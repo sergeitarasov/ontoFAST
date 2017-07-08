@@ -7,9 +7,20 @@
 #
 #
 #
+vec=names(term_tb)[1:10]
+onto=hao.obo
 
-gt.name<-function(vec, onto, names=F){
-  name.vec=onto$name[onto$id%in%unlist(vec, use.names = FALSE)]
+onto$name[1:10]
+
+identical(unname(onto$id), names(onto$name))
+gt.name(names(term_tb)[1:10], hao.obo, names=T)
+
+
+onto$name[c(na.omit(match(unlist(vec, use.names = FALSE), onto$id)))]
+
+get_name<-function(vec, onto, names=F){
+  #name.vec=onto$name[onto$id%in%unlist(vec, use.names = FALSE)]
+  name.vec=onto$name[c(na.omit(match(unlist(vec, use.names = FALSE), onto$id)))]
   if (names==F) {name.vec=unname(name.vec)}
   return(name.vec)
 }
@@ -41,14 +52,26 @@ distance.statement.match<-function(statement, onto.terms){
 }
 distance.statement.match("Ocellar corona", "ocellus cell df")
 
+(strsplit("ab", " ")[[1]])
 
+statement=char.list[[341]]
+statement="Propleura  dorsal part"
 
-distance.all.match<-function(statement, onto.obj, thresh=0.7, include_synonyms=F){
+distance.all.match<-function(statement, onto.obj, thresh=0.7, include_synonyms=T){
+  statement_split=strsplit(statement, " ")[[1]]
+  statement_split=statement_split[!statement_split==""]
+   if (length(statement_split)==1){
+     selec.terms=character(0)
+     return(selec.terms)
+   } else
+
   if (include_synonyms==T){
     onto.names=c(onto.obj$name, onto.obj$parsed_syns)
   } else onto.names=onto.obj$name
 
   max.all=sapply(onto.names, function(x) {distance.statement.match(statement, x)}) #run over all HAO terms
+
+  #max.all[,1:10]
   #selec.terms=apply(max.all, 1, order, decreasing=T)[1:,] #selection based on ordering
   if (max(max.all)<thresh){
     selec.terms=character(0)
@@ -60,7 +83,14 @@ distance.all.match<-function(statement, onto.obj, thresh=0.7, include_synonyms=F
   selec.terms=lapply(selec.terms, function(x) {minimal_set(onto.obj, names(x))})
 
   selec.terms=unlist(selec.terms)
-  selec.terms=selec.terms[duplicated(selec.terms)]
+
+  selec.tb=table(selec.terms)
+  selec.tb=selec.tb[selec.tb>1]
+  selec.dp=selec.tb[order(selec.tb, decreasing=T)]
+  selec.terms=c(na.omit(names(selec.dp)[1:10]))
+
+
+  if (length(selec.terms)==0){selec.terms=character(0)}
   return(selec.terms)
 }
 
@@ -71,19 +101,45 @@ onto.match<-function(onto.names, char.statement, onto.obj, min_set=T){
   terms=onto.names[vapply(onto.names, function(x) {grepl(x, char.statement, ignore.case = T)}, logical(1))]
   if (min_set==T){
     terms=ontologyIndex::minimal_set(onto.obj, names(terms))
-    terms=gt.name(terms, onto.obj, names=T)}
+   #terms=gt.name(terms, onto.obj, names=T)}
+  }
   return(terms)
 }
 
-om=onto.match(c(hao.obo$name, hao.syns), "mesoventrite", hao.obo)
+om=onto.match(c(hao.obo$name, hao.syns), "Mandibular peg on ventral margin", hao.obo)
 onto.match(c(hao.obo$name, hao.syns), "Metacoxal plates", hao.obo)
-gt.name(distance.all.match("mesoventrite", hao.obo), hao.obo)
+gt.name(distance.all.match("Propleura  dorsal part", hao.obo), hao.obo)
 
-dm=distance.all.match("Metacoxal plates", hao.obo)
+dm=distance.all.match(char.list[[341]], hao.obo)
 
 intersect(names(om), dm)
 minimal_set( hao.obo, c(names(om), dm))
+
+n<-1000
+mat<-matrix(rnorm(n),ncol=10,nrow=100)
+
+###### apply() vs pbapply()
+x<-pbapply(mat,1,sum)
+y<-apply(mat,1,sum)
+
+x-y
+
+
+
 ##____________________________________________________
+onto.obj=hao.obo
+### annotate characters for Sharkey's dt
+#charsSh=read.csv("chars-Sharkey.csv", header=F,  stringsAsFactors = F)
+char.list=unlist(charsSh[,1])
 
+annot.list=lapply(char.list, function(x) {onto.match(c(hao.obo$name, hao.syns), x, hao.obo, min_set = T)}) ##annotating using grepl
+#annot.list=setNames(annot.list, char.list)
+#annot=list(ids=c(1:392), names=char.list, annotations=annot.list)
 
+annot.dist=lapply(char.list, function(x) {distance.all.match(x, onto.obj)}) #annotating using distsnce
 
+annot.dist=pblapply(char.list, function(x) {distance.all.match(x, onto.obj)}) #annotating using distsnce
+
+gt.name(annot.dist[[341]], hao.obo)
+####______________
+char.list[[341]]

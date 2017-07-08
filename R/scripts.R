@@ -5,19 +5,20 @@ library("ontologyIndex")
 library("stringdist", lib.loc="~/.local/R/site-library")
 library("stringr", lib.loc="/usr/lib/R/site-library")
 library("RNeXML", lib.loc="~/.local/R/site-library")
+library("pbapply")
 .libPaths()
 
-setwd("/home/tarasov/my-papers-2017/AO-BN-ED-morpho/Ontology-play/HYMAO-Ontho-phylo")
-charsSh=read.csv("chars-Sharkey.csv", header=F,  stringsAsFactors = F)
-char.dt=read.csv("HAO-chars.csv", header=F, stringsAsFactors = F, na.strings = c("","NA"))
+#setwd("/home/tarasov/my-papers-2017/AO-BN-ED-morpho/Ontology-play/HYMAO-Ontho-phylo")
+#charsSh=read.csv("chars-Sharkey.csv", header=F,  stringsAsFactors = F)
+#char.dt=read.csv("HAO-chars.csv", header=F, stringsAsFactors = F, na.strings = c("","NA"))
 
-hao.obo=get_OBO("hao_new.obo", extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
-propagate_relations(hao.obo, "HAO:0000345", "is_a")
+#hao.obo=get_OBO("hao_new.obo", extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
+#propagate_relations(hao.obo, "HAO:0000345", "is_a")
 ######
-nexml<-nexml_read("Sharkey.nexml")
-get_characters(geiger_nex)
-get_characters_list(geiger_nex)
-get_metadata(nexml, "otus")
+#nexml<-nexml_read("Sharkey.nexml")
+#get_characters(geiger_nex)
+#get_characters_list(geiger_nex)
+#get_metadata(nexml, "otus")
 ########
 ### make the list of synonyms suitable for rearch__________
 onto.syn=hao.obo$synonym[50:60]
@@ -185,13 +186,17 @@ seq_sim(a, b, method = c("osa", "lv", "dl", "hamming", "lcs", "qgram",
         #onto.match(c(hao.obo$name, hao.syns), "Anterior edge of sternite VIII in male", hao.obo, min_set = T)
 
         ### annotate characters for Sharkey's dt
-        charsSh=read.csv("chars-Sharkey.csv", header=F,  stringsAsFactors = F)
+        #charsSh=read.csv("chars-Sharkey.csv", header=F,  stringsAsFactors = F)
         char.list=unlist(charsSh[,1])
 
-        annot.list=lapply(char.list, function(x) {onto.match(c(hao.obo$name, hao.syns), x, hao.obo, min_set = T)})
-        annot.list=setNames(annot.list, char.list)
+        annot.list=pblapply(char.list, function(x) {onto.match(c(hao.obo$name, hao.syns), x, hao.obo, min_set = T)})
+        #annot.list=setNames(annot.list, char.list)
+        annot_gr=list(ids=c(1:392), names=char.list, annotations=annot.list)
+        str(annot)
 
-        annot=list(ids=c(1:392), names=char.list, annotations=annot.list)
+        annot.dist_ex=annot.dist
+        #annot.dist_ex=setNames(annot.dist_ex, char.list)
+        annot_ds=list(ids=c(1:392), names=char.list, annotations=annot.dist_ex)
         ####______________
 
         #____compare two sets
@@ -249,7 +254,7 @@ seq_sim(a, b, method = c("osa", "lv", "dl", "hamming", "lcs", "qgram",
 
           if (length(char_id)>0){
             terms.org=c(na.omit(as.character(char.dt[char_id,3:9])))
-            comp.list=comp.sets(terms.org, names(annot$annotations[[i]]))
+            comp.list=comp.sets(terms.org, annot$annotations[[i]])
 
 
             out.list$identical[i]=comp.list$iden
@@ -259,8 +264,41 @@ seq_sim(a, b, method = c("osa", "lv", "dl", "hamming", "lcs", "qgram",
           else out.list$identical[i]="character abscent"
         }
         #____________________
+        #grepl dist comparions
+        out.list=list()
+        out.list$ids=c()
+        out.list$original_missing=list()
+        out.list$found_missing=list()
+        out.list$identical=c()
+  i=1
+        for (i in seq_along(annot_gr$ids)){
 
-        length(which(out.list$identical=="none"))
+           comp.list=comp.sets(annot_gr$annotations[[i]], annot_ds$annotations[[i]])
+
+
+            out.list$identical[i]=comp.list$iden
+            out.list$original_missing[[i]]=comp.list$org
+            out.list$found_missing[[i]]=comp.list$found
+
+          #else out.list$identical[i]="character abscent"
+        }
+
+
+
+
+        #___________________
+         length(which(out.list$identical=="none"))
+
+        ##
+        #out.dist=out.list
+        #out.grepl=out.list
+        smmr=cbind(out.dist$identical, out.grepl$identical, out.list$identical, dist_count)
+        colnames(smmr)<-c("dist", "grepl", "grepl_vs_dist", "dist-count")
+        write.csv(smmr, file="dist-grepl.csv", row.names = F)
+
+        dist_count=unlist(lapply(annot.dist_ex, length))
+        str(annot.dist_ex)
+        ##
 
         str(out.list)
         str(char.dt
@@ -285,6 +323,11 @@ seq_sim(a, b, method = c("osa", "lv", "dl", "hamming", "lcs", "qgram",
             write.csv(char.orig.vs.annot, file="auto_annatotated3.csv", row.names = F)
 
             ##______________
+
+
+
+
+            #########
             #minimal_set(hao.obo, c("HAO:0000670", "HAO:0000345"))
 
             "HAO:0000345"%in%get_ancestors(hao.obo, c("HAO:0000670"))
