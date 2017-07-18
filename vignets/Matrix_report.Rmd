@@ -1,0 +1,55 @@
+---
+title: "Matrix Report (Sharkey et al)"
+author: "Sergei Tarasov"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette    #html_vignette #pdf_document:
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r}
+
+library("plyr", lib.loc="~/.local/R/site-library")
+```
+
+
+
+# now I have
+id_characters
+name_characters
+id_character_states
+name_character_states
+
+###################################
+
+
+```{r}
+print("## Contains inapplicable")
+names(char_matrix)[apply(char_matrix, 2,  function(x) any(unique(x)=="-"))]  %>%length
+print("## Contains missing")
+names(char_matrix)[apply(char_matrix, 2,  function(x) any(unique(x)=="?"))] %>%length
+print("## Contains polymorphic states")
+names(char_matrix)[apply(char_matrix, 2,  function(x) any(grepl("/", unique(x))))]
+names(char_matrix)[apply(char_matrix, 2,  function(x) any(grepl("/", unique(x))))]%>%length
+print("## Enumeration not sequential in matrix")
+enumeration_not_seq(char_matrix)
+print("## Unused states")
+unused_states(coding_states_matrix, name_character_states)
+print("## Groups of characters with the same pattern")
+same_patterns(char_matrix)
+print("## Number of missing states ? per taxon")
+taxa_missing_states(char_matrix)
+```
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Sergei Tarasov" />
+
+<meta name="date" content="2017-07-11" />
+
+<title>Information on ontologyIndex object</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Information on ontologyIndex object</h1>
+<h4 class="author"><em>Sergei Tarasov</em></h4>
+<h4 class="date"><em>2017-07-11</em></h4>
+
+
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;~/my-papers-2017/phyloBayesHMM/ontoFast/ontoFast/data/Other-ontologies&quot;</span>)
+<span class="kw">library</span>(ontologyIndex)</code></pre></div>
+<div id="structures-of-main-anatomy-ontologies" class="section level2">
+<h2>Structures of main Anatomy Ontologies</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">uberon=<span class="kw">get_OBO</span>(<span class="st">&quot;UBERON.obo&quot;</span>, <span class="dt">extract_tags=</span><span class="st">&quot;everything&quot;</span>, <span class="dt">propagate_relationships =</span> <span class="kw">c</span>(<span class="st">&quot;part_of&quot;</span>, <span class="st">&quot;is_a&quot;</span>))</code></pre></div>
+<pre><code>## Warning in (function (parents, id = names(parents), name = id, obsolete =
+## setNames(nm = id, : Some parent terms not found: BFO:0000002, BFO:0000003,
+## UBERON:0005187 (4 more)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">drosoph&lt;-<span class="kw">get_OBO</span>(<span class="st">&quot;fbbt.obo&quot;</span>, <span class="dt">extract_tags=</span><span class="st">&quot;everything&quot;</span>, <span class="dt">propagate_relationships =</span> <span class="kw">c</span>(<span class="st">&quot;part_of&quot;</span>, <span class="st">&quot;is_a&quot;</span>))
+amphib&lt;-<span class="kw">get_OBO</span>(<span class="st">&quot;AAO_v3.obo&quot;</span>, <span class="dt">extract_tags=</span><span class="st">&quot;everything&quot;</span>, <span class="dt">propagate_relationships =</span> <span class="kw">c</span>(<span class="st">&quot;part_of&quot;</span>, <span class="st">&quot;is_a&quot;</span>))
+tron&lt;-<span class="kw">get_OBO</span>(<span class="st">&quot;TrOn.obo&quot;</span>, <span class="dt">extract_tags=</span><span class="st">&quot;everything&quot;</span>, <span class="dt">propagate_relationships =</span> <span class="kw">c</span>(<span class="st">&quot;part_of&quot;</span>, <span class="st">&quot;is_a&quot;</span>))
+spiders&lt;-<span class="kw">get_OBO</span>(<span class="st">&quot;spd.obo&quot;</span>, <span class="dt">extract_tags=</span><span class="st">&quot;everything&quot;</span>, <span class="dt">propagate_relationships =</span> <span class="kw">c</span>(<span class="st">&quot;part_of&quot;</span>, <span class="st">&quot;is_a&quot;</span>))
+hao_new&lt;-<span class="kw">get_OBO</span>(<span class="st">&quot;hao_new.obo&quot;</span>, <span class="dt">extract_tags=</span><span class="st">&quot;everything&quot;</span>, <span class="dt">propagate_relationships =</span> <span class="kw">c</span>(<span class="st">&quot;part_of&quot;</span>, <span class="st">&quot;is_a&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sort</span>(<span class="kw">names</span>(uberon)))</code></pre></div>
+<pre><code>##   [1] &quot;aboral_to&quot;                                     
+##   [2] &quot;adjacent_to&quot;                                   
+##   [3] &quot;alt_id&quot;                                        
+##   [4] &quot;ambiguous_for_taxon&quot;                           
+##   [5] &quot;anastomoses_with&quot;                              
+##   [6] &quot;ancestors&quot;                                     
+##   [7] &quot;anteriorly_connected_to&quot;                       
+##   [8] &quot;anterior_to&quot;                                   
+##   [9] &quot;attaches_to&quot;                                   
+##  [10] &quot;attaches_to_part_of&quot;                           
+##  [11] &quot;bounding_layer_of&quot;                             
+##  [12] &quot;branching_part_of&quot;                             
+##  [13] &quot;capable_of&quot;                                    
+##  [14] &quot;capable_of_part_of&quot;                            
+##  [15] &quot;channel_for&quot;                                   
+##  [16] &quot;channels_from&quot;                                 
+##  [17] &quot;channels_into&quot;                                 
+##  [18] &quot;children&quot;                                      
+##  [19] &quot;comment&quot;                                       
+##  [20] &quot;composed_primarily_of&quot;                         
+##  [21] &quot;conduit_for&quot;                                   
+##  [22] &quot;confers_advantage_in&quot;                          
+##  [23] &quot;connected_to&quot;                                  
+##  [24] &quot;connects&quot;                                      
+##  [25] &quot;consider&quot;                                      
+##  [26] &quot;contains&quot;                                      
+##  [27] &quot;contains_process&quot;                              
+##  [28] &quot;continuous_with&quot;                               
+##  [29] &quot;contributes_to_morphology_of&quot;                  
+##  [30] &quot;created_by&quot;                                    
+##  [31] &quot;creation_date&quot;                                 
+##  [32] &quot;data-version&quot;                                  
+##  [33] &quot;dc-contributor&quot;                                
+##  [34] &quot;dc-creator&quot;                                    
+##  [35] &quot;deep_to&quot;                                       
+##  [36] &quot;def&quot;                                           
+##  [37] &quot;default-namespace&quot;                             
+##  [38] &quot;developmentally_induced_by&quot;                    
+##  [39] &quot;developmentally_replaces&quot;                      
+##  [40] &quot;develops_from&quot;                                 
+##  [41] &quot;develops_from_part_of&quot;                         
+##  [42] &quot;develops_in&quot;                                   
+##  [43] &quot;directly_develops_from&quot;                        
+##  [44] &quot;disjoint_from&quot;                                 
+##  [45] &quot;distally_connected_to&quot;                         
+##  [46] &quot;distalmost_part_of&quot;                            
+##  [47] &quot;distal_to&quot;                                     
+##  [48] &quot;domain&quot;                                        
+##  [49] &quot;dorsal_to&quot;                                     
+##  [50] &quot;drains&quot;                                        
+##  [51] &quot;dubious_for_taxon&quot;                             
+##  [52] &quot;ends&quot;                                          
+##  [53] &quot;ends_with&quot;                                     
+##  [54] &quot;equivalent_to_chain&quot;                           
+##  [55] &quot;existence_ends_during&quot;                         
+##  [56] &quot;existence_ends_during_or_before&quot;               
+##  [57] &quot;existence_ends_with&quot;                           
+##  [58] &quot;existence_starts_and_ends_during&quot;              
+##  [59] &quot;existence_starts_during&quot;                       
+##  [60] &quot;existence_starts_during_or_after&quot;              
+##  [61] &quot;existence_starts_with&quot;                         
+##  [62] &quot;expand_assertion_to&quot;                           
+##  [63] &quot;expand_expression_to&quot;                          
+##  [64] &quot;extends_fibers_into&quot;                           
+##  [65] &quot;fma_set_term&quot;                                  
+##  [66] &quot;format-version&quot;                                
+##  [67] &quot;functionally_related_to&quot;                       
+##  [68] &quot;has_boundary&quot;                                  
+##  [69] &quot;has_component&quot;                                 
+##  [70] &quot;has_developmental_contribution_from&quot;           
+##  [71] &quot;has_fused_element&quot;                             
+##  [72] &quot;has_member&quot;                                    
+##  [73] &quot;has_muscle_antagonist&quot;                         
+##  [74] &quot;has_muscle_insertion&quot;                          
+##  [75] &quot;has_muscle_origin&quot;                             
+##  [76] &quot;has_part&quot;                                      
+##  [77] &quot;has_potential_to_develop_into&quot;                 
+##  [78] &quot;has_potential_to_developmentally_contribute_to&quot;
+##  [79] &quot;has_quality&quot;                                   
+##  [80] &quot;has_skeleton&quot;                                  
+##  [81] &quot;holds_over_chain&quot;                              
+##  [82] &quot;id&quot;                                            
+##  [83] &quot;immediately_anterior_to&quot;                       
+##  [84] &quot;immediately_deep_to&quot;                           
+##  [85] &quot;immediately_posterior_to&quot;                      
+##  [86] &quot;immediately_preceded_by&quot;                       
+##  [87] &quot;immediately_superficial_to&quot;                    
+##  [88] &quot;immediate_transformation_of&quot;                   
+##  [89] &quot;implements_design_pattern&quot;                     
+##  [90] &quot;in_anterior_side_of&quot;                           
+##  [91] &quot;in_central_side_of&quot;                            
+##  [92] &quot;in_deep_part_of&quot;                               
+##  [93] &quot;indirectly_supplies&quot;                           
+##  [94] &quot;in_distal_side_of&quot;                             
+##  [95] &quot;in_dorsal_side_of&quot;                             
+##  [96] &quot;in_innermost_side_of&quot;                          
+##  [97] &quot;in_lateral_side_of&quot;                            
+##  [98] &quot;in_left_side_of&quot;                               
+##  [99] &quot;innervated_by&quot;                                 
+## [100] &quot;innervates&quot;                                    
+## [101] &quot;in_outermost_side_of&quot;                          
+## [102] &quot;in_posterior_side_of&quot;                          
+## [103] &quot;in_proximal_side_of&quot;                           
+## [104] &quot;input_of&quot;                                      
+## [105] &quot;in_right_side_of&quot;                              
+## [106] &quot;in_superficial_part_of&quot;                        
+## [107] &quot;in_taxon&quot;                                      
+## [108] &quot;intersection_of&quot;                               
+## [109] &quot;intersects_midsagittal_plane_of&quot;               
+## [110] &quot;in_ventral_side_of&quot;                            
+## [111] &quot;inverse_of&quot;                                    
+## [112] &quot;is_a&quot;                                          
+## [113] &quot;is_class_level&quot;                                
+## [114] &quot;is_metadata_tag&quot;                               
+## [115] &quot;is_symmetric&quot;                                  
+## [116] &quot;is_transitive&quot;                                 
+## [117] &quot;layer_part_of&quot;                                 
+## [118] &quot;located_in&quot;                                    
+## [119] &quot;location_of&quot;                                   
+## [120] &quot;lumen_of&quot;                                      
+## [121] &quot;luminal_space_of&quot;                              
+## [122] &quot;name&quot;                                          
+## [123] &quot;namespace&quot;                                     
+## [124] &quot;negatively_regulates&quot;                          
+## [125] &quot;obsolete&quot;                                      
+## [126] &quot;only_in_taxon&quot;                                 
+## [127] &quot;ontology&quot;                                      
+## [128] &quot;output_of&quot;                                     
+## [129] &quot;overlaps&quot;                                      
+## [130] &quot;owl-axioms&quot;                                    
+## [131] &quot;parents&quot;                                       
+## [132] &quot;participates_in&quot;                               
+## [133] &quot;part_of&quot;                                       
+## [134] &quot;positively_regulates&quot;                          
+## [135] &quot;postaxialmost_part_of&quot;                         
+## [136] &quot;posteriorly_connected_to&quot;                      
+## [137] &quot;posterior_to&quot;                                  
+## [138] &quot;preaxialmost_part_of&quot;                          
+## [139] &quot;preceded_by&quot;                                   
+## [140] &quot;precedes&quot;                                      
+## [141] &quot;present_in_taxon&quot;                              
+## [142] &quot;produced_by&quot;                                   
+## [143] &quot;produces&quot;                                      
+## [144] &quot;property_value&quot;                                
+## [145] &quot;protects&quot;                                      
+## [146] &quot;proximally_connected_to&quot;                       
+## [147] &quot;proximalmost_part_of&quot;                          
+## [148] &quot;proximal_to&quot;                                   
+## [149] &quot;range&quot;                                         
+## [150] &quot;regulates&quot;                                     
+## [151] &quot;remark&quot;                                        
+## [152] &quot;replaced_by&quot;                                   
+## [153] &quot;seeAlso&quot;                                       
+## [154] &quot;serially_homologous_to&quot;                        
+## [155] &quot;sexually_homologous_to&quot;                        
+## [156] &quot;simultaneous_with&quot;                             
+## [157] &quot;site_of&quot;                                       
+## [158] &quot;skeleton_of&quot;                                   
+## [159] &quot;source_atlas&quot;                                  
+## [160] &quot;starts&quot;                                        
+## [161] &quot;starts_with&quot;                                   
+## [162] &quot;subdivision_of&quot;                                
+## [163] &quot;subset&quot;                                        
+## [164] &quot;subsetdef&quot;                                     
+## [165] &quot;superficial_to&quot;                                
+## [166] &quot;supplies&quot;                                      
+## [167] &quot;surrounded_by&quot;                                 
+## [168] &quot;surrounds&quot;                                     
+## [169] &quot;synapsed_by&quot;                                   
+## [170] &quot;synonym&quot;                                       
+## [171] &quot;synonymtypedef&quot;                                
+## [172] &quot;transformation_of&quot;                             
+## [173] &quot;transitive_over&quot;                               
+## [174] &quot;treat-xrefs-as-equivalent&quot;                     
+## [175] &quot;treat-xrefs-as-has-subclass&quot;                   
+## [176] &quot;treat-xrefs-as-is_a&quot;                           
+## [177] &quot;treat-xrefs-as-reverse-genus-differentia&quot;      
+## [178] &quot;tributary_of&quot;                                  
+## [179] &quot;trunk_part_of&quot;                                 
+## [180] &quot;union_of&quot;                                      
+## [181] &quot;ventral_to&quot;                                    
+## [182] &quot;xref&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sort</span>(<span class="kw">names</span>(drosoph)))</code></pre></div>
+<pre><code>##  [1] &quot;alt_id&quot;                          &quot;ancestors&quot;                      
+##  [3] &quot;auto-generated-by&quot;               &quot;capable_of&quot;                     
+##  [5] &quot;capable_of_part_of&quot;              &quot;children&quot;                       
+##  [7] &quot;comment&quot;                         &quot;composed_primarily_of&quot;          
+##  [9] &quot;connected_to&quot;                    &quot;consider&quot;                       
+## [11] &quot;created_by&quot;                      &quot;creation_date&quot;                  
+## [13] &quot;data-version&quot;                    &quot;date&quot;                           
+## [15] &quot;def&quot;                             &quot;default-namespace&quot;              
+## [17] &quot;develops_directly_from&quot;          &quot;develops_from&quot;                  
+## [19] &quot;disjoint_from&quot;                   &quot;domain&quot;                         
+## [21] &quot;electrically_synapsed_to&quot;        &quot;expand_expression_to&quot;           
+## [23] &quot;expresses&quot;                       &quot;fasciculates_with&quot;              
+## [25] &quot;format-version&quot;                  &quot;has_part&quot;                       
+## [27] &quot;has_postsynaptic_terminals_in&quot;   &quot;has_presynaptic_terminals_in&quot;   
+## [29] &quot;has_soma_location&quot;               &quot;has_synaptic_terminals_in&quot;      
+## [31] &quot;has_synaptic_terminals_of&quot;       &quot;holds_over_chain&quot;               
+## [33] &quot;id&quot;                              &quot;inheres_in&quot;                     
+## [35] &quot;innervated_by&quot;                   &quot;innervates&quot;                     
+## [37] &quot;intersection_of&quot;                 &quot;inverse_of&quot;                     
+## [39] &quot;is_a&quot;                            &quot;is_metadata_tag&quot;                
+## [41] &quot;is_transitive&quot;                   &quot;name&quot;                           
+## [43] &quot;namespace&quot;                       &quot;obsolete&quot;                       
+## [45] &quot;occurs_in&quot;                       &quot;ontology&quot;                       
+## [47] &quot;overlaps&quot;                        &quot;owl-axioms&quot;                     
+## [49] &quot;parents&quot;                         &quot;partially_overlaps&quot;             
+## [51] &quot;part_of&quot;                         &quot;property_value&quot;                 
+## [53] &quot;range&quot;                           &quot;regulates&quot;                      
+## [55] &quot;remark&quot;                          &quot;replaced_by&quot;                    
+## [57] &quot;saved-by&quot;                        &quot;subset&quot;                         
+## [59] &quot;subsetdef&quot;                       &quot;synapsed_by&quot;                    
+## [61] &quot;synapsed_to&quot;                     &quot;synapsed_via_type_Ib_bouton_to&quot; 
+## [63] &quot;synapsed_via_type_II_bouton_to&quot;  &quot;synapsed_via_type_III_bouton_to&quot;
+## [65] &quot;synapsed_via_type_Is_bouton_to&quot;  &quot;synonym&quot;                        
+## [67] &quot;synonymtypedef&quot;                  &quot;transitive_over&quot;                
+## [69] &quot;xref&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sort</span>(<span class="kw">names</span>(tron)))</code></pre></div>
+<pre><code>##  [1] &quot;ancestors&quot;         &quot;auto-generated-by&quot; &quot;children&quot;         
+##  [4] &quot;created_by&quot;        &quot;creation_date&quot;     &quot;date&quot;             
+##  [7] &quot;def&quot;               &quot;default-namespace&quot; &quot;format-version&quot;   
+## [10] &quot;id&quot;                &quot;is_a&quot;              &quot;name&quot;             
+## [13] &quot;namespace&quot;         &quot;obsolete&quot;          &quot;parents&quot;          
+## [16] &quot;part_of&quot;           &quot;saved-by&quot;          &quot;subset&quot;           
+## [19] &quot;subsetdef&quot;         &quot;synonym&quot;           &quot;xref&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sort</span>(<span class="kw">names</span>(spiders)))</code></pre></div>
+<pre><code>##  [1] &quot;adjacent_to&quot;       &quot;ancestors&quot;         &quot;auto-generated-by&quot;
+##  [4] &quot;children&quot;          &quot;comment&quot;           &quot;consider&quot;         
+##  [7] &quot;created_by&quot;        &quot;creation_date&quot;     &quot;data-version&quot;     
+## [10] &quot;date&quot;              &quot;def&quot;               &quot;default-namespace&quot;
+## [13] &quot;format-version&quot;    &quot;id&quot;                &quot;is_a&quot;             
+## [16] &quot;is_transitive&quot;     &quot;name&quot;              &quot;namespace&quot;        
+## [19] &quot;namespace-id-rule&quot; &quot;obsolete&quot;          &quot;ontology&quot;         
+## [22] &quot;parents&quot;           &quot;part_of&quot;           &quot;saved-by&quot;         
+## [25] &quot;synonym&quot;           &quot;xref&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sort</span>(<span class="kw">names</span>(hao_new)))</code></pre></div>
+<pre><code>##  [1] &quot;ancestors&quot;                      &quot;auto-generated-by&quot;             
+##  [3] &quot;BFO:0000050&quot;                    &quot;children&quot;                      
+##  [5] &quot;comment&quot;                        &quot;date&quot;                          
+##  [7] &quot;def&quot;                            &quot;default-namespace&quot;             
+##  [9] &quot;default-relationship-id-prefix&quot; &quot;disjoint_from&quot;                 
+## [11] &quot;format-version&quot;                 &quot;HAO:attached_to&quot;               
+## [13] &quot;id&quot;                             &quot;intersection_of&quot;               
+## [15] &quot;is_a&quot;                           &quot;is_anti_symmetric&quot;             
+## [17] &quot;is_reflexive&quot;                   &quot;is_transitive&quot;                 
+## [19] &quot;name&quot;                           &quot;namespace-id-rule&quot;             
+## [21] &quot;OBO_REL:0000004&quot;                &quot;obsolete&quot;                      
+## [23] &quot;ontology&quot;                       &quot;parents&quot;                       
+## [25] &quot;remark&quot;                         &quot;saved-by&quot;                      
+## [27] &quot;synonym&quot;                        &quot;xref&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ontology_list=<span class="kw">list</span>(<span class="dt">uberon=</span>uberon, <span class="dt">drosoph=</span>drosoph, <span class="dt">tron=</span>tron, <span class="dt">spiders=</span>spiders, <span class="dt">hao_new=</span>hao_new)</code></pre></div>
+</div>
+<div id="synonyms-in-ontologies-get-structure" class="section level2">
+<h2>Synonyms in ontologies; get structure</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for (i in <span class="kw">seq_along</span>(ontology_list)){
+  <span class="kw">print</span>(<span class="kw">names</span>(ontology_list)[i])
+  <span class="kw">print</span>(<span class="st">&quot;#############################################&quot;</span>)
+<span class="kw">print</span>(ontology_list[[i]]$synonym[<span class="kw">lapply</span>(ontology_list[[i]]$synonym, length)&gt;<span class="dv">0</span>][<span class="dv">1</span>:<span class="dv">5</span>])
+}</code></pre></div>
+<pre><code>## [1] &quot;uberon&quot;
+## [1] &quot;#############################################&quot;
+## $`CL:0000001`
+## [1] &quot;\&quot;primary cell culture cell\&quot; EXACT []&quot;
+## [2] &quot;\&quot;primary cell line cell\&quot; RELATED []&quot; 
+## [3] &quot;\&quot;unpassaged cultured cell\&quot; EXACT []&quot; 
+## 
+## $`CL:0000002`
+## [1] &quot;\&quot;continuous cell line cell\&quot; EXACT []&quot;
+## [2] &quot;\&quot;permanent cell line cell\&quot; EXACT []&quot; 
+## 
+## $`CL:0000003`
+## [1] &quot;\&quot;cell in vivo\&quot; NARROW []&quot;
+## 
+## $`CL:0000006`
+## [1] &quot;\&quot;neuronal receptor cell (sensu Animalia)\&quot; EXACT []&quot;
+## 
+## $`CL:0000009`
+## [1] &quot;\&quot;xylem initial\&quot; RELATED []&quot;     &quot;\&quot;xylem mother cell\&quot; RELATED []&quot;
+## 
+## [1] &quot;drosoph&quot;
+## [1] &quot;#############################################&quot;
+## $`FBbt:00000001`
+## [1] &quot;\&quot;Drosophila\&quot; RELATED []&quot;     &quot;\&quot;whole organism\&quot; RELATED []&quot;
+## 
+## $`FBbt:00000005`
+## [1] &quot;\&quot;acron\&quot; RELATED []&quot;
+## 
+## $`FBbt:00000007`
+## [1] &quot;\&quot;cephalic segment\&quot; RELATED []&quot; &quot;\&quot;pregnathal segment\&quot; EXACT []&quot;
+## [3] &quot;\&quot;preoral segment\&quot; EXACT []&quot;    &quot;\&quot;procephalon\&quot; RELATED []&quot;     
+## 
+## $`FBbt:00000008`
+## [1] &quot;\&quot;clypeo-labrum\&quot; RELATED []&quot;
+## 
+## $`FBbt:00000011`
+## [1] &quot;\&quot;postoral segment\&quot; RELATED []&quot;
+## 
+## [1] &quot;tron&quot;
+## [1] &quot;#############################################&quot;
+## $`TrOn:0000002`
+## [1] &quot;\&quot;A1_musculature\&quot; EXACT []&quot;
+## 
+## $`TrOn:0000008`
+## [1] &quot;\&quot;pleopod\&quot; RELATED []&quot;
+## 
+## $`TrOn:0000009`
+## [1] &quot;\&quot;A2_musculature\&quot; EXACT []&quot;
+## 
+## $`TrOn:0000010`
+## [1] &quot;\&quot;A3_musculature\&quot; EXACT []&quot;
+## 
+## $`TrOn:0000011`
+## [1] &quot;\&quot;A4_musculature\&quot; EXACT []&quot;
+## 
+## [1] &quot;spiders&quot;
+## [1] &quot;#############################################&quot;
+## $`SPD:0000001`
+## [1] &quot;\&quot;whole organism\&quot; EXACT [SPD:Ramirez]&quot;
+## 
+## $`SPD:0000002`
+## [1] &quot;\&quot;cephalothorax\&quot; EXACT [SPD:Michalik]&quot;
+## 
+## $`SPD:0000003`
+## [1] &quot;\&quot;abdomen\&quot; EXACT [SPD:Michalik]&quot;
+## 
+## $`SPD:0000005`
+## [1] &quot;\&quot;dorsal shield of the prosoma\&quot; EXACT [SPD:Ramirez]&quot;
+## 
+## $`SPD:0000007`
+## [1] &quot;\&quot;epigastric area\&quot; EXACT [SPD:Ramirez]&quot;
+## 
+## [1] &quot;hao_new&quot;
+## [1] &quot;#############################################&quot;
+## $`HAO:0000001`
+## [1] &quot;\&quot;fu2-fu1v\&quot; [http://api.hymao.org/api/ref/67864]&quot;                       
+## [2] &quot;\&quot;mesothoracic interfurcal muscle\&quot; [http://api.hymao.org/api/ref/68619]&quot;
+## [3] &quot;\&quot;ventral mesofurco-profurcal\&quot; [http://api.hymao.org/api/ref/67864]&quot;    
+## 
+## $`HAO:0000012`
+## [1] &quot;\&quot;whole organism\&quot; [http://api.hymao.org/api/ref/68619]&quot;
+## 
+## $`HAO:0000015`
+## [1] &quot;\&quot;der Hinterleib\&quot; [http://api.hymao.org/api/ref/78598]&quot;
+## 
+## $`HAO:0000020`
+## [1] &quot;\&quot;abdominal petiole\&quot; [http://api.hymao.org/api/ref/96670]&quot;                                                                                                                              
+## [2] &quot;\&quot;first metasomal segment\&quot; [http://api.hymao.org/api/ref/96581]&quot;                                                                                                                        
+## [3] &quot;\&quot;petiole\&quot; [http://api.hymao.org/api/ref/36874, http://canacoll.org/Hym/Staff/Gibson/apss/chalglos.htm,  http://projects.biodiversity.be/ants/    , http://api.hymao.org/api/ref/78442]&quot;
+## 
+## $`HAO:0000022`
+## [1] &quot;\&quot;postpetiole\&quot; [http://api.hymao.org/api/ref/97831]&quot;</code></pre>
+</div>
+<div id="common-names-in-all-ontologies" class="section level2">
+<h2>Common names in all ontologies</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Reduce</span>(intersect, <span class="kw">lapply</span>(ontology_list, names))</code></pre></div>
+<pre><code>##  [1] &quot;id&quot;                &quot;name&quot;              &quot;parents&quot;          
+##  [4] &quot;children&quot;          &quot;ancestors&quot;         &quot;obsolete&quot;         
+##  [7] &quot;def&quot;               &quot;default-namespace&quot; &quot;format-version&quot;   
+## [10] &quot;is_a&quot;              &quot;synonym&quot;           &quot;xref&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">uberon$id[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre></div>
+<pre><code>##   BFO:0000004   BFO:0000015   BFO:0000030   BFO:0000040   BFO:0000141 
+## &quot;BFO:0000004&quot; &quot;BFO:0000015&quot; &quot;BFO:0000030&quot; &quot;BFO:0000040&quot; &quot;BFO:0000141&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">uberon$name[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre></div>
+<pre><code>##       BFO:0000004       BFO:0000015       BFO:0000030       BFO:0000040 
+##                NA                NA          &quot;object&quot; &quot;material entity&quot; 
+##       BFO:0000141 
+##                NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hao_new$id[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre></div>
+<pre><code>##   HAO:0000000   HAO:0000001   HAO:0000002   HAO:0000003   HAO:0000004 
+## &quot;HAO:0000000&quot; &quot;HAO:0000001&quot; &quot;HAO:0000002&quot; &quot;HAO:0000003&quot; &quot;HAO:0000004&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hao_new$name[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre></div>
+<pre><code>##                          HAO:0000000                          HAO:0000001 
+##                  &quot;anatomical entity&quot; &quot;ventral mesofurco-profurcal muscle&quot; 
+##                          HAO:0000002                          HAO:0000003 
+##                            &quot;A1 flap&quot;               &quot;anatomical structure&quot; 
+##                          HAO:0000004 
+##      &quot;portion of organism substance&quot;</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

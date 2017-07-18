@@ -1,0 +1,68 @@
+---
+title: "Structure of ontologyIndex object"
+author: "Sergei Tarasov"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette     #html_vignette #pdf_document:
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Structure of extended ontologyIndex (Matrix+ontology) objects
+
+### original (most important)
+* **ontology$name**, *Vector*, (original)
+    + name of AO terms with IDs  
+      `HAO:0000000`   
+      `[1] "anatomical entity"`  
+
+* **ontology$id**, *Vector*, (original)
+    + AO ids of terms  
+     `HAO:0000000`   
+     `[1] "HAO:0000000"` 
+
+* **ontology$synonym**, *List*, (original)
+    + unparsed synonyms  
+    ` $ SPD:0000003`  
+    `[1] "\"abdomen\" EXACT [SPD:Michalik]"`  
+* **ontology$parents**, *List*, (original)  
+    + term's parents  
+    ` $ HAO:0000963`  
+    `[1] "HAO:0000221" "HAO:0000909"`
+* **ontology$children**, *List*, (original)
+    + term's children  
+    ` $ HAO:0000994`  
+    `[1] "HAO:0001247" "HAO:0001275" "HAO:0001352"`
+* **ontology$is_a**, *List*, (original)
+    + ` $ HAO:0000994`  
+    `[1] "HAO:0001247" "HAO:0001275" "HAO:0001352"`
+* **ontology$part_of**, *List*, (original); can be coded as **ontology\$BFO:0000050**
+    + ` $ HAO:0000994`  
+    `[1] "HAO:0001247" "HAO:0001275" "HAO:0001352"`
+
+    
+### my entities
+* **ontology$parsed_synonyms**
+* **ontology$name_characters**
+* **ontology$id_characters**
+* **ontology$annot_characters**
+
+### To include
+* **ontology$name_character_states**
+* **ontology$id_character_states**
+* **ontology$dependent_upon**
+* **ontology$character_matrix**
+
+
+
+
+
+
+> setdiff(names(ontology), names(hao_new))
+[1] "parsed_syns"      "annot_characters" "id_characters"    "parsed_synonyms"  "name_characters"
+
+
+
+
+

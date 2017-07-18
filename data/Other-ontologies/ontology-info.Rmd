@@ -1,0 +1,63 @@
+---
+title: "Information on ontologyIndex object"
+author: "Sergei Tarasov"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette     #html_vignette #pdf_document:
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r}
+setwd("~/my-papers-2017/phyloBayesHMM/ontoFast/ontoFast/data/Other-ontologies")
+library(ontologyIndex)
+```
+
+## Structures of main Anatomy Ontologies
+
+```{r, include=TRUE, cache=TRUE}
+uberon=get_OBO("UBERON.obo", extract_tags="everything", propagate_relationships = c("part_of", "is_a"))
+drosoph<-get_OBO("fbbt.obo", extract_tags="everything", propagate_relationships = c("part_of", "is_a"))
+amphib<-get_OBO("AAO_v3.obo", extract_tags="everything", propagate_relationships = c("part_of", "is_a"))
+tron<-get_OBO("TrOn.obo", extract_tags="everything", propagate_relationships = c("part_of", "is_a"))
+spiders<-get_OBO("spd.obo", extract_tags="everything", propagate_relationships = c("part_of", "is_a"))
+hao_new<-get_OBO("hao_new.obo", extract_tags="everything", propagate_relationships = c("part_of", "is_a"))
+```
+
+```{r, results='markup'}
+print(sort(names(uberon)))
+print(sort(names(drosoph)))
+print(sort(names(tron)))
+print(sort(names(spiders)))
+print(sort(names(hao_new)))
+```
+
+```{r}
+ontology_list=list(uberon=uberon, drosoph=drosoph, tron=tron, spiders=spiders, hao_new=hao_new)
+```
+
+
+
+## Synonyms in ontologies; get structure
+```{r}
+for (i in seq_along(ontology_list)){
+  print(names(ontology_list)[i])
+  print("#############################################")
+print(ontology_list[[i]]$synonym[lapply(ontology_list[[i]]$synonym, length)>0][1:5])
+}
+```
+
+
+## Common names in all ontologies 
+```{r}
+Reduce(intersect, lapply(ontology_list, names))
+```
+
+
+```{r}
+uberon$id[1:5]
+uberon$name[1:5]
+hao_new$id[1:5]
+hao_new$name[1:5]
+```
+

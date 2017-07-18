@@ -7,18 +7,9 @@
 #
 #
 #
-vec=names(term_tb)[1:10]
-onto=hao.obo
-
-onto$name[1:10]
-
-identical(unname(onto$id), names(onto$name))
-gt.name(names(term_tb)[1:10], hao.obo, names=T)
 
 
-onto$name[c(na.omit(match(unlist(vec, use.names = FALSE), onto$id)))]
-
-get_name<-function(vec, onto, names=F){
+get_onto_name<-function(vec, onto, names=F){
   #name.vec=onto$name[onto$id%in%unlist(vec, use.names = FALSE)]
   name.vec=onto$name[c(na.omit(match(unlist(vec, use.names = FALSE), onto$id)))]
   if (names==F) {name.vec=unname(name.vec)}
@@ -32,6 +23,26 @@ syn.extract<-function(onto.syn){
   names(syn.extr)<-names(syn.raw)
   return(syn.extr)
 }
+
+get_onto_id<-function(vec_name, ontology, names=F){
+  match_vec<-match(unlist(vec_name, use.names = FALSE), ontology$name)
+  ids=names(ontology$name)[match_vec]
+  if (names==T) {names(ids)<-ontology$name[match_vec]}
+  return(ids)
+}
+#vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
+#get_onto_id(vec_name, hao.obo)
+
+
+
+
+
+
+#########################
+#
+# UNSORTED
+#
+######################
 hao.syns=syn.extract(hao.obo$synonym)
 hao.obo$parsed_syns=hao.syns #make ontology object to contains parsed synonyms
 class(hao.obo)
