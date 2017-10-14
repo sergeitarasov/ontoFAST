@@ -164,12 +164,12 @@ all_char_paths<-function(ontology, sep=" | "){
 #' visNodes(borderWidthSelected=4)%>%
 #' visOptions(highlightNearest = TRUE)%>%
 #' visLayout(randomSeed = 12)
-#'
 
-ontology<-hao.obo
-terms<-"HAO:0001631"
-terms<-"HAO:0000001"
-terms="HAO:0000639"
+
+# ontology<-hao.obo
+# terms<-"HAO:0001631"
+# terms<-"HAO:0000001"
+# terms="HAO:0000639"
 
 get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
                           all_links=F, incl.top.anc=T, highliht_focus=T){
@@ -220,27 +220,48 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
   return(dt)
 }
 
-dt=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+# dt=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+#
+# get_part_descen(hao.obo, "HAO:0000011", is_a=c("is_a"), part_of=c("BFO:0000050"))
+#
+# dt=get_part_descen(hao.obo, get_onto_id("thorax", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+#
+# visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
+#   visNodes(borderWidthSelected=4)%>%
+#   visOptions(highlightNearest = TRUE)%>%
+#   visLayout(randomSeed = 12)
+#
+# visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
+#   visNodes(borderWidthSelected=4)%>%
+#   visOptions(highlightNearest = TRUE)%>%
+#   visLayout(randomSeed = 12) %>%
+#   visIgraphLayout(layout="layout_with_gem")
 
-get_part_descen(hao.obo, "HAO:0000011", is_a=c("is_a"), part_of=c("BFO:0000050"))
 
-dt=get_part_descen(hao.obo, get_onto_id("thorax", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
-
-visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
-  visNodes(borderWidthSelected=4)%>%
-  visOptions(highlightNearest = TRUE)%>%
-  visLayout(randomSeed = 12)
-
-visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
-  visNodes(borderWidthSelected=4)%>%
-  visOptions(highlightNearest = TRUE)%>%
-  visLayout(randomSeed = 12) %>%
-  visIgraphLayout(layout="layout_with_gem")
-
-get_onto_name("HAO:0001631",ontology)
 
 ###############################################
 #### Similar to above but for ancestors
+
+#' @title Makes dataframe of descndanrts to plot using visNetwork
+#' @description Returns a list of two dataframes: nodes and edges
+#' @param ontology ontology_index object.
+#' @param terms temr id for which descendants to be displayed
+#' @param is_a id of how is_a relationships are coded in ontology.
+#' To no included in output use NA.
+#' @param part_of same as previous
+#' @param color color for is_a and part_of relationships
+#' @param all_links whether all links (is_a and part_of) which link descendants with other nodes must be included in the output.
+#' Better not use as it makes the output messy.
+#' @param incl.top.anc include the parents of terms
+#' @param highliht_focus whether terms mus be highlited
+#' @return The list of dataframes.
+#' @examples
+#' dt=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+#' visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
+#' visNodes(borderWidthSelected=4)%>%
+#' visOptions(highlightNearest = TRUE)%>%
+#' visLayout(randomSeed = 12)
+
 get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
                           all_links=F, incl.top.anc=T, highliht_focus=T){
   des=get_ancestors(ontology, terms)
@@ -321,7 +342,37 @@ map_obj<-function(obj, nchar){
 #names(map_f)<-c("ids_selec1", "ids_selec2", "ids_selec3")
 
 
+#####################################
+###### For Shiny
 
+##### necessary variables
+# define terms for the links
+is_a=c("is_a")
+part_of=c("BFO:0000050")
+
+# map for links_chk; first element in the map part of; 2nd is_a
+links_chk_map<-list(part_of=c(part_of, ""), is_a=c("", is_a), both=c(part_of, is_a))
+links_chk_map$part_of[2]
+nchar=300 # number of chars to show
+
+#create mapping for reative objects
+map_btn_check<-map_obj("add_btn", nchar)
+map_checkbox<-map_obj("checkbox", nchar)
+#create shiny_in objetc
+shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
+
+# cretae serch terms object; it has to beleted later
+srch_items<-names(ontology$name)
+names(srch_items)<-unname(ontology$name)
+####
+
+
+####
+
+shinyApp(ui, server)
+# str(shiny_in)
+# summary(ontology)
+#colnames(dt_out)<-c("id", "statemet", "selected_annot", "grep_id", "grep_id_name")
 
 
 

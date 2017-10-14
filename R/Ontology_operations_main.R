@@ -1,3 +1,65 @@
+# package Dependencies
+devtools::use_package("pbapply")
+devtools::use_package("ontologyIndex")
+devtools::use_package("dplyr")
+devtools::use_package("shiny")
+devtools::use_package("shinydashboard")
+devtools::use_package("visNetwork")
+
+#############
+require("ontologyIndex")
+require("pbapply")
+
+# list of functions
+#gt.name<-function(vec, onto, names=F)
+#syn.extract<-function(onto.syn)
+#distance.statement.match<-function(statement, onto.terms)
+#distance.all.match<-function(statement, onto.obj, thresh=0.7, include_synonyms=F)
+#onto.match<-function(onto.names, char.statement, onto.obj, min_set=T)
+#
+#
+#
+
+#' @title Revise
+#' @description Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
+#' @param annotated.char.list Character list with ontology annotations.
+#' @param col_order_inverse The default creates the first columns consisting if character IDs and the second columns consisting of ontology annatotaions.
+#' The inverse order changes the columns order.
+#' @return Two-columns matrix.
+#' @examples
+#' list2edges(annotated.char.list, col_order_inverse=F)
+
+get_onto_name<-function(vec, onto, names=F){
+  #name.vec=onto$name[onto$id%in%unlist(vec, use.names = FALSE)]
+  name.vec=onto$name[c(na.omit(match(unlist(vec, use.names = FALSE), onto$id)))]
+  if (names==F) {name.vec=unname(name.vec)}
+  return(name.vec)
+}
+
+
+
+#' @title Revise
+#' @description Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
+#' @param annotated.char.list Character list with ontology annotations.
+#' @param col_order_inverse The default creates the first columns consisting if character IDs and the second columns consisting of ontology annatotaions.
+#' The inverse order changes the columns order.
+#' @return Two-columns matrix.
+#' @examples
+#' list2edges(annotated.char.list, col_order_inverse=F)
+
+get_onto_id<-function(vec_name, ontology, names=F){
+  match_vec<-match(unlist(vec_name, use.names = FALSE), ontology$name)
+  ids=names(ontology$name)[match_vec]
+  if (names==T) {names(ids)<-ontology$name[match_vec]}
+  return(ids)
+}
+#vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
+#get_onto_id(vec_name, hao.obo)
+
+
+
+
+
 #' @title Associates synonym names with ontology terms
 #' @description Extracts and parses synonyms from ontology to make them readable
 #' @param ontology ontology_index object.
@@ -68,7 +130,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
   names(annot_grepl)<-ontology$id_characters
   return(annot_grepl)
 }
-grep_all_chars=annot_all_chars(hao.obo)
+#grep_all_chars=annot_all_chars(hao.obo)
 
 
 #' @title Compares  orignal annotationd vs. auto_annotations
@@ -113,20 +175,20 @@ comp.sets<-function(set_org, set_annot){
 
 compare_annot<-function(ontology, annot.auto){
   out.list=c()
-for (i in seq_along(annot.auto)){
-  char_id=ontology$id_characters[i]
-  #out.list$ids[i]=i
-if (length(ontology$annot_characters[[char_id]])>0){
-    comp.list=comp.sets(ontology$annot_characters[[char_id]], annot.auto[[char_id]])
-    out.list=c(out.list, comp.list$iden)
-    #out.list$identical[i]=comp.list$iden
-    #out.list$original_missing[[i]]=comp.list$org
-    #out.list$found_missing[[i]]=comp.list$found
+  for (i in seq_along(annot.auto)){
+    char_id=ontology$id_characters[i]
+    #out.list$ids[i]=i
+    if (length(ontology$annot_characters[[char_id]])>0){
+      comp.list=comp.sets(ontology$annot_characters[[char_id]], annot.auto[[char_id]])
+      out.list=c(out.list, comp.list$iden)
+      #out.list$identical[i]=comp.list$iden
+      #out.list$original_missing[[i]]=comp.list$org
+      #out.list$found_missing[[i]]=comp.list$found
+    }
+    else out.list=c(out.list, "character abscent")
   }
-  else out.list=c(out.list, "character abscent")
-}
-#names(out.list)<-names(ontology$id_characters)
-return(out.list)
+  #names(out.list)<-names(ontology$id_characters)
+  return(out.list)
 }
 #length(which(com_lists=="none"))
 #cbind(com_lists)
@@ -159,8 +221,13 @@ get_comp_table<-function(ontology, grep_all_chars){
   return(dt_out)
 }
 
-tb_compar=get_comp_table(hao.obo, grep_all_chars)
-write.csv(tb_compar, file="auto_annatotated4.csv", row.names = F)
+# tb_compar=get_comp_table(hao.obo, grep_all_chars)
+# write.csv(tb_compar, file="auto_annatotated4.csv", row.names = F)
+
+
+
+
+
 
 
 

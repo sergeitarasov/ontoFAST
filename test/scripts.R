@@ -1,9 +1,4 @@
-library("ontologyIndex")
-library("stringdist", lib.loc="~/.local/R/site-library")
-library("stringr", lib.loc="/usr/lib/R/site-library")
-library("RNeXML", lib.loc="~/.local/R/site-library")
-library("pbapply")
-.libPaths()
+
 
 #setwd("/home/tarasov/my-papers-2017/AO-BN-ED-morpho/Ontology-play/HYMAO-Ontho-phylo")
 #charsSh=read.csv("chars-Sharkey.csv", header=F,  stringsAsFactors = F)
@@ -12,11 +7,6 @@ library("pbapply")
 #hao.obo=get_OBO("hao_new.obo", extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
 #propagate_relations(hao.obo, "HAO:0000345", "is_a")
 ######
-#nexml<-nexml_read("Sharkey.nexml")
-#get_characters(geiger_nex)
-#get_characters_list(geiger_nex)
-#get_metadata(nexml, "otus")
-########
 ### make the list of synonyms suitable for rearch__________
 onto.syn=hao.obo$synonym[50:60]
 ###
