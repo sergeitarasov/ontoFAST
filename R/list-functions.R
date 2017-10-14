@@ -166,6 +166,11 @@ all_char_paths<-function(ontology, sep=" | "){
 #' visLayout(randomSeed = 12)
 #'
 
+ontology<-hao.obo
+terms<-"HAO:0001631"
+terms<-"HAO:0000001"
+terms="HAO:0000639"
+
 get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
                           all_links=F, incl.top.anc=T, highliht_focus=T){
   des=get_descendants(ontology, terms)
@@ -176,16 +181,24 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
   if (length(is_a)>0){
     edges=list2edges(ontology[[is_a]])
     rows=which(edges[,k]%in%des==T)
-    if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
-    all_edges=cbind(edges[rows,], color[1])
+    if (length(rows)>0){
+      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
+      all_edges=cbind(matrix(edges[rows,], ncol = 2), color[1])
+      #all_edges=cbind(edges[rows,], color[1])
+    }
   }
 
   if (length(part_of)>0){
     edges=list2edges(ontology[[part_of]])
     rows=which(edges[,1]%in%des==T)
-    if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
-    all_edges=rbind(all_edges, cbind(edges[rows,], color[2]))
+    if (length(rows)>0){
+      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
+      all_edges=rbind(all_edges, cbind(matrix(edges[rows,], ncol = 2), color[2]))
+      #all_edges=rbind(all_edges, cbind(edges[rows,], color[2]))
+    }
   }
+
+  if(is.null(all_edges)==T) return("No descendants found for the term")
 
   #nodes=unique(des)
   nodes=unique(c(all_edges[,1], all_edges[,2]))
@@ -208,6 +221,9 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
 }
 
 dt=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+
+get_part_descen(hao.obo, "HAO:0000011", is_a=c("is_a"), part_of=c("BFO:0000050"))
+
 dt=get_part_descen(hao.obo, get_onto_id("thorax", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
 
 visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
@@ -221,7 +237,72 @@ visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
   visLayout(randomSeed = 12) %>%
   visIgraphLayout(layout="layout_with_gem")
 
+get_onto_name("HAO:0001631",ontology)
 
+###############################################
+#### Similar to above but for ancestors
+get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
+                          all_links=F, incl.top.anc=T, highliht_focus=T){
+  des=get_ancestors(ontology, terms)
+  all_edges=c()
+  if (all_links){ k=2
+  }else k=1
+
+  if (length(is_a)>0){
+    edges=list2edges(ontology[[is_a]])
+    rows=which(edges[,k]%in%des==T)
+    if (length(rows)>0){
+      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
+      all_edges=cbind(matrix(edges[rows,], ncol = 2), color[1])
+      #all_edges=cbind(edges[rows,], color[1])
+    }
+  }
+
+  if (length(part_of)>0){
+    edges=list2edges(ontology[[part_of]])
+    rows=which(edges[,2]%in%des==T)
+    if (length(rows)>0){
+      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
+      all_edges=rbind(all_edges, cbind(matrix(edges[rows,], ncol = 2), color[2]))
+      #all_edges=rbind(all_edges, cbind(edges[rows,], color[2]))
+    }
+  }
+
+  if(is.null(all_edges)==T) return("No ancestors found for the term")
+
+  #nodes=unique(des)
+  nodes=unique(c(all_edges[,1], all_edges[,2]))
+  nodes_color<-rep(NA, length(nodes))
+  if (highliht_focus){nodes_color[which(nodes==terms)]<-"orange"}
+
+  dt_nodes=data.frame(id=nodes,
+                      label=get_onto_name(nodes, ontology),
+                      title=nodes,
+                      color.background =nodes_color,
+                      color.highlight.background=nodes_color)
+
+
+  dt_edges=data.frame(from=all_edges[,1],
+                      to=all_edges[,2],
+                      arrows="to",
+                      color=all_edges[,3])
+  dt=list(nodes=dt_nodes, edges=dt_edges)
+  return(dt)
+}
+
+dt1=get_part_anc(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+dt2=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+
+dt<-list(nodes=rbind(dt1$nodes, dt2$nodes), edges=rbind(dt1$edges, dt2$edges))
+rbind(dt1, dt)
+
+length(as.character(dt$nodes$id))
+
+
+duplicated(as.character(dt$nodes$id))
+dt$nodes[!duplicated(as.character(dt$nodes$id)),]
+
+duplicated(c("a","a","a","a"))
 
 #_________________________________________________________________________
 colnames(dt_out)<-c("id", "statemet", "selected_annot", "grep_id", "grep_id_name")
@@ -242,14 +323,17 @@ data_interctive<-function(ontology){
 
 ####Map checkbox with Text objects to retrive info in Shiny
 nchar=3
-map_obj<-function(nchar){
-  map_f=paste("checkbox", c(1:nchar), sep="")
-  names(map_f)<-paste("ids_selec", c(1:nchar), sep="")
+map_obj<-function(obj, nchar){
+  map_f=paste(obj, c(1:nchar), sep="")
+  names(map_f)<-paste(c(1:nchar), sep="")
   return(map_f)
 }
 
 #map_f=c("checkbox1", "checkbox2", "checkbox3")
 #names(map_f)<-c("ids_selec1", "ids_selec2", "ids_selec3")
+
+
+
 
 
 

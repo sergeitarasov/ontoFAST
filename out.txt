@@ -1,0 +1,10 @@
+Model posterior probabilities:
+01 irreversible: NaN
+10 irreversible: NaN
+1 rate: NaN
+2 rate: NaN
+
+BF 10_irr/1: NaN
+BF 10_irr/2: NaN
+BF 1/2: NaN
+BF 2/1: NaN

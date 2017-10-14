@@ -103,8 +103,8 @@ parse_matrix<-function(char_matrix, coding_states_report){
   return(matrix)
 }
 
-
-
+cbind(paste0("CHAR:", c(1:392)),(paste0("CHAR:", c(1:392)) %in% mt_data$contains_inapplicable)) %>% write.csv(., file="contains_inaplic.csv")
+getwd()
 
 
 #' @title Check if enumertion of states in matrix is sequential e.g. 0, 1, 2, ... per each character
@@ -184,6 +184,12 @@ coding_states_mt<-function(char_matrix){
 #' @examples
 #' same_patterns(char_matrix)->same_chrs_patterns
 ##########
+str(dt_rates)
+char_matrix<-dt_rates
+
+unlist(same_patterns(dt_rates))
+unique(pattern_str)
+
 same_patterns<-function(char_matrix){
 
   char_matrix_nofac=apply(char_matrix, 2,  function(x) as.character(x))
