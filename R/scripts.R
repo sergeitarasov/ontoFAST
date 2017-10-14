@@ -1,6 +1,3 @@
-source("https://bioconductor.org/biocLite.R")
-biocLite("ontoCAT")
-
 library("ontologyIndex")
 library("stringdist", lib.loc="~/.local/R/site-library")
 library("stringr", lib.loc="/usr/lib/R/site-library")

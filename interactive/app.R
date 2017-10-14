@@ -6,7 +6,7 @@ part_of=c("BFO:0000050")
 # map for links_chk; first element in the map part of; 2nd is_a
 links_chk_map<-list(part_of=c(part_of, ""), is_a=c("", is_a), both=c(part_of, is_a))
 links_chk_map$part_of[2]
-nchar=8 # number of chars to show
+nchar=300 # number of chars to show
 
 #create mapping for reative objects
 map_btn_check<-map_obj("add_btn", nchar)
@@ -209,7 +209,14 @@ server <- function(input, output, session) {
   ))}
 
 
-  output$WidgetVectorDisplay <-renderUI({lapply(X = 1:nchar, FUN = makeRadioButton)})
+  output$WidgetVectorDisplay <-renderUI(
+    withProgress(message = "Creating character statements", value = 0.1, {
+      incProgress(0.3)
+      incProgress(0.9)
+      {lapply(X = 1:nchar, FUN = makeRadioButton)}
+    })
+
+                                        )
 
   ### Show descnedants upon button
   observeEvent(

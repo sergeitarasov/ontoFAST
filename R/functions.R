@@ -1,10 +1,11 @@
 # package Dependencies
-library("pbapply")
-library("ontologyIndex")
-dplyr
-shiny
-shydashboard
-visNetwork
+devtools::use_package("pbapply")
+devtools::use_package("ontologyIndex")
+devtools::use_package("dplyr")
+devtools::use_package("shiny")
+devtools::use_package("shydashboard")
+devtools::use_package("visNetwork")
+
 #############
 
 

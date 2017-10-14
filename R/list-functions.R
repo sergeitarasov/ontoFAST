@@ -290,19 +290,7 @@ get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050")
   return(dt)
 }
 
-dt1=get_part_anc(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
-dt2=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
 
-dt<-list(nodes=rbind(dt1$nodes, dt2$nodes), edges=rbind(dt1$edges, dt2$edges))
-rbind(dt1, dt)
-
-length(as.character(dt$nodes$id))
-
-
-duplicated(as.character(dt$nodes$id))
-dt$nodes[!duplicated(as.character(dt$nodes$id)),]
-
-duplicated(c("a","a","a","a"))
 
 #_________________________________________________________________________
 colnames(dt_out)<-c("id", "statemet", "selected_annot", "grep_id", "grep_id_name")
