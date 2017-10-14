@@ -1,3 +1,13 @@
+# package Dependencies
+library("pbapply")
+library("ontologyIndex")
+dplyr
+shiny
+shydashboard
+visNetwork
+#############
+
+
 # list of functions
 #gt.name<-function(vec, onto, names=F)
 #syn.extract<-function(onto.syn)

@@ -1,8 +1,3 @@
-shiny::runApp(system.file("shiny", package = "visNetwork"))
-
-devtools::install_github('ayayron/shinydnd')
-devtools::install_github('andrewsali/shinycssloaders')
-
 ##### necessary variables
 # define terms for the links
 is_a=c("is_a")
@@ -11,37 +6,32 @@ part_of=c("BFO:0000050")
 # map for links_chk; first element in the map part of; 2nd is_a
 links_chk_map<-list(part_of=c(part_of, ""), is_a=c("", is_a), both=c(part_of, is_a))
 links_chk_map$part_of[2]
+nchar=8 # number of chars to show
 
+#create mapping for reative objects
+map_btn_check<-map_obj("add_btn", nchar)
+map_checkbox<-map_obj("checkbox", nchar)
+#create shiny_in objetc
+shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
+
+# cretae serch terms object; it has to beleted later
+srch_items<-names(ontology$name)
+names(srch_items)<-unname(ontology$name)
 ####
 
 
-str(shiny_in)
-summary(ontology)
+####
 
 shinyApp(ui, server)
-nchar=8
-map_f<-map_obj(nchar)
-map_btn_check<-map_obj("add_btn", nchar)
-map_checkbox<-map_obj("checkbox", nchar)
+# str(shiny_in)
+# summary(ontology)
+#colnames(dt_out)<-c("id", "statemet", "selected_annot", "grep_id", "grep_id_name")
 
-colnames(dt_out)<-c("id", "statemet", "selected_annot", "grep_id", "grep_id_name")
-shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
-shiny_in$c1
-n=17
 
-shiny_in$terms_selected$`CHAR:1`=c("cell (HAO:0000013)", "wing cell (HAO:0001091)" )
-shiny_in$c5$`CHAR:1`
 
-shiny_in$c5[[shiny_in$c1[n]]]
-write.csv(file="shiny_test.csv", unlist(list("HAO:1"="dad", "HAO:2"="aa", "HAO:3"="as", "HAO:4"="ad")))
-
-srch_items<-names(ontology$name)
-names(srch_items)<-unname(ontology$name)
 ###########################################################################
 ui <- dashboardPage(
-  #fluidPage(
-  #sidebarLayout(
-  #sidebarPanel(
+
   dashboardHeader(title = "OntoFAST",
                   tags$li(a(actionButton("savefile_btn", label="Save file", icon=icon("save")),
                             style = "padding-top:5px; padding-bottom:0px;"),
@@ -61,7 +51,7 @@ ui <- dashboardPage(
 
 
 
-#mainPanel()\
+
 dashboardBody(
 
 tags$head(tags$style(HTML('
@@ -163,7 +153,7 @@ fluidRow(width = "100%",
 
 
 
-shinyApp(ui, server)
+#shinyApp(ui, server)
 ############################################################################################################################
 
 server <- function(input, output, session) {
@@ -182,15 +172,6 @@ server <- function(input, output, session) {
   })
   })
 
-# output$network <- renderVisNetwork({
-#   #dt=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
-#
-#   visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
-#     visNodes(borderWidthSelected=4)%>%
-#     visOptions(highlightNearest = TRUE)%>%
-#     visLayout(randomSeed = 12) %>%
-#     visIgraphLayout(layout="layout_with_gem")
-# })
 
 ##### Selectize
 
@@ -229,32 +210,6 @@ server <- function(input, output, session) {
 
 
   output$WidgetVectorDisplay <-renderUI({lapply(X = 1:nchar, FUN = makeRadioButton)})
-  ####
-  # values <- reactiveValues(
-  #   lastUpdated = NULL
-  # )
-
-#############chechbox old actions
-  # observe({
-  #   #lapply(names(input)[1:3], function(x) {
-  #   lapply(map_f, function(x) {
-  #     observe({
-  #       input[[x]]
-  #       #values$lastUpdated <- x
-  #
-  #       #output$show_last <- renderPrint({
-  #       output[[names(map_f)[which(map_f==x)]]] <- renderText({
-  #
-  #         paste("Selected IDs:", paste(input[[x]], collapse = ", "))
-  #
-  #         # paste(input[[x]], sep=", ")
-  #         #names(input)[1:3]
-  #       })
-  #
-  #     })
-  #   })
-  # })
-###############
 
   ### Show descnedants upon button
   observeEvent(
@@ -496,102 +451,4 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 
 
-####################
 
-shiny_in$terms_selected$`CHAR:2`=c(input$ids_in2)
-
-uit <- fluidPage(
-  p("The first checkbox group controls the second"),
-  checkboxGroupInput("inCheckboxGroup", "Input checkbox",
-                     c("Item A", "Item B", "Item C")),
-  checkboxGroupInput("inCheckboxGroup2", "Input checkbox 2",
-                     c("Item A", "Item B", "Item C"))
-)
-
-servert <- function(input, output, session) {
-  observe({
-    x <- input$inCheckboxGroup
-
-    # Can use character(0) to remove all choices
-    if (is.null(x))
-      x <- character(0)
-
-    # Can also set the label and select items
-    updateCheckboxGroupInput(session, "inCheckboxGroup2",
-                             label = paste("Checkboxgroup label", length(x)),
-                             choices = x,
-                             selected = x
-    )
-  })
-}
-
-
-
-####### Add button actions
-observe({
-  lapply(map_btn_check, function(x) {
-    observe({
-      input[[x]]
-      output[[names(map_btn_check)[which(map_btn_check==x)]]] <- renderText({
-        paste("Selected IDs:", paste(input[[x]], collapse = ", "))
-      })
-
-    })
-  })
-})
-
-####
-
-
-####### Add button actions
-observeEvent(
-  input$add_btn2,
-  {
-    shiny_in$terms_selected[["CHAR:2"]] <<- c(shiny_in$terms_selected[["CHAR:2"]], input$ids_in2)
-    shiny_in$c5[["CHAR:2"]] <<- c(shiny_in$c5[["CHAR:2"]], input$ids_in2)
-
-    updateCheckboxGroupInput(session, "checkbox2",label=NA, choices=shiny_in$c5[["CHAR:2"]],
-                             selected=shiny_in$terms_selected[["CHAR:2"]]
-    )
-
-
-    # print(ids_input)
-
-    # shiny_in$terms_selected$`CHAR:2`=c("aaa")
-    # print(shiny_in$terms_selected[["CHAR:2"]])
-    # print(shiny_in$c5[["CHAR:2"]])
-
-
-  })
-
-####
-
-observe({
-  lapply(map_btn_check, function(x) {
-    observeEvent(
-      input[[x]],
-      {#update terms selected
-
-        term_id<-
-
-          shiny_in$terms_selected[[paste0("CHAR:", names(map_btn_check)[which(map_btn_check==x)])]] <<- c(
-            shiny_in$terms_selected[[paste0("CHAR:", names(map_btn_check)[which(map_btn_check==x)])]],
-            input[[paste0("ids_in", names(map_btn_check)[which(map_btn_check==x)])]])
-
-        #update terms all
-        shiny_in$c5[[paste0("CHAR:", names(map_btn_check)[which(map_btn_check==x)])]] <<- c(
-          shiny_in$c5[[paste0("CHAR:", names(map_btn_check)[which(map_btn_check==x)])]],
-          input[[paste0("ids_in", names(map_btn_check)[which(map_btn_check==x)])]])
-
-        #update checkbox
-        updateCheckboxGroupInput(session, paste0("checkbox", names(map_btn_check)[which(map_btn_check==x)]),
-                                 label=NA, choices=shiny_in$c5[[paste0("CHAR:", names(map_btn_check)[which(map_btn_check==x)])]],
-                                 selected=shiny_in$terms_selected[[paste0("CHAR:", names(map_btn_check)[which(map_btn_check==x)])]]
-        )}
-
-
-    )
-
-
-  })
-})
