@@ -330,8 +330,7 @@ data_interctive<-function(ontology){
 
 
 
-####Map checkbox with Text objects to retrive info in Shiny
-nchar=3
+####Function to create mapping for Shiny
 map_obj<-function(obj, nchar){
   map_f=paste(obj, c(1:nchar), sep="")
   names(map_f)<-paste(c(1:nchar), sep="")
@@ -341,8 +340,9 @@ map_obj<-function(obj, nchar){
 #map_f=c("checkbox1", "checkbox2", "checkbox3")
 #names(map_f)<-c("ids_selec1", "ids_selec2", "ids_selec3")
 
-
 #####################################
+
+
 ###### For Shiny
 
 ##### necessary variables

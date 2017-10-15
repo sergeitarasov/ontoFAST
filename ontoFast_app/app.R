@@ -1,3 +1,161 @@
+
+runOntoFast(nchar=20)
+
+runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar,  ...) {
+
+require(shiny)
+require(shinydashboard)
+require(visNetwork)
+
+  ##### necessary variables
+  #create mapping for reative objects
+  map_btn_check<-map_obj("add_btn", nchar)
+  map_checkbox<-map_obj("checkbox", nchar)
+
+  # map for links_chk; first element in the map part of; 2nd is_a
+  links_chk_map<-list(part_of=c(part_of, ""), is_a=c("", is_a), both=c(part_of, is_a))
+  links_chk_map$part_of[2]
+
+
+  # define terms for the links
+  # is_a=c("is_a")
+  # part_of=c("BFO:0000050")
+  #
+  #
+  # nchar=300 # number of chars to show
+  #
+  #
+  # #create shiny_in objetc
+  # shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
+  #
+  # # cretae serch terms object; it has to beleted later
+  # srch_items<-names(ontology$name)
+  # names(srch_items)<-unname(ontology$name)
+  ####
+
+##############
+    ui <- dashboardPage(
+
+  dashboardHeader(title = "OntoFAST",
+                  tags$li(a(actionButton("savefile_btn", label="Save file", icon=icon("save")),
+                            style = "padding-top:5px; padding-bottom:0px;"),
+                          class = "dropdown")
+  ),
+
+  dashboardSidebar(width="400px",
+                   h2("Character Statements:", style='padding-left: 12px;'),
+
+                   hr(),
+
+                   uiOutput("WidgetVectorDisplay")
+
+
+
+  ),
+
+
+
+
+  dashboardBody(
+
+    tags$head(tags$style(HTML('
+                              .main-header {
+                              # position: fixed;
+                              width:100%;
+                              }
+
+                              .sidebar {
+                              # height: 90vh; overflow-y: auto;
+                              height: 95vh; overflow-y: auto; overflow-x: auto;
+                              }
+
+                              .content {
+                              height: 95vh; overflow-y: hidden; overflow-x: scroll;
+                              }
+
+                              .hyphenate {
+                              -ms-word-break: break-all;
+                              word-break: break-all;
+
+
+                              word-break: break-word;
+
+                              -webkit-hyphens: auto;
+                              -moz-hyphens: auto;
+                              hyphens: auto;
+                              }
+
+                              .box{-webkit-box-shadow: none; -moz-box-shadow: none;box-shadow: none; border-style: none;}
+
+
+
+                              '))),
+
+
+
+
+    fluidRow(width = "auto",
+             box(width = 5, height = 190, title = NULL,
+
+                 fluidRow(box(style="padding:0px; -webkit-border-style: none; -moz-border-style: none; -ms-border-style: none;
+                              border-style: none; -webkit-box-shadow: none; -moz-box-shadow: none;box-shadow: none; border-style: none;",
+                              radioButtons("des_chk", label="Show upon expansion",  inline = T,
+                                           choices =list("descendants", "ancestors", "both"),
+                                           selected =list("descendants")
+                              )),
+                          box(style='padding:0px;',
+                              radioButtons("links_chk", label="Links to show",  inline = T,
+                                           choices =list("part_of", "is_a", "both"),
+                                           selected =list("both")
+                              )
+                          )),
+
+                 selectizeInput("selectize", label = NULL, choices=NULL, selected = FALSE, multiple = FALSE, width = "auto",
+                                options = list(openOnFocus=F, maxOptions=100, placeholder="Enter term or ID"
+                                )),
+                 actionButton("select_descen", label = "Expand", icon = icon("glyphicon glyphicon-fullscreen", lib="glyphicon"))
+             ),
+
+
+             box(width = 3, height = 190, title = NULL,
+                 h6("ID:"),
+                 verbatimTextOutput("id_txt", placeholder = T),
+
+                 h6("Synonyms:"),
+                 verbatimTextOutput("syn_txt", placeholder = T),
+                 tags$head(tags$style("#syn_txt{overflow-y:scroll; height: 60px;}"))
+
+                 # tags$head(tags$style("#def_txt{color:red; font-size:12px; font-style:italic;
+                 #  overflow-y:scroll; max-height: 50px; background: ghostwhite;}"))
+
+             ),
+
+             box(width = 4, height = 190, title = NULL,
+                 h6("Definition:"),
+                 verbatimTextOutput("def_txt", placeholder = T),
+                 tags$head(tags$style("#def_txt{overflow-y:scroll; height: 130px; hyphens: auto; word-break: break-word; -webkit-hyphens: manual;}"))
+
+             )
+
+
+
+
+
+
+
+    ),
+
+    fluidRow(width = "100%",
+
+             box(width = "100%", height=NULL, title = NULL,
+
+                 visNetworkOutput("network", width = "100%", height = "65vh")
+             )
+    )
+    )
+    )
+
+########################################################################################################################
 server <- function(input, output, session) {
 
 
@@ -296,3 +454,10 @@ server <- function(input, output, session) {
 }
 
 ###############################################################################################################################
+ # end of app list
+
+#######
+  shinyApp(ui = ui, server = server)
+
+  #shiny::runApp(sh)
+}
