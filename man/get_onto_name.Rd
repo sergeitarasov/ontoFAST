@@ -2,22 +2,23 @@
 % Please edit documentation in R/Ontology_operations_main.R
 \name{get_onto_name}
 \alias{get_onto_name}
-\title{Revise}
+\title{Returns names of ontology terms for ontology IDs}
 \usage{
 get_onto_name(vec, onto, names = F)
 }
 \arguments{
-\item{annotated.char.list}{Character list with ontology annotations.}
+\item{vec}{ID or IDs}
 
-\item{col_order_inverse}{The default creates the first columns consisting if character IDs and the second columns consisting of ontology annatotaions.
-The inverse order changes the columns order.}
+\item{onto}{ontology}
+
+\item{names}{add element names}
 }
 \value{
-Two-columns matrix.
+vector.
 }
 \description{
-Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
+Returns names of ontology terms for ontology IDs
 }
 \examples{
-list2edges(annotated.char.list, col_order_inverse=F)
+get_onto_name("HAO:0002272", hao.obo)
 }

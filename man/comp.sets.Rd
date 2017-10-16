@@ -6,6 +6,11 @@
 \usage{
 comp.sets(set_org, set_annot)
 }
+\arguments{
+\item{set_org}{manula annotations}
+
+\item{set_annot}{auto-annotations}
+}
 \value{
 List.
 }

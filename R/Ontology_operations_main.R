@@ -1,3 +1,4 @@
+
 # package Dependencies
 devtools::use_package("pbapply")
 devtools::use_package("ontologyIndex")
@@ -5,10 +6,12 @@ devtools::use_package("dplyr")
 devtools::use_package("shiny")
 devtools::use_package("shinydashboard")
 devtools::use_package("visNetwork")
-
+devtools::use_package("stringr")
 #############
 require("ontologyIndex")
 require("pbapply")
+require("stringr")
+
 
 # list of functions
 #gt.name<-function(vec, onto, names=F)
@@ -20,14 +23,14 @@ require("pbapply")
 #
 #
 
-#' @title Revise
-#' @description Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
-#' @param annotated.char.list Character list with ontology annotations.
-#' @param col_order_inverse The default creates the first columns consisting if character IDs and the second columns consisting of ontology annatotaions.
-#' The inverse order changes the columns order.
-#' @return Two-columns matrix.
+#' @title Returns names of ontology terms for ontology IDs
+#' @description Returns names of ontology terms for ontology IDs
+#' @param vec ID or IDs
+#' @param onto ontology
+#' @param names add element names
+#' @return vector.
 #' @examples
-#' list2edges(annotated.char.list, col_order_inverse=F)
+#' get_onto_name("HAO:0002272", hao.obo)
 
 get_onto_name<-function(vec, onto, names=F){
   #name.vec=onto$name[onto$id%in%unlist(vec, use.names = FALSE)]
@@ -38,14 +41,15 @@ get_onto_name<-function(vec, onto, names=F){
 
 
 
-#' @title Revise
-#' @description Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
-#' @param annotated.char.list Character list with ontology annotations.
-#' @param col_order_inverse The default creates the first columns consisting if character IDs and the second columns consisting of ontology annatotaions.
-#' The inverse order changes the columns order.
-#' @return Two-columns matrix.
+#' @title Returns IDs of ontology terms given terms' names
+#' @description Returns IDs of ontology terms given terms' names
+#' @param vec_name term names
+#' @param onto ontology
+#' @param names add element names
+#' @return vector.
 #' @examples
-#' list2edges(annotated.char.list, col_order_inverse=F)
+#' vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
+#' get_onto_id(vec_name, hao.obo)
 
 get_onto_id<-function(vec_name, ontology, names=F){
   match_vec<-match(unlist(vec_name, use.names = FALSE), ontology$name)
@@ -67,12 +71,12 @@ get_onto_id<-function(vec_name, ontology, names=F){
 #' @return The vector with ontology IDs and synonym names.
 #' @examples
 #' hao.obo$parsed_synonyms=syn_extract(hao.obo)
-#'
+
 
 syn_extract<-function(ontology, list_id="synonym"){
   syn.raw=utils::stack(ontology[[list_id]])
   syn.raw=setNames(syn.raw$values, syn.raw$ind)
-  syn.extr=str_match(syn.raw, pattern="\"(.*?)\"")[,2]
+  syn.extr=stringr::str_match(syn.raw, pattern="\"(.*?)\"")[,2]
   names(syn.extr)<-names(syn.raw)
   return(syn.extr)
 }
@@ -91,19 +95,21 @@ syn_extract<-function(ontology, list_id="synonym"){
 #' @examples
 #' annot_char_grep(hao.obo, "Mola on right mandible")
 #'
-# former onto.match()
 
 annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=TRUE){
   if (use.synonyms) search_terms=c(ontology$name, ontology$parsed_synonyms)
   if (!use.synonyms) search_terms=ontology$name
-  terms=onto.names[vapply(search_terms,
+  #onto.names=c(ontology$name, ontology$parsed_syns)
+  terms=search_terms[vapply(search_terms,
                           function(x) {grepl(x, char.statement, ignore.case = T)}, logical(1))]
   if (min_set==T){
     terms=ontologyIndex::minimal_set(ontology, names(terms))
   }
   return(terms)
 }
-#annot_char_grep(hao.obo, "Mola on right mandible")
+#annot_char_grep(hao_obo, "Mola on right mandible")
+
+
 
 
 
@@ -118,10 +124,7 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 #' @examples
 #' grep_all_chars=annot_all_chars(hao.obo)
 #'
-#hao.obo$name_characters=char.list
-#ontology=hao.obo
-#annot.list=lapply(char.list, function(x) {onto.match(c(hao.obo$name, hao.syns), x, hao.obo, min_set = T)})
-#!!! INCLUDE DISTANCE METHODs
+
 
 annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
   print("Doing grep search...")
@@ -135,8 +138,8 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 
 #' @title Compares  orignal annotationd vs. auto_annotations
 #' @description Gives set relatinships
-#' @param set_org
-#' @param set_annot
+#' @param set_org manula annotations
+#' @param set_annot auto-annotations
 #' @return List.
 #' @examples
 #' comp.sets(set_org, set_annot)

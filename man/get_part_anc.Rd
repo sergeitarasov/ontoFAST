@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{get_part_anc}
 \alias{get_part_anc}
-\title{Makes dataframe of descndanrts to plot using visNetwork}
+\title{Makes dataframe of ancestors to plot using visNetwork}
 \usage{
 get_part_anc(ontology, terms, is_a = c("is_a"), part_of = c("BFO:0000050"),
   color = c("red", "blue"), all_links = F, incl.top.anc = T,
@@ -34,7 +34,7 @@ The list of dataframes.
 Returns a list of two dataframes: nodes and edges
 }
 \examples{
-dt=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+dt=get_part_anc(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
 visNetwork(dt$nodes, dt$edges, width = "100\%", height = "100\%") \%>\%
 visNodes(borderWidthSelected=4)\%>\%
 visOptions(highlightNearest = TRUE)\%>\%

@@ -116,8 +116,8 @@ chars_per_term<-function(ontology){
   colnames(term_tb)<-c("ID", "names", "N_chars")
   return(term_tb)
 }
-terms_tb=chars_per_term(hao.obo)
-write.csv(terms_tb, file="n_characters_per_term.csv")
+#terms_tb=chars_per_term(hao.obo)
+#write.csv(terms_tb, file="n_characters_per_term.csv")
 
 
 #' @title Summarizes path of all ancestors (names) for every annotate character
@@ -242,7 +242,7 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
 ###############################################
 #### Similar to above but for ancestors
 
-#' @title Makes dataframe of descndanrts to plot using visNetwork
+#' @title Makes dataframe of ancestors to plot using visNetwork
 #' @description Returns a list of two dataframes: nodes and edges
 #' @param ontology ontology_index object.
 #' @param terms temr id for which descendants to be displayed
@@ -256,7 +256,7 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
 #' @param highliht_focus whether terms mus be highlited
 #' @return The list of dataframes.
 #' @examples
-#' dt=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+#' dt=get_part_anc(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
 #' visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
 #' visNodes(borderWidthSelected=4)%>%
 #' visOptions(highlightNearest = TRUE)%>%
@@ -313,19 +313,43 @@ get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050")
 
 
 
-#_________________________________________________________________________
-colnames(dt_out)<-c("id", "statemet", "selected_annot", "grep_id", "grep_id_name")
-i=17
-char_id=
-#Make input for shiny app
-data_interctive<-function(ontology){
-  c1=char_id=ontology$id_characters
-  c2=ontology$name_characters
-  c3=ontology$annot_characters
-  c4=grep_all_chars
-  c5=lapply(grep_all_chars, function(x) {paste(get_onto_name(x, ontology), paste("(", x, ")", sep=""))})
-  shiny_in=list(c1, c2, c3, c4, c5)
-  return(shiny_in)
+#' @title Make ontology object for vizualization
+#' @description Make ontology object for vizualization
+#' @param ontology Ontology
+#' @return Ontology index object named as shiny_in.
+#' @examples
+#' make_shiny_in(hao.obo)
+
+# make_shiny_in<-function(ontology){
+#   c1=char_id=ontology$id_characters # shiny_in$id_characters
+#   c2=ontology$name_characters # shiny_in$name_characters
+#   c3=ontology$annot_characters #manual annot
+#
+#   c4=grep_all_chars # auto-anot ontology$auto_annot_characters - this should be decalred earlier
+#
+#   c5=lapply(grep_all_chars, function(x) {paste(get_onto_name(x, ontology), paste("(", x, ")", sep=""))}) #auto annot IDs +names
+#     #ontology$auto_annot_characters_id_name
+#   # shiny_in$auto_annot_characters_id_name
+#
+#   #c6 shiny_in$name
+#
+#   shiny_in=list(c1, c2, c3, c4, c5)
+#   return(shiny_in)
+# }
+
+
+make_shiny_in<-function(ontology){
+
+shiny_in<- ontology
+shiny_in$terms_selected<-list()
+
+shiny_in$srch_items<-names(ontology$name)
+names(shiny_in$srch_items)<-unname(ontology$name)
+
+shiny_in$auto_annot_characters_id_name <-lapply(
+  ontology$auto_annot_characters, function(x) {paste(get_onto_name(x, ontology), paste("(", x, ")", sep=""))})
+
+return(shiny_in)
 }
 
 
@@ -343,36 +367,34 @@ map_obj<-function(obj, nchar){
 #####################################
 
 
-###### For Shiny
 
-##### necessary variables
-# define terms for the links
-is_a=c("is_a")
-part_of=c("BFO:0000050")
-
-# map for links_chk; first element in the map part of; 2nd is_a
-links_chk_map<-list(part_of=c(part_of, ""), is_a=c("", is_a), both=c(part_of, is_a))
-links_chk_map$part_of[2]
-nchar=300 # number of chars to show
-
-#create mapping for reative objects
-map_btn_check<-map_obj("add_btn", nchar)
-map_checkbox<-map_obj("checkbox", nchar)
-#create shiny_in objetc
-shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
-
-# cretae serch terms object; it has to beleted later
-srch_items<-names(ontology$name)
-names(srch_items)<-unname(ontology$name)
-####
+# shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
+#
+# # cretae serch terms object; it has to beleted later
+# srch_items<-names(ontology$name)
+# names(srch_items)<-unname(ontology$name)
+#
 
 
-####
 
-shinyApp(ui, server)
-# str(shiny_in)
-# summary(ontology)
-#colnames(dt_out)<-c("id", "statemet", "selected_annot", "grep_id", "grep_id_name")
+
+
+# ###### For Shiny
+#
+#
+# #create shiny_in objetc
+# shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
+#
+# # cretae serch terms object; it has to beleted later
+# srch_items<-names(ontology$name)
+# names(srch_items)<-unname(ontology$name)
+# ####
+#
+#
+# ####
+#
+# shinyApp(ui, server)
+
 
 
 

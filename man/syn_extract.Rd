@@ -19,5 +19,4 @@ Extracts and parses synonyms from ontology to make them readable
 }
 \examples{
 hao.obo$parsed_synonyms=syn_extract(hao.obo)
-
 }
