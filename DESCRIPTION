@@ -14,3 +14,12 @@ Imports: pbapply, ontologyIndex, dplyr, shiny, shinydashboard, visNetwork,
     stringr,
     magrittr,
     devtools
+Depends: pbapply,
+    ontologyIndex,
+    dplyr,
+    shiny,
+    shinydashboard,
+    visNetwork,
+    stringr,
+    magrittr,
+    devtools

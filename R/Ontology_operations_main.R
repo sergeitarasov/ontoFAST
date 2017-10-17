@@ -1,18 +1,18 @@
 
 # package Dependencies
-devtools::use_package("pbapply")
-devtools::use_package("ontologyIndex")
-devtools::use_package("dplyr")
-devtools::use_package("shiny")
-devtools::use_package("shinydashboard")
-devtools::use_package("visNetwork")
-devtools::use_package("stringr")
-devtools::use_package("magrittr")
-devtools::use_package("devtools")
+devtools::use_package("pbapply", type = "Depends")
+devtools::use_package("ontologyIndex", type = "Depends")
+devtools::use_package("dplyr", type = "Depends")
+devtools::use_package("shiny", type = "Depends")
+devtools::use_package("shinydashboard", type = "Depends")
+devtools::use_package("visNetwork", type = "Depends")
+devtools::use_package("stringr", type = "Depends")
+devtools::use_package("magrittr", type = "Depends")
+devtools::use_package("devtools", type = "Depends")
 #############
-require("ontologyIndex")
-require("pbapply")
-require("stringr")
+#require("ontologyIndex")
+#require("pbapply")
+#require("stringr")
 
 
 # list of functions
@@ -234,8 +234,46 @@ get_comp_table<-function(ontology, grep_all_chars){
 
 
 
+#' Hymenoptera character statements
+#'
+#' A table of characters and characters states from
+#' Hymenoptera character matrix (Sharkey et al., 2011: Cladistics). The table contains 392 character statements.
+#'
+#' @docType data
+#'
+#' @format A data table with 392 rows; each row is a character statement with character states:
+#' \describe{
+#'   \item{CHARACTER STATEMENTS:}{Charater statements}
+#'   \item{STATES}{sates of the character}
+#'   \item{STATES}{....}
+#' }
+#'
+#' @references Sharkey, M.J., et al. 2011. Phylogenetic relationships among superfamilies of Hymenoptera. Cladistics 28(1), 80-112.
+#' (\href{http://onlinelibrary.wiley.com/doi/10.1111/j.1096-0031.2011.00366.x/full}{Read})
+#'
+#' @examples
+#' chars<-Sharkey_2011
+"Sharkey_2011"
 
 
 
-
+#' Hymenoptera Anatomy Ontology (HAO)
+#'
+#' Anatomy ontology of Hymenoptera. This ontology was imported into R using get_OBO() function from ontologyIndex packages (see the examples).
+#'
+#' @docType data
+#'
+#' @format List containing various ontological relationships and terms.
+#'
+#' @references Yoder MJ, Mikó I, Seltmann KC, Bertone MA, Deans AR. 2010. A Gross Anatomy Ontology for Hymenoptera. PLoS ONE 5 (12): e15991.
+#' (\href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0015991}{Read})
+#'
+#' \href{http://portal.hymao.org/projects/32/public/ontology/}{Hymenoptera Anatomy Ontology Portal}
+#'
+#' @examples
+#' ontology<-HAO
+#' # you can also parse the original .obo file
+#' ontology<-get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+#' extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
+"HAO"
 

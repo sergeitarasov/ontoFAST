@@ -10,9 +10,9 @@
 
 runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar, show.chars=T,  ...){
 
-require(shiny)
-require(shinydashboard)
-require(visNetwork)
+#require(shiny)
+#require(shinydashboard)
+#require(visNetwork)
 
 
 
@@ -52,7 +52,7 @@ require(visNetwork)
                           class = "dropdown")
   ),
 
-  dashboardSidebar(width="400px",
+  dashboardSidebar(width="20vw",
                    h2("Character Statements:", style='padding-left: 12px;'),
 
                    hr(),
@@ -80,7 +80,7 @@ require(visNetwork)
                               }
 
                               .content {
-                              height: 95vh; overflow-y: hidden; overflow-x: scroll;
+                              height: 95vh; overflow-y: hidden; overflow-x: scroll; background-color: white;
                               }
 
                               .hyphenate {
@@ -95,20 +95,22 @@ require(visNetwork)
                               hyphens: auto;
                               }
 
-                              .box{-webkit-box-shadow: none; -moz-box-shadow: none;box-shadow: none; border-style: none;}
+                              .box{-webkit-box-shadow: none; -moz-box-shadow: none;box-shadow: none; border-style: none; }
+
 
 
 
                               '))),
 
 
+#fluidRow(column(width = 12,
+
+    fluidRow(width = "auto", style='padding:0px;', #I dont know if padding is applicable to fluid row
 
 
-    fluidRow(width = "auto",
-             box(width = 5, height = 190, title = NULL,
+             box(width = 5, height = "auto", title = NULL, style="padding:0px;",
 
-                 fluidRow(box(style="padding:0px; -webkit-border-style: none; -moz-border-style: none; -ms-border-style: none;
-                              border-style: none; -webkit-box-shadow: none; -moz-box-shadow: none;box-shadow: none; border-style: none;",
+                 fluidRow(box(style="padding:0px;",
                               radioButtons("des_chk", label="Show upon expansion",  inline = T,
                                            choices =list("descendants", "ancestors", "both"),
                                            selected =list("descendants")
@@ -120,32 +122,38 @@ require(visNetwork)
                               )
                           )),
 
+
+
                  selectizeInput("selectize", label = NULL, choices=NULL, selected = FALSE, multiple = FALSE, width = "auto",
                                 options = list(openOnFocus=F, maxOptions=100, placeholder="Enter term or ID"
                                 )),
                  actionButton("select_descen", label = "Expand", icon = icon("glyphicon glyphicon-fullscreen", lib="glyphicon"))
-             ),
 
 
-             box(width = 3, height = 190, title = NULL,
-                 h5("ID:"),
+
+
+                 ), #box
+
+
+             box(width = 3, height = "auto", title = NULL, style='padding:0px;',
+                 h5("ID:", style='padding:0px;'),
                  verbatimTextOutput("id_txt", placeholder = T),
-                 tags$head(tags$style("#id_txt{font-family: Arial;}")),
+                 tags$head(tags$style("#id_txt{font-family: Arial; padding:0px;}")),
 
-                 h5("Synonyms:"),
+                 h5("Synonyms:", style='padding:0px;'),
                  verbatimTextOutput("syn_txt", placeholder = T),
-                 tags$head(tags$style("#syn_txt{overflow-y:scroll; height: 60px; font-family: Arial;}"))
+                 tags$head(tags$style("#syn_txt{overflow-y:scroll; height: 5vh; font-family: Arial; padding:0px;
+                                      hyphens: auto; word-break: break-word;-webkit-hyphens: manual;}"))
 
-                 # tags$head(tags$style("#def_txt{color:red; font-size:12px; font-style:italic;
-                 #  overflow-y:scroll; max-height: 50px; background: ghostwhite;}"))
+
 
              ),
 
-             box(width = 4, height = 190, title = NULL,
-                 h5("Definition:"),
+             box(width = 4, height = "auto", title = NULL, style='padding:0px;',
+                 h5("Definition:", style='padding:0px;'),
                  verbatimTextOutput("def_txt", placeholder = T),
-                 tags$head(tags$style("#def_txt{overflow-y:scroll; height: 130px; hyphens: auto; word-break: break-word; -webkit-hyphens: manual;
-                                      font-family: Arial;}"))
+                 tags$head(tags$style("#def_txt{overflow-y:scroll; height: 11vh; hyphens: auto; word-break: break-word; -webkit-hyphens: manual;
+                                      font-family: Arial; padding:0px;}"))
 
              )
 
@@ -156,16 +164,19 @@ require(visNetwork)
 
 
     ),
+hr(),
 
     fluidRow(width = "100%",
 
-             box(width = "100%", height=NULL, title = NULL,
+             box(width = "100%", height="auto", title = NULL, style='padding:0px;',
 
                  visNetworkOutput("network", width = "100%", height = "65vh")
              )
     )
-    )
-    )
+
+ #))#end col, fluid row
+    ) # end body
+    ) # end ui
 
 ########################################################################################################################
 server <- function(input, output, session) {
@@ -190,7 +201,7 @@ server <- function(input, output, session) {
   ##### Selectize
 
   updateSelectizeInput(session, "selectize", label = NULL, choices=shiny_in$srch_items, selected = FALSE,
-                       options = list(openOnFocus=F, maxOptions=100, placeholder="Search Ontology term or ID and click Expand to visualize"
+                       options = list(openOnFocus=F, maxOptions=100, placeholder="Search Ontology term"
                        ),
                        server = TRUE
   )
