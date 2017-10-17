@@ -73,12 +73,12 @@ return(list.from.edge)
 #' @param ... other parameters for ontologyIndex::get_descendants() function
 #' @return The vector of character IDs.
 #' @examples
-#' get_descendants_chars(hao.obo, "HAO:0000653")
+#' get_descendants_chars(hao_obo, "HAO:0000653")
 
 get_descendants_chars<-function(ontology, terms, ...){
   onto_chars_list=list2edges(ontology$annot_characters, col_order_inverse=T)
-  descen<-unique(onto_chars_list[,2][onto_chars_list[,1]%in%
-                                ontologyIndex::get_descendants(ontology, terms, ...)])
+  descen<-unique(onto_chars_list[,2][onto_chars_list[,1] %in%
+                                       ontologyIndex::get_descendants(ontology=ontology, roots=terms, ...)])
   return(descen)
 }
 #get_descendants_chars(hao.obo, "HAO:0000653")
@@ -198,7 +198,7 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
     }
   }
 
-  if(is.null(all_edges)==T) return("No descendants found for the term")
+  if(is.null(all_edges)==T) return(dt=list(nodes=NULL, edges=NULL))
 
   #nodes=unique(des)
   nodes=unique(c(all_edges[,1], all_edges[,2]))
@@ -262,6 +262,7 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
 #' visOptions(highlightNearest = TRUE)%>%
 #' visLayout(randomSeed = 12)
 
+
 get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
                           all_links=F, incl.top.anc=T, highliht_focus=T){
   des=get_ancestors(ontology, terms)
@@ -289,7 +290,7 @@ get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050")
     }
   }
 
-  if(is.null(all_edges)==T) return("No ancestors found for the term")
+  if(is.null(all_edges)==T) return(dt=list(nodes=NULL, edges=NULL))
 
   #nodes=unique(des)
   nodes=unique(c(all_edges[,1], all_edges[,2]))
@@ -343,11 +344,22 @@ make_shiny_in<-function(ontology){
 shiny_in<- ontology
 shiny_in$terms_selected<-list()
 
-shiny_in$srch_items<-names(ontology$name)
-names(shiny_in$srch_items)<-unname(ontology$name)
+# making serch terms for Selectize using synonyms
+shiny_in$srch_items<-c(names(ontology$name), names(ontology$parsed_synonyms))
+names(shiny_in$srch_items)<-c(
+  paste(unname(ontology$name), names(ontology$name), sep=", "),
+                              paste(unname(ontology$parsed_synonyms), get_onto_name(names(ontology$parsed_synonyms), ontology),
+                                    sep=" <synonym of> ")
+                              )
 
+
+# rendering auto annotations with IDs and names
 shiny_in$auto_annot_characters_id_name <-lapply(
-  ontology$auto_annot_characters, function(x) {paste(get_onto_name(x, ontology), paste("(", x, ")", sep=""))})
+  ontology$auto_annot_characters, function(x) {
+    paste(get_onto_name(x, ontology), paste(", ", x, sep=""), sep="")
+    })
+shiny_in$auto_annot_characters_id_name[shiny_in$auto_annot_characters_id_name ==", "]<-NULL #making empty annot as na
+
 
 return(shiny_in)
 }

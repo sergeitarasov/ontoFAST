@@ -1,13 +1,14 @@
-#' @title Runh shiny
+#' @title Run OntoFAST interactively
 #' @description Runh shiny
 #' @param is_a is_a
 #' @param part_of part_of
+#' @param show.chars Shows character statements
 #' @return runs app.
 #' @examples
 #' runOntoFast(nchar=10)
 
 
-runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar,  ...){
+runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar, show.chars=T,  ...){
 
 require(shiny)
 require(shinydashboard)
@@ -19,6 +20,7 @@ require(visNetwork)
   #create mapping for reative objects
   map_btn_check<-map_obj("add_btn", nchar)
   map_checkbox<-map_obj("checkbox", nchar)
+ # map_ids<-map_obj("ids_in", nchar)
 
   # map for links_chk; first element in the map part of; 2nd is_a
   links_chk_map<-list(part_of=c(part_of, ""), is_a=c("", is_a), both=c(part_of, is_a))
@@ -126,12 +128,13 @@ require(visNetwork)
 
 
              box(width = 3, height = 190, title = NULL,
-                 h6("ID:"),
+                 h5("ID:"),
                  verbatimTextOutput("id_txt", placeholder = T),
+                 tags$head(tags$style("#id_txt{font-family: Arial;}")),
 
-                 h6("Synonyms:"),
+                 h5("Synonyms:"),
                  verbatimTextOutput("syn_txt", placeholder = T),
-                 tags$head(tags$style("#syn_txt{overflow-y:scroll; height: 60px;}"))
+                 tags$head(tags$style("#syn_txt{overflow-y:scroll; height: 60px; font-family: Arial;}"))
 
                  # tags$head(tags$style("#def_txt{color:red; font-size:12px; font-style:italic;
                  #  overflow-y:scroll; max-height: 50px; background: ghostwhite;}"))
@@ -139,9 +142,10 @@ require(visNetwork)
              ),
 
              box(width = 4, height = 190, title = NULL,
-                 h6("Definition:"),
+                 h5("Definition:"),
                  verbatimTextOutput("def_txt", placeholder = T),
-                 tags$head(tags$style("#def_txt{overflow-y:scroll; height: 130px; hyphens: auto; word-break: break-word; -webkit-hyphens: manual;}"))
+                 tags$head(tags$style("#def_txt{overflow-y:scroll; height: 130px; hyphens: auto; word-break: break-word; -webkit-hyphens: manual;
+                                      font-family: Arial;}"))
 
              )
 
@@ -220,11 +224,13 @@ server <- function(input, output, session) {
 
 
   output$WidgetVectorDisplay <-renderUI(
+    if (show.chars==T){
     withProgress(message = "Creating character statements", value = 0.1, {
       incProgress(0.3)
       incProgress(0.9)
       {lapply(X = 1:nchar, FUN = makeRadioButton)}
     })
+    } else { h3("The characters are disabled", style='padding-left: 12px;') }
 
   )
 
@@ -270,6 +276,20 @@ server <- function(input, output, session) {
 
           incProgress(0.3)
 
+          net_title<-NULL
+          net_submain<-NULL
+
+
+          if (is.null(dt$nodes)){ # if dt is empty show Warnings
+            # minimal example
+            dt<-list(nodes=data.frame(id = 1:2), edges=data.frame(from = c(1,2), to = c(2,1)))
+            net_title<-"Warning: the selected term or link have no relationships to display"
+            net_submain<-"Select another term and/or links"
+          }
+
+
+
+
           ## Legend data
 
           lnodes <- data.frame(label = c("Selected term"),
@@ -281,7 +301,7 @@ server <- function(input, output, session) {
 
           ####
 
-          visNetwork(dt$nodes, dt$edges, height = "65vh",  width ="100%", main = NULL, submain =NULL) %>%
+          visNetwork(dt$nodes, dt$edges, height = "65vh",  width ="100%", main =net_title, submain =net_submain) %>%
             visNodes(borderWidthSelected=4)%>%
             visOptions(highlightNearest = TRUE, nodesIdSelection = T)%>%
             visLegend(addEdges = ledges, addNodes = lnodes, useGroups = F, position = "right", width=0.09) %>%
@@ -291,6 +311,9 @@ server <- function(input, output, session) {
           incProgress(0.9)
 
           visIgraphLayout(visNt, layout="layout_with_gem")
+
+
+
 
 
         })
@@ -309,6 +332,7 @@ server <- function(input, output, session) {
   )
   #######
 
+########
   ####### Add button actions
   observe({
     lapply(map_btn_check, function(x) {
@@ -346,6 +370,8 @@ server <- function(input, output, session) {
 
             if (!term_id_name %in% shiny_in$auto_annot_characters_id_name[[CHAR_id]]){#check for duplication
 
+
+
               #update terms selected
               shiny_in$terms_selected[[CHAR_id]] <<- c(shiny_in$terms_selected[[CHAR_id]], term_id_name)
 
@@ -358,7 +384,13 @@ server <- function(input, output, session) {
                                        selected=shiny_in$terms_selected[[CHAR_id]]
               )
 
-              updateTextInput(session, paste0("ids_in", names(map_btn_check)[which(map_btn_check==x)]), value = "",  label = "")
+              withProgress(message = "Added", value = 1, { Sys.sleep(.1) })
+
+              updateTextInput(session, paste0("ids_in", isolate(names(map_btn_check)[which(map_btn_check==x)])), value = "",  label = "")
+
+
+
+
               term_id<-c("")
             }
 
@@ -401,6 +433,8 @@ server <- function(input, output, session) {
                                        label=NA, choices=shiny_in$auto_annot_characters_id_name[[CHAR_id]],
                                        selected=shiny_in$terms_selected[[CHAR_id]]
               )
+
+              withProgress(message = "Added", value = 1, { Sys.sleep(.1) })
 
               updateTextInput(session, paste0("ids_in", names(map_btn_check)[which(map_btn_check==x)]), value = "",  label = "")
             }
@@ -451,10 +485,13 @@ server <- function(input, output, session) {
       output$id_txt<-renderText({input$selectize})
 
       output$def_txt<-renderText({
-        ontology$def[which(names(ontology$def)==input$selectize)]})
+        shiny_in$def[which(names(shiny_in$def)==input$selectize)]})
 
       output$syn_txt<-renderText({
-        ontology$parsed_synonyms[which(names(ontology$parsed_synonyms)==input$selectize)]})
+        paste(
+          shiny_in$parsed_synonyms[which(names(shiny_in$parsed_synonyms)==input$selectize)],
+          collapse = ", ")
+        })
     })
 
   #####

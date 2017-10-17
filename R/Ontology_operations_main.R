@@ -7,6 +7,8 @@ devtools::use_package("shiny")
 devtools::use_package("shinydashboard")
 devtools::use_package("visNetwork")
 devtools::use_package("stringr")
+devtools::use_package("magrittr")
+devtools::use_package("devtools")
 #############
 require("ontologyIndex")
 require("pbapply")
@@ -127,8 +129,8 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 
 
 annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
-  print("Doing grep search...")
-  annot_grepl=pblapply(ontology$name_characters,
+  print("Doing automatic annotation of characters with ontology terms...")
+  annot_grepl=pbapply::pblapply(ontology$name_characters,
                        function(x) {annot_char_grep(ontology, x, use.synonyms, min_set)})
   names(annot_grepl)<-ontology$id_characters
   return(annot_grepl)

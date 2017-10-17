@@ -2,14 +2,17 @@
 % Please edit documentation in R/app.R
 \name{runOntoFast}
 \alias{runOntoFast}
-\title{Runh shiny}
+\title{Run OntoFAST interactively}
 \usage{
-runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), nchar, ...)
+runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), nchar,
+  show.chars = T, ...)
 }
 \arguments{
 \item{is_a}{is_a}
 
 \item{part_of}{part_of}
+
+\item{show.chars}{Shows character statements}
 }
 \value{
 runs app.

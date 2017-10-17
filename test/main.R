@@ -19,7 +19,7 @@ names(name_characters)<-id_characters
 hao_obo$name_characters<-name_characters
 
 #including manual annotations !!! work on it to do better exmaple from the beginning of file reading
-hao_obo$annot_characters<-ontology$annot_characters
+#hao_obo$annot_characters<-ontology$annot_characters
 
 # pase synonyms for automatic annotation
 hao_obo$parsed_synonyms<-syn_extract(hao_obo)
@@ -27,10 +27,14 @@ hao_obo$parsed_synonyms<-syn_extract(hao_obo)
 # automatic annotation
 hao_obo$auto_annot_characters<-annot_all_chars(hao_obo, use.synonyms=TRUE, min_set=TRUE)
 
+#shiny_in<<-c()
 #make a global object
 shiny_in<<-make_shiny_in(hao_obo)
 #run OntoFast
-runOntoFast(nchar=15)
+runOntoFast(nchar=5, show.chars=T)
 
+
+#selected terms
+shiny_in$terms_selected
 
 
