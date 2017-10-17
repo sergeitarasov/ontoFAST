@@ -239,4 +239,3 @@ get_comp_table<-function(ontology, grep_all_chars){
 
 
 
-
