@@ -1,4 +1,4 @@
-https://travis-ci.org/sergeitarasov/ontoFAST.svg?branch=main
+[![Build Status](https://travis-ci.org/sergeitarasov/ontoFAST.svg?branch=main)
 
 # ontoFAST
 Fast annotation of characer matrix with anatomy ontology terms for comparative phylogenetics
