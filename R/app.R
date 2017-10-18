@@ -2,11 +2,12 @@
 #' @description Runh shiny
 #' @param is_a is_a
 #' @param part_of part_of
+#' @param nchar number of characters to show
 #' @param show.chars Shows character statements
 #' @return runs app.
 #' @examples
-#' shiny_in<-make_shiny_in(HAO)
-#' runOntoFast(show.chars=F)
+#' #shiny_in<-make_shiny_in(HAO)
+#' #runOntoFast(show.chars=F)
 
 
 runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", show.chars=T,  ...){

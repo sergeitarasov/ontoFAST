@@ -12,6 +12,8 @@ runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), nchar = "all",
 
 \item{part_of}{part_of}
 
+\item{nchar}{number of characters to show}
+
 \item{show.chars}{Shows character statements}
 }
 \value{
@@ -21,6 +23,6 @@ runs app.
 Runh shiny
 }
 \examples{
-shiny_in<-make_shiny_in(HAO)
-runOntoFast(show.chars=F)
+#shiny_in<-make_shiny_in(HAO)
+#runOntoFast(show.chars=F)
 }
