@@ -8,7 +8,7 @@
 #' runOntoFast(nchar=10)
 
 
-runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar, show.chars=T,  ...){
+runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", show.chars=T,  ...){
 
 #require(shiny)
 #require(shinydashboard)
@@ -26,22 +26,11 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar, show.ch
   links_chk_map<-list(part_of=c(part_of, ""), is_a=c("", is_a), both=c(part_of, is_a))
   links_chk_map$part_of[2]
 
+# nchar to display
+  if (nchar=="all"){
+    nchar=length(shiny_in$id_characters)
+  }
 
-  # define terms for the links
-  # is_a=c("is_a")
-  # part_of=c("BFO:0000050")
-  #
-  #
-  # nchar=300 # number of chars to show
-  #
-  #
-  # #create shiny_in objetc
-  # shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
-  #
-  # # cretae serch terms object; it has to beleted later
-  # srch_items<-names(ontology$name)
-  # names(srch_items)<-unname(ontology$name)
-  ####
 
 ##############
     ui <- dashboardPage(
@@ -386,6 +375,12 @@ server <- function(input, output, session) {
               #update terms selected
               shiny_in$terms_selected[[CHAR_id]] <<- c(shiny_in$terms_selected[[CHAR_id]], term_id_name)
 
+              #update terms selected id
+
+              #shiny_in$terms_selected_id[[CHAR_id]] <<- c(shiny_in$terms_selected_id[[CHAR_id]], term_id)
+
+              #print(shiny_in$terms_selected_id[[CHAR_id]])
+
               #update terms all
               shiny_in$auto_annot_characters_id_name[[CHAR_id]] <<- c(shiny_in$auto_annot_characters_id_name[[CHAR_id]], term_id_name)
 
@@ -436,6 +431,9 @@ server <- function(input, output, session) {
               #update terms selected
               shiny_in$terms_selected[[CHAR_id]] <<- c(shiny_in$terms_selected[[CHAR_id]], term_id_name)
 
+              #update terms selected id
+             # shiny_in$terms_selected_id[[CHAR_id]] <<- c(shiny_in$terms_selected_id[[CHAR_id]], term_id)
+
               #update terms all
               shiny_in$auto_annot_characters_id_name[[CHAR_id]] <<- c(shiny_in$auto_annot_characters_id_name[[CHAR_id]], term_id_name)
 
@@ -463,12 +461,20 @@ server <- function(input, output, session) {
   observe({
     lapply(map_checkbox, function(x) {
       observeEvent(
-        input[[x]],
+        input[[x]], # rhe input is the vector of selected terms
         {
+          #print("observed")
           CHAR_id<-paste0("CHAR:", names(map_checkbox)[which(map_checkbox==x)])
 
           #update terms selected
           shiny_in$terms_selected[[CHAR_id]] <<- input[[x]]
+
+          #update terms selected id
+          #print(names(shiny_in$terms_map[shiny_in$terms_map %in%input[[x]]]))
+
+          # TERMS NOT FOUND are not included here
+          shiny_in$terms_selected_id[[CHAR_id]] <<- names(shiny_in$terms_map[shiny_in$terms_map %in%input[[x]]])
+
 
 
 

@@ -343,6 +343,11 @@ make_shiny_in<-function(ontology){
 
 shiny_in<- ontology
 shiny_in$terms_selected<-list()
+shiny_in$terms_selected_id<-list()
+
+#map between term_id_name and term_id
+shiny_in$terms_map<-paste(unname(ontology$name), paste(", ", names(ontology$name), sep=""), sep="")
+names(shiny_in$terms_map)<-names(ontology$name)
 
 # making serch terms for Selectize using synonyms
 shiny_in$srch_items<-c(names(ontology$name), names(ontology$parsed_synonyms))
@@ -363,6 +368,7 @@ shiny_in$auto_annot_characters_id_name[shiny_in$auto_annot_characters_id_name ==
 
 return(shiny_in)
 }
+
 
 
 

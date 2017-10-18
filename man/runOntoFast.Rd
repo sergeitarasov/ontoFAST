@@ -4,7 +4,7 @@
 \alias{runOntoFast}
 \title{Run OntoFAST interactively}
 \usage{
-runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), nchar,
+runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), nchar = "all",
   show.chars = T, ...)
 }
 \arguments{

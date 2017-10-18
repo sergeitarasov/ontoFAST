@@ -28,7 +28,7 @@ hao_obo$name_characters<-name_characters
 hao_obo$parsed_synonyms<-syn_extract(hao_obo)
 
 # automatic annotation
-#hao_obo$auto_annot_characters<-annot_all_chars(hao_obo, use.synonyms=TRUE, min_set=TRUE)
+hao_obo$auto_annot_characters<-annot_all_chars(hao_obo, use.synonyms=TRUE, min_set=TRUE)
 
 #shiny_in<<-c()
 #make a global object
@@ -39,6 +39,11 @@ runOntoFast(nchar=5, show.chars=T)
 
 #selected terms
 shiny_in$terms_selected
+shiny_in$terms_selected_id
+names(shiny_in$terms_map[shiny_in$terms_map %in%sa])
+
+sa<<-c()
+shiny_in$auto_annot_characters[["CHAR:381"]][a]
 
 system.file("data_onto", "HAO.obo", package = "ontoFAST")
 
@@ -48,6 +53,5 @@ save(char_et_states, file="Sharkey_chars.RData")
 HAO<-hao_obo1
 devtools::use_data(HAO)
 
-
-
-
+devtools::build()
+devtools::use_vignette("my-vignette")

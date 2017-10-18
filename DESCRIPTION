@@ -23,3 +23,6 @@ Depends: pbapply,
     stringr,
     magrittr,
     devtools
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
