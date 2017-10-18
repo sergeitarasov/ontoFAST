@@ -5,14 +5,17 @@
 #' @param show.chars Shows character statements
 #' @return runs app.
 #' @examples
-#' runOntoFast(nchar=10)
+#' shiny_in<-make_shiny_in(HAO)
+#' runOntoFast(show.chars=F)
 
 
 runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", show.chars=T,  ...){
 
-#require(shiny)
-#require(shinydashboard)
-#require(visNetwork)
+
+  # nchar to display
+  if (nchar=="all"){
+    nchar=length(shiny_in$id_characters)
+  }
 
 
 
@@ -26,16 +29,12 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
   links_chk_map<-list(part_of=c(part_of, ""), is_a=c("", is_a), both=c(part_of, is_a))
   links_chk_map$part_of[2]
 
-# nchar to display
-  if (nchar=="all"){
-    nchar=length(shiny_in$id_characters)
-  }
 
 
 ##############
     ui <- dashboardPage(
 
-  dashboardHeader(title = "OntoFAST",
+  dashboardHeader(title = "ontoFAST",
                   tags$li(a(actionButton("savefile_btn", label="Save file", icon=icon("save")),
                             style = "padding-top:5px; padding-bottom:0px;"),
                           class = "dropdown")

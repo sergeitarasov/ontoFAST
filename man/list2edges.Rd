@@ -19,5 +19,6 @@ Two-columns matrix.
 Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
 }
 \examples{
-list2edges(annotated.char.list, col_order_inverse=F)
+annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
+list2edges(annot_list)
 }

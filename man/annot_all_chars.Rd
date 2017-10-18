@@ -2,7 +2,7 @@
 % Please edit documentation in R/Ontology_operations_main.R
 \name{annot_all_chars}
 \alias{annot_all_chars}
-\title{Annotates all character statement against all ontology terms}
+\title{Annotate all character statements with ontology terms}
 \usage{
 annot_all_chars(ontology, use.synonyms = TRUE, min_set = TRUE)
 }
@@ -22,6 +22,19 @@ Matches character statement and returns most similar ontology terms using
 grep and distance-based matching
 }
 \examples{
-grep_all_chars=annot_all_chars(hao.obo)
+#getting ontology
+ontology<-HAO
+#parsing synonyms
+ontology$parsed_synonyms<-syn_extract(HAO)
+# reading in characters
+char_et_states<-Sharkey_2011
+# embedding characters and character ids into ontology
+id_characters<-paste("CHAR:",c(1:392), sep="")
+name_characters<-char_et_states[,1]
+names(name_characters)<-id_characters
+ontology$name_characters<-name_characters
+ontology$id_characters<-id_characters
 
+# running annotations
+auto_annotations<-annot_all_chars(ontology)
 }

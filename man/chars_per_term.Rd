@@ -16,6 +16,7 @@ The matrix of ontology terms IDs, their names and character number.
 Returns matrix summarizing  number of characters per each ontology terms in descending order
 }
 \examples{
-chars_per_term(hao.obo)
-
+ontology<-HAO
+ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+chars_per_term(ontology)
 }

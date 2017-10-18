@@ -2,7 +2,7 @@
 % Please edit documentation in R/Ontology_operations_main.R
 \name{annot_char_grep}
 \alias{annot_char_grep}
-\title{Annotates character statement against all ontology terms useng grep}
+\title{Annotate a character statement with ontology terms}
 \usage{
 annot_char_grep(ontology, char.statement, use.synonyms = TRUE,
   min_set = TRUE)
@@ -24,6 +24,5 @@ The vector of matches ontology terms.
 Matches character statement and returns most similar ontology terms
 }
 \examples{
-annot_char_grep(hao.obo, "Mola on right mandible")
-
+annot_char_grep(HAO, "Mola on right mandible")
 }

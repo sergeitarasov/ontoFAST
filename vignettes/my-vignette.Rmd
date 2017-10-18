@@ -2,56 +2,77 @@
 title: "ontoFAST: getting started"
 author: "Sergei Tarasov"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
+#html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-## Prerequsites
+# Installing
 
 To install `ontoFAST` package, you must have Rstudio and `devtools` package installed. The latter can be done by executing `install.packages("devtools")` in Rstudio. If `devtools` is intalled you can use it to install `ontoFAST` directly from GitHub: 
 
 ```{r}
-library(devtools)
-install_github("sergeitarasov/ontoFAST@main")
+# !!! uncomment to run
+#library(devtools)
+#install_github("sergeitarasov/ontoFAST@main")
+library(ontoFAST)
 ```
 
-## Working with ontoFAST
+# Working with ontoFAST
+## Assembling data
+Let's first read in ontology. In this example, I use Hymenoptera anatomy ontology that is available as embedded data set:
+```{r}
+hao_obo<-HAO
+```
+Alternatively ontology can be parsed directly from `.obo` file:
+```{r}
+hao_obo=get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+                extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+```
+Not, let's read in character statements. I prefer using a simple table format to store characters and their states. So, it can be imported in R for example using `read.csv` function. Here, I use embedded data set from Sharkey et.al. (2011):
+```{r}
+char_et_states<-Sharkey_2011
+```
+This data sets contains 392 characters. Let's create IDs for them, which will be used to call the characters. We keep all our data in `ontologyIndex` (here `hao_obo`) object that stores the entire ontology.
+```{r}
+id_characters<-paste("CHAR:",c(1:392), sep="")
+hao_obo$id_characters<-id_characters
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```
+Now, let's add character statements to `hao_obo` and associate them with IDs.
+```{r}
+name_characters<-char_et_states[,1]
+names(name_characters)<-id_characters
+hao_obo$name_characters<-name_characters
+```
+To make automatic annotation more efficient, we can use the synonyms of terms in the ontology. The synonyms are stored in `hao_obo$synonym` but they have to be preprocessed to be available for automatic annotation. To do it we use `syn_extract()` function.
+```{r}
+hao_obo$parsed_synonyms<-syn_extract(hao_obo)
+```
+Now, we can run the automatic annotation. You can skip this step if you do not want to use synonyms.
+```{r}
+hao_obo$auto_annot_characters<-annot_all_chars(hao_obo, use.synonyms=TRUE, min_set=TRUE)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+## Running ontoFAST interactively
+The final step before running ontoFAST in interactive mode, requires creating the global `shiny_in` object that will store all the annotations and associated data. To create the global object use the assignment operator `<<-`
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r}
+shiny_in<<-make_shiny_in(hao_obo)
 ```
+Now we can run ontoFAST interactively by executing the line below. It may take a few seconds until all characters are loaded.
+```{r}
+# !!! uncomment to run
+#runOntoFast()
+```
+![ontoFAST in interactive mode](~/my-papers-2017/phyloBayesHMM/ontoFast/test/ontoFAST.jpg)
 
-Also a quote using `>`:
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+By default ontoFAST displays all the characters in the data set. Using argument `nchar=N` you my restrict the visualization to `N` characters. You may also use ontoFAST as an ontology browser without loading characters by specifying argument `show.chars=FALSE`.
+
+
+

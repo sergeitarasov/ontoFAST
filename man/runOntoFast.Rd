@@ -21,5 +21,6 @@ runs app.
 Runh shiny
 }
 \examples{
-runOntoFast(nchar=10)
+shiny_in<-make_shiny_in(HAO)
+runOntoFast(show.chars=F)
 }

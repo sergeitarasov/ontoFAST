@@ -18,5 +18,7 @@ The vector of ontology terms IDs.
 Returns all ontology terms which are ancestors of a given character set
 }
 \examples{
-get_ancestors_chars(hao.obo, c("CHAR:381","CHAR:382"))
+ontology<-HAO
+ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+get_ancestors_chars(ontology, c("CHAR:1","CHAR:2"))
 }

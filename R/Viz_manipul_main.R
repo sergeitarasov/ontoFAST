@@ -9,7 +9,8 @@
 #' @param descendants_cols IDs of columns corresponding to character annotations
 #' @return The list.
 #' @examples
-#' annotated.char.list=table2list(char.dt, 1, 3:9)
+#' # converting Sharkey_2011 data set to list of characater states
+#' list_data<-table2list(Sharkey_2011)
 
 table2list<-function(table, id_col=c(1), descendants_cols=c(2:ncol(table))){
 annotated.char.list=list()
@@ -30,7 +31,8 @@ return(annotated.char.list)
 #' The inverse order changes the columns order.
 #' @return Two-columns matrix.
 #' @examples
-#' list2edges(annotated.char.list, col_order_inverse=F)
+#' annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
+#' list2edges(annot_list)
 
 list2edges<-function(annotated.char.list, col_order_inverse=F){
 annotated.vec=setNames(unlist(annotated.char.list, use.names=F),rep(names(annotated.char.list), lengths(annotated.char.list)))
@@ -40,7 +42,6 @@ if (col_order_inverse==T){
 edge.matrix=cbind(names(annotated.vec), unname(annotated.vec))
 return(edge.matrix)
 }
-#list2edges(annotated.char.list, col_order_inverse=F)
 
 
 
@@ -50,7 +51,9 @@ return(edge.matrix)
 #' @param edge.matrix Two-columns edge matrix.
 #' @return The list.
 #' @examples
-#' #edges2list(edge.matrix)
+#' annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
+#' edge.matrix<-list2edges(annot_list)
+#' edges2list(edge.matrix)
 
 edges2list<-function(edge.matrix){
 uniq_ids=unique(edge.matrix[,1])
@@ -62,7 +65,6 @@ for (i in 1:length(uniq_ids)){
 names(list.from.edge)<-uniq_ids
 return(list.from.edge)
 }
-#edges2list(edge.matrix)
 
 
 
@@ -73,7 +75,9 @@ return(list.from.edge)
 #' @param ... other parameters for ontologyIndex::get_descendants() function
 #' @return The vector of character IDs.
 #' @examples
-#' get_descendants_chars(hao_obo, "HAO:0000653")
+#' ontology<-HAO
+#' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+#' get_descendants_chars(ontology, "HAO:0000653")
 
 get_descendants_chars<-function(ontology, terms, ...){
   onto_chars_list=list2edges(ontology$annot_characters, col_order_inverse=T)
@@ -81,7 +85,7 @@ get_descendants_chars<-function(ontology, terms, ...){
                                        ontologyIndex::get_descendants(ontology=ontology, roots=terms, ...)])
   return(descen)
 }
-#get_descendants_chars(hao.obo, "HAO:0000653")
+
 
 
 
@@ -91,13 +95,13 @@ get_descendants_chars<-function(ontology, terms, ...){
 #' @param char_id IDs of character.
 #' @return The vector of ontology terms IDs.
 #' @examples
-#'get_ancestors_chars(hao.obo, c("CHAR:381","CHAR:382"))
+#' ontology<-HAO
+#' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+#' get_ancestors_chars(ontology, c("CHAR:1","CHAR:2"))
 
 get_ancestors_chars<-function(ontology, char_id){
   ontologyIndex::get_ancestors(ontology, unlist(ontology$annot_characters[char_id], use.names = FALSE))
 }
-#get_ancestors_chars(hao.obo, c("CHAR:381","CHAR:382"))
-
 
 
 
@@ -106,13 +110,15 @@ get_ancestors_chars<-function(ontology, char_id){
 #' @param ontology ontology_index object with character annatotions included (ontology$annot_characters).
 #' @return The matrix of ontology terms IDs, their names and character number.
 #' @examples
-#' chars_per_term(hao.obo)
-#'
+#' ontology<-HAO
+#' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+#' chars_per_term(ontology)
+
 chars_per_term<-function(ontology){
   all_des=pblapply(ontology$id, function(x) {get_descendants_chars(ontology, x)})
   char_per_term=unlist(lapply(all_des, length))
   term_tb=char_per_term[order(char_per_term, decreasing=T)]
-  term_tb=cbind(names(term_tb), get_onto_name(names(term_tb), hao.obo, names=F), unname(term_tb))
+  term_tb=cbind(names(term_tb), get_onto_name(names(term_tb), ontology, names=F), unname(term_tb))
   colnames(term_tb)<-c("ID", "names", "N_chars")
   return(term_tb)
 }
@@ -126,9 +132,18 @@ chars_per_term<-function(ontology){
 #' @param sep separator use to delimit ontology terms
 #' @return The matrix.
 #' @examples
-#' chr_paths=all_char_paths(ontology)
-#'write.csv(chr_paths, file="full_char_annots_ontology.csv")
-
+#' #getting ontology
+#' ontology<-HAO
+#' # reading in characters
+#' char_et_states<-Sharkey_2011
+#' # embedding characters and character ids into ontology
+#' id_characters<-paste("CHAR:",c(1:392), sep="")
+#' name_characters<-char_et_states[,1]
+#' names(name_characters)<-id_characters
+#' ontology$name_characters<-name_characters
+#' ontology$id_characters<-id_characters
+#' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+#' #' all_char_paths(ontology)
 
 all_char_paths<-function(ontology, sep=" | "){
   f<-function(char) rev(get_onto_name(get_ancestors_chars(ontology, char), ontology))
@@ -141,35 +156,27 @@ all_char_paths<-function(ontology, sep=" | "){
 }
 
 
-
-
-
-
-#' @title Makes dataframe of descndanrts to plot using visNetwork
-#' @description Returns a list of two dataframes: nodes and edges
-#' @param ontology ontology_index object.
-#' @param terms temr id for which descendants to be displayed
-#' @param is_a id of how is_a relationships are coded in ontology.
-#' To no included in output use NA.
-#' @param part_of same as previous
-#' @param color color for is_a and part_of relationships
-#' @param all_links whether all links (is_a and part_of) which link descendants with other nodes must be included in the output.
-#' Better not use as it makes the output messy.
-#' @param incl.top.anc include the parents of terms
-#' @param highliht_focus whether terms mus be highlited
-#' @return The list of dataframes.
-#' @examples
-#' dt=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
-#' visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
-#' visNodes(borderWidthSelected=4)%>%
-#' visOptions(highlightNearest = TRUE)%>%
-#' visLayout(randomSeed = 12)
-
-
-# ontology<-hao.obo
-# terms<-"HAO:0001631"
-# terms<-"HAO:0000001"
-# terms="HAO:0000639"
+#
+# #' @title Makes dataframe of descndanrts to plot using visNetwork
+# #' @description Returns a list of two dataframes: nodes and edges
+# #' @param ontology ontology_index object.
+# #' @param terms temr id for which descendants to be displayed
+# #' @param is_a id of how is_a relationships are coded in ontology.
+# #' To no included in output use NA.
+# #' @param part_of same as previous
+# #' @param color color for is_a and part_of relationships
+# #' @param all_links whether all links (is_a and part_of) which link descendants with other nodes must be included in the output.
+# #' Better not use as it makes the output messy.
+# #' @param incl.top.anc include the parents of terms
+# #' @param highliht_focus whether terms mus be highlited
+# #' @return The list of dataframes.
+# #' @examples
+# #' dt=get_part_descen(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+# #' visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
+# #' visNodes(borderWidthSelected=4)%>%
+# #' visOptions(highlightNearest = TRUE)%>%
+# #' visLayout(randomSeed = 12)
+#
 
 get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
                           all_links=F, incl.top.anc=T, highliht_focus=T){
@@ -241,26 +248,26 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
 
 ###############################################
 #### Similar to above but for ancestors
-
-#' @title Makes dataframe of ancestors to plot using visNetwork
-#' @description Returns a list of two dataframes: nodes and edges
-#' @param ontology ontology_index object.
-#' @param terms temr id for which descendants to be displayed
-#' @param is_a id of how is_a relationships are coded in ontology.
-#' To no included in output use NA.
-#' @param part_of same as previous
-#' @param color color for is_a and part_of relationships
-#' @param all_links whether all links (is_a and part_of) which link descendants with other nodes must be included in the output.
-#' Better not use as it makes the output messy.
-#' @param incl.top.anc include the parents of terms
-#' @param highliht_focus whether terms mus be highlited
-#' @return The list of dataframes.
-#' @examples
-#' dt=get_part_anc(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
-#' visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
-#' visNodes(borderWidthSelected=4)%>%
-#' visOptions(highlightNearest = TRUE)%>%
-#' visLayout(randomSeed = 12)
+#
+# #' @title Makes dataframe of ancestors to plot using visNetwork
+# #' @description Returns a list of two dataframes: nodes and edges
+# #' @param ontology ontology_index object.
+# #' @param terms temr id for which descendants to be displayed
+# #' @param is_a id of how is_a relationships are coded in ontology.
+# #' To no included in output use NA.
+# #' @param part_of same as previous
+# #' @param color color for is_a and part_of relationships
+# #' @param all_links whether all links (is_a and part_of) which link descendants with other nodes must be included in the output.
+# #' Better not use as it makes the output messy.
+# #' @param incl.top.anc include the parents of terms
+# #' @param highliht_focus whether terms mus be highlited
+# #' @return The list of dataframes.
+# #' @examples
+# #' dt=get_part_anc(hao.obo, get_onto_id("mouthparts", ontology) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+# #' visNetwork(dt$nodes, dt$edges, width = "100%", height = "100%") %>%
+# #' visNodes(borderWidthSelected=4)%>%
+# #' visOptions(highlightNearest = TRUE)%>%
+# #' visLayout(randomSeed = 12)
 
 
 get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
@@ -319,25 +326,7 @@ get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050")
 #' @param ontology Ontology
 #' @return Ontology index object named as shiny_in.
 #' @examples
-#' make_shiny_in(hao.obo)
-
-# make_shiny_in<-function(ontology){
-#   c1=char_id=ontology$id_characters # shiny_in$id_characters
-#   c2=ontology$name_characters # shiny_in$name_characters
-#   c3=ontology$annot_characters #manual annot
-#
-#   c4=grep_all_chars # auto-anot ontology$auto_annot_characters - this should be decalred earlier
-#
-#   c5=lapply(grep_all_chars, function(x) {paste(get_onto_name(x, ontology), paste("(", x, ")", sep=""))}) #auto annot IDs +names
-#     #ontology$auto_annot_characters_id_name
-#   # shiny_in$auto_annot_characters_id_name
-#
-#   #c6 shiny_in$name
-#
-#   shiny_in=list(c1, c2, c3, c4, c5)
-#   return(shiny_in)
-# }
-
+#' make_shiny_in(HAO)
 
 make_shiny_in<-function(ontology){
 
@@ -382,36 +371,6 @@ map_obj<-function(obj, nchar){
 #map_f=c("checkbox1", "checkbox2", "checkbox3")
 #names(map_f)<-c("ids_selec1", "ids_selec2", "ids_selec3")
 
-#####################################
-
-
-
-# shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
-#
-# # cretae serch terms object; it has to beleted later
-# srch_items<-names(ontology$name)
-# names(srch_items)<-unname(ontology$name)
-#
-
-
-
-
-
-# ###### For Shiny
-#
-#
-# #create shiny_in objetc
-# shiny_in=list(c1=c1, c2=c2, c3=c3, c4=c4, c5=c5, c6=ontology$name, terms_selected=list())
-#
-# # cretae serch terms object; it has to beleted later
-# srch_items<-names(ontology$name)
-# names(srch_items)<-unname(ontology$name)
-# ####
-#
-#
-# ####
-#
-# shinyApp(ui, server)
 
 
 

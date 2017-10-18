@@ -35,8 +35,9 @@ hao_obo$auto_annot_characters<-annot_all_chars(hao_obo, use.synonyms=TRUE, min_s
 shiny_in<<-make_shiny_in(hao_obo)
 #run OntoFast
 runOntoFast(nchar=5, show.chars=T)
+runOntoFast()
 
-
+HAO$synonym
 #selected terms
 shiny_in$terms_selected
 shiny_in$terms_selected_id

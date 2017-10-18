@@ -2,7 +2,7 @@
 % Please edit documentation in R/Ontology_operations_main.R
 \name{get_onto_name}
 \alias{get_onto_name}
-\title{Returns names of ontology terms for ontology IDs}
+\title{Term names for ontology IDs}
 \usage{
 get_onto_name(vec, onto, names = F)
 }
@@ -20,5 +20,5 @@ vector.
 Returns names of ontology terms for ontology IDs
 }
 \examples{
-get_onto_name("HAO:0002272", hao.obo)
+get_onto_name("HAO:0002272", HAO)
 }

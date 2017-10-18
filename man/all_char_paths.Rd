@@ -18,6 +18,16 @@ The matrix.
 Returns matrix with character ids and their ancestor paths
 }
 \examples{
-chr_paths=all_char_paths(ontology)
-write.csv(chr_paths, file="full_char_annots_ontology.csv")
+#getting ontology
+ontology<-HAO
+# reading in characters
+char_et_states<-Sharkey_2011
+# embedding characters and character ids into ontology
+id_characters<-paste("CHAR:",c(1:392), sep="")
+name_characters<-char_et_states[,1]
+names(name_characters)<-id_characters
+ontology$name_characters<-name_characters
+ontology$id_characters<-id_characters
+ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+#' all_char_paths(ontology)
 }

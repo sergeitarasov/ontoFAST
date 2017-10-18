@@ -16,5 +16,5 @@ Ontology index object named as shiny_in.
 Make ontology object for vizualization
 }
 \examples{
-make_shiny_in(hao.obo)
+make_shiny_in(HAO)
 }

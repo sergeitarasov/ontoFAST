@@ -2,7 +2,7 @@
 % Please edit documentation in R/Ontology_operations_main.R
 \name{syn_extract}
 \alias{syn_extract}
-\title{Associates synonym names with ontology terms}
+\title{Link synonyms with ontology terms}
 \usage{
 syn_extract(ontology, list_id = "synonym")
 }
@@ -18,5 +18,5 @@ The vector with ontology IDs and synonym names.
 Extracts and parses synonyms from ontology to make them readable
 }
 \examples{
-hao.obo$parsed_synonyms=syn_extract(hao.obo)
+parsed_synonyms<-syn_extract(HAO)
 }

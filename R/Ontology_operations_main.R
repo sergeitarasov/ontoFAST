@@ -10,9 +10,6 @@ devtools::use_package("stringr", type = "Depends")
 devtools::use_package("magrittr", type = "Depends")
 devtools::use_package("devtools", type = "Depends")
 #############
-#require("ontologyIndex")
-#require("pbapply")
-#require("stringr")
 
 
 # list of functions
@@ -25,14 +22,14 @@ devtools::use_package("devtools", type = "Depends")
 #
 #
 
-#' @title Returns names of ontology terms for ontology IDs
+#' @title Term names for ontology IDs
 #' @description Returns names of ontology terms for ontology IDs
 #' @param vec ID or IDs
 #' @param onto ontology
 #' @param names add element names
 #' @return vector.
 #' @examples
-#' get_onto_name("HAO:0002272", hao.obo)
+#' get_onto_name("HAO:0002272", HAO)
 
 get_onto_name<-function(vec, onto, names=F){
   #name.vec=onto$name[onto$id%in%unlist(vec, use.names = FALSE)]
@@ -43,7 +40,7 @@ get_onto_name<-function(vec, onto, names=F){
 
 
 
-#' @title Returns IDs of ontology terms given terms' names
+#' @title IDs for ontology term names
 #' @description Returns IDs of ontology terms given terms' names
 #' @param vec_name term names
 #' @param onto ontology
@@ -51,7 +48,7 @@ get_onto_name<-function(vec, onto, names=F){
 #' @return vector.
 #' @examples
 #' vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
-#' get_onto_id(vec_name, hao.obo)
+#' get_onto_id(vec_name, HAO)
 
 get_onto_id<-function(vec_name, ontology, names=F){
   match_vec<-match(unlist(vec_name, use.names = FALSE), ontology$name)
@@ -59,20 +56,16 @@ get_onto_id<-function(vec_name, ontology, names=F){
   if (names==T) {names(ids)<-ontology$name[match_vec]}
   return(ids)
 }
-#vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
-#get_onto_id(vec_name, hao.obo)
 
 
 
-
-
-#' @title Associates synonym names with ontology terms
+#' @title Link synonyms with ontology terms
 #' @description Extracts and parses synonyms from ontology to make them readable
 #' @param ontology ontology_index object.
 #' @param list_id theu ID of list element where synonyms are stored
 #' @return The vector with ontology IDs and synonym names.
 #' @examples
-#' hao.obo$parsed_synonyms=syn_extract(hao.obo)
+#' parsed_synonyms<-syn_extract(HAO)
 
 
 syn_extract<-function(ontology, list_id="synonym"){
@@ -82,11 +75,9 @@ syn_extract<-function(ontology, list_id="synonym"){
   names(syn.extr)<-names(syn.raw)
   return(syn.extr)
 }
-#hao.obo$parsed_synonyms=syn_extract(hao.obo)
 
 
-
-#' @title Annotates character statement against all ontology terms useng grep
+#' @title Annotate a character statement with ontology terms
 #' @description Matches character statement and returns most similar ontology terms
 #' @param ontology ontology_index object.
 #' @param char.statement character statement
@@ -95,8 +86,7 @@ syn_extract<-function(ontology, list_id="synonym"){
 #' @param min_set if TRUE eliminates higher order inferred ontology terms
 #' @return The vector of matches ontology terms.
 #' @examples
-#' annot_char_grep(hao.obo, "Mola on right mandible")
-#'
+#' annot_char_grep(HAO, "Mola on right mandible")
 
 annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=TRUE){
   if (use.synonyms) search_terms=c(ontology$name, ontology$parsed_synonyms)
@@ -109,13 +99,10 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
   }
   return(terms)
 }
-#annot_char_grep(hao_obo, "Mola on right mandible")
 
 
 
-
-
-#' @title Annotates all character statement against all ontology terms
+#' @title Annotate all character statements with ontology terms
 #' @description Matches character statement and returns most similar ontology terms using
 #' grep and distance-based matching
 #' @param ontology ontology_index object with character names (ontology$name_characters) and ids (ontology$id_characters)
@@ -124,9 +111,21 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 #' @param min_set if TRUE eliminates higher order inferred ontology terms
 #' @return The list of matched ontology terms and their charatcter ids.
 #' @examples
-#' grep_all_chars=annot_all_chars(hao.obo)
+#' #getting ontology
+#' ontology<-HAO
+#' #parsing synonyms
+#' ontology$parsed_synonyms<-syn_extract(HAO)
+#' # reading in characters
+#' char_et_states<-Sharkey_2011
+#' # embedding characters and character ids into ontology
+#' id_characters<-paste("CHAR:",c(1:392), sep="")
+#' name_characters<-char_et_states[,1]
+#' names(name_characters)<-id_characters
+#' ontology$name_characters<-name_characters
+#' ontology$id_characters<-id_characters
 #'
-
+#' # running annotations
+#' auto_annotations<-annot_all_chars(ontology)
 
 annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
   print("Doing automatic annotation of characters with ontology terms...")
@@ -135,102 +134,6 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
   names(annot_grepl)<-ontology$id_characters
   return(annot_grepl)
 }
-#grep_all_chars=annot_all_chars(hao.obo)
-
-
-#' @title Compares  orignal annotationd vs. auto_annotations
-#' @description Gives set relatinships
-#' @param set_org manula annotations
-#' @param set_annot auto-annotations
-#' @return List.
-#' @examples
-#' comp.sets(set_org, set_annot)
-#'
-
-comp.sets<-function(set_org, set_annot){
-  iden_org_found=list()
-  if (length(intersect(set_org, set_annot))==0) {
-    iden_org_found$iden="none"
-    iden_org_found$org="na"
-    iden_org_found$found="na"
-    if (any(set_annot %in% get_ancestors(hao.obo, set_org))==T){iden_org_found$iden="original is finer" }
-  } else if (setequal(set_org, set_annot)==T) {
-    iden_org_found$iden="identical"
-    iden_org_found$org="na"
-    iden_org_found$found="na"
-  } else if ((setequal(set_org, set_annot)==F)){
-    iden_org_found$org=setdiff(set_org, set_annot)
-    iden_org_found$found=setdiff(set_annot, set_org)
-    iden_org_found$iden="partial"
-    if (all(set_org %in% set_annot)==T) {iden_org_found$iden="original is subset"}
-    if (all(set_annot %in% set_org)==T) {iden_org_found$iden="auto_annot is subset"}
-  }
-  return(iden_org_found)
-}
-
-
-
-#' @title Compares  orignal annotationd vs. auto_annotations and returns a vector of relatinships summarized by comp.sets()
-#' @description Compares  orignal annotationd vs. auto_annotations and returns a vector of relatinships summarized by comp.sets().
-#' @param ontology ontology with ontology$annot_characters
-#' @param annot.auto annot.auto=grep_all_chars; from grep search
-#' @return Vector with relatinships; each name is a character ID.
-#' @examples
-#' com_lists=compare_annot(ontology, grep_all_chars)
-
-compare_annot<-function(ontology, annot.auto){
-  out.list=c()
-  for (i in seq_along(annot.auto)){
-    char_id=ontology$id_characters[i]
-    #out.list$ids[i]=i
-    if (length(ontology$annot_characters[[char_id]])>0){
-      comp.list=comp.sets(ontology$annot_characters[[char_id]], annot.auto[[char_id]])
-      out.list=c(out.list, comp.list$iden)
-      #out.list$identical[i]=comp.list$iden
-      #out.list$original_missing[[i]]=comp.list$org
-      #out.list$found_missing[[i]]=comp.list$found
-    }
-    else out.list=c(out.list, "character abscent")
-  }
-  #names(out.list)<-names(ontology$id_characters)
-  return(out.list)
-}
-#length(which(com_lists=="none"))
-#cbind(com_lists)
-
-#' @title Compares  orignal annotationd vs. auto_annotations and returns a table of comparisons
-#' @description Compares  orignal annotationd vs. auto_annotations and returns a table of comparisons. depends on compare_annot()
-#' @param ontology ontology with ontology$annot_characters
-#' @param grep_all_chars auto annotated chars from grep search
-#' @return Table.
-#' @examples
-#' tb_compar=get_comp_table(hao.obo, grep_all_chars)
-
-get_comp_table<-function(ontology, grep_all_chars){
-  com_lists=compare_annot(ontology, grep_all_chars)
-  dt_out=c()
-
-  for (i in seq_along(ontology$id_characters)){
-    c1=char_id=ontology$id_characters[i]
-    c2=ontology$name_characters[i]
-    c3=ontology$annot_characters[[char_id]]
-    c4=com_lists[i]
-    c5=grep_all_chars[[char_id]]
-
-    c3=paste(paste(c3, get_onto_name(c3, ontology), sep="-(", collapse="); "), ")", sep="")
-    c5=paste(paste(c5, get_onto_name(c5, ontology), sep="-(", collapse="); "), ")", sep="")
-
-    dt_out=rbind(dt_out, c(c1,c2,c3,c4,c5))
-  }
-  colnames(dt_out)<-c("id", "statemet", "original_annot", "compar_results", "suggested_annot")
-  return(dt_out)
-}
-
-# tb_compar=get_comp_table(hao.obo, grep_all_chars)
-# write.csv(tb_compar, file="auto_annatotated4.csv", row.names = F)
-
-
-
 
 
 

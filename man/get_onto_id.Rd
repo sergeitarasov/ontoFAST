@@ -2,7 +2,7 @@
 % Please edit documentation in R/Ontology_operations_main.R
 \name{get_onto_id}
 \alias{get_onto_id}
-\title{Returns IDs of ontology terms given terms' names}
+\title{IDs for ontology term names}
 \usage{
 get_onto_id(vec_name, ontology, names = F)
 }
@@ -21,5 +21,5 @@ Returns IDs of ontology terms given terms' names
 }
 \examples{
 vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
-get_onto_id(vec_name, hao.obo)
+get_onto_id(vec_name, HAO)
 }

@@ -21,5 +21,6 @@ Takes table where each row consists of charcter number and ontology annotations 
 Each character is assigned its own ID CHAR:XXXX
 }
 \examples{
-annotated.char.list=table2list(char.dt, 1, 3:9)
+# converting Sharkey_2011 data set to list of characater states
+list_data<-table2list(Sharkey_2011)
 }
