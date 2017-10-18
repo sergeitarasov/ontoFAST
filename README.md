@@ -8,7 +8,7 @@ The package provides convenient and efficient tools that allow linking character
 #### The workflow:
 1. Get your character statements and ontology which you want to use to link the characters with.
 2. Run automatic annotation of characters with ontology in R.
-3. Automatic annotations are not perfect, so post-process them manually using interactive environment straight from R.
+3. Automatic annotations are not perfect, so post-process them manually using interactive environment straight from R. The interactive mode visualizes the ontology as a network thus providing a convenient way to navigate through it.
 4. The annotations are done! Save them for future use or query them to get new insight into you characters.
 
 *The interactive environment for ontoFAST is created using R package [Shiny](https://shiny.rstudio.com/). Shiny builds interactive web apps right within R. The interactive tools of ontoFAST can be run in Rstudio or a web-browser.*
