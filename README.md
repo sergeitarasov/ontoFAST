@@ -7,7 +7,7 @@ The package provides convenient and efficient tools that allow linking character
 
 #### The workflow:
 1. Get your character statements and ontology which you want to use to link the characters with.
-2. Run automatic annotation of characters and ontology terms in R.
+2. Run automatic annotation of characters with ontology in R.
 3. Automatic annotations are not perfect, so post-process them manually using interactive environment straight from R.
 4. The annotations are done! Save them for future use or query them to get new insight into you characters.
 
