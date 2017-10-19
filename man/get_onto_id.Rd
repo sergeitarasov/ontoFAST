@@ -2,7 +2,7 @@
 % Please edit documentation in R/Ontology_operations_main.R
 \name{get_onto_id}
 \alias{get_onto_id}
-\title{IDs for ontology term names}
+\title{Get IDs for ontology names}
 \usage{
 get_onto_id(vec_name, ontology, names = F)
 }

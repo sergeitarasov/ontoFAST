@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{get_ancestors_chars}
 \alias{get_ancestors_chars}
-\title{Get all ancestal ontology terms in a given set of characters}
+\title{Get ancestal ontology terms for a set of characters}
 \usage{
 get_ancestors_chars(ontology, char_id)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{list2edges}
 \alias{list2edges}
-\title{Converts list of charater annotations to two-column edge matrix}
+\title{Converts list to edge matrix}
 \usage{
 list2edges(annotated.char.list, col_order_inverse = F)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{edges2list}
 \alias{edges2list}
-\title{Converts edge matrix of charater annotations to list}
+\title{Converts edge matrix to list}
 \usage{
 edges2list(edge.matrix)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{table2list}
 \alias{table2list}
-\title{Converts table of charater annotations to list}
+\title{Converts table to list}
 \usage{
 table2list(table, id_col = c(1), descendants_cols = c(2:ncol(table)))
 }

@@ -11,18 +11,7 @@ devtools::use_package("magrittr", type = "Depends")
 devtools::use_package("devtools", type = "Depends")
 #############
 
-
-# list of functions
-#gt.name<-function(vec, onto, names=F)
-#syn.extract<-function(onto.syn)
-#distance.statement.match<-function(statement, onto.terms)
-#distance.all.match<-function(statement, onto.obj, thresh=0.7, include_synonyms=F)
-#onto.match<-function(onto.names, char.statement, onto.obj, min_set=T)
-#
-#
-#
-
-#' @title Term names for ontology IDs
+#' @title Get names for ontology IDs
 #' @description Returns names of ontology terms for ontology IDs
 #' @param vec ID or IDs
 #' @param onto ontology
@@ -30,6 +19,7 @@ devtools::use_package("devtools", type = "Depends")
 #' @return vector.
 #' @examples
 #' get_onto_name("HAO:0002272", HAO)
+#' @export
 
 get_onto_name<-function(vec, onto, names=F){
   #name.vec=onto$name[onto$id%in%unlist(vec, use.names = FALSE)]
@@ -40,7 +30,7 @@ get_onto_name<-function(vec, onto, names=F){
 
 
 
-#' @title IDs for ontology term names
+#' @title Get IDs for ontology names
 #' @description Returns IDs of ontology terms given terms' names
 #' @param vec_name term names
 #' @param onto ontology
@@ -49,6 +39,7 @@ get_onto_name<-function(vec, onto, names=F){
 #' @examples
 #' vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
 #' get_onto_id(vec_name, HAO)
+#' @export
 
 get_onto_id<-function(vec_name, ontology, names=F){
   match_vec<-match(unlist(vec_name, use.names = FALSE), ontology$name)
@@ -66,7 +57,7 @@ get_onto_id<-function(vec_name, ontology, names=F){
 #' @return The vector with ontology IDs and synonym names.
 #' @examples
 #' parsed_synonyms<-syn_extract(HAO)
-
+#' @export
 
 syn_extract<-function(ontology, list_id="synonym"){
   syn.raw=utils::stack(ontology[[list_id]])
@@ -87,6 +78,7 @@ syn_extract<-function(ontology, list_id="synonym"){
 #' @return The vector of matches ontology terms.
 #' @examples
 #' annot_char_grep(HAO, "Mola on right mandible")
+#' @export
 
 annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=TRUE){
   if (use.synonyms) search_terms=c(ontology$name, ontology$parsed_synonyms)
@@ -126,6 +118,7 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 #'
 #' # running annotations
 #' auto_annotations<-annot_all_chars(ontology)
+#' @export
 
 annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
   print("Doing automatic annotation of characters with ontology terms...")

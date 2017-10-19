@@ -8,7 +8,7 @@
 #' @examples
 #' #shiny_in<-make_shiny_in(HAO)
 #' #runOntoFast(show.chars=F)
-
+#' @export
 
 runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", show.chars=T,  ...){
 

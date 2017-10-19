@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{all_char_paths}
 \alias{all_char_paths}
-\title{Summarizes path of all ancestors (names) for every annotate character}
+\title{Get all ontology ancestors for a character}
 \usage{
 all_char_paths(ontology, sep = " | ")
 }

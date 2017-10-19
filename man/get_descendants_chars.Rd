@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{get_descendants_chars}
 \alias{get_descendants_chars}
-\title{Get all character IDs descending from specified term}
+\title{Get characters that descendants of selected ontology term}
 \usage{
 get_descendants_chars(ontology, terms, ...)
 }

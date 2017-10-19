@@ -1,7 +1,7 @@
 #list to table
 #plyr::ldply(annotated.char.list, rbind) #list to table
 #################################################### BASIC LIST FUNCTIOINS
-#' @title Converts table of charater annotations to list
+#' @title Converts table to list
 #' @description Takes table where each row consists of charcter number and ontology annotations and returns a list.
 #' Each character is assigned its own ID CHAR:XXXX
 #' @param table A character table with annotations.
@@ -11,6 +11,7 @@
 #' @examples
 #' # converting Sharkey_2011 data set to list of characater states
 #' list_data<-table2list(Sharkey_2011)
+#' @export
 
 table2list<-function(table, id_col=c(1), descendants_cols=c(2:ncol(table))){
 annotated.char.list=list()
@@ -24,7 +25,7 @@ return(annotated.char.list)
 
 
 
-#' @title Converts list of charater annotations to two-column edge matrix
+#' @title Converts list to edge matrix
 #' @description Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
 #' @param annotated.char.list Character list with ontology annotations.
 #' @param col_order_inverse The default creates the first columns consisting if character IDs and the second columns consisting of ontology annatotaions.
@@ -33,6 +34,7 @@ return(annotated.char.list)
 #' @examples
 #' annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 #' list2edges(annot_list)
+#' @export
 
 list2edges<-function(annotated.char.list, col_order_inverse=F){
 annotated.vec=setNames(unlist(annotated.char.list, use.names=F),rep(names(annotated.char.list), lengths(annotated.char.list)))
@@ -46,7 +48,7 @@ return(edge.matrix)
 
 
 
-#' @title Converts edge matrix of charater annotations to list
+#' @title Converts edge matrix to list
 #' @description Takes two columns edge matrix (columns from and two) and produces list
 #' @param edge.matrix Two-columns edge matrix.
 #' @return The list.
@@ -54,6 +56,7 @@ return(edge.matrix)
 #' annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 #' edge.matrix<-list2edges(annot_list)
 #' edges2list(edge.matrix)
+#' @export
 
 edges2list<-function(edge.matrix){
 uniq_ids=unique(edge.matrix[,1])
@@ -68,7 +71,7 @@ return(list.from.edge)
 
 
 
-#' @title Get all character IDs descending from specified term
+#' @title Get characters that descendants of selected ontology term
 #' @description Returns all characters located (associated) with a given ontology terms
 #' @param ontology ontology_index object.
 #' @param terms IDs of ontology terms for which descendants are queried.
@@ -78,6 +81,7 @@ return(list.from.edge)
 #' ontology<-HAO
 #' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' get_descendants_chars(ontology, "HAO:0000653")
+#' @export
 
 get_descendants_chars<-function(ontology, terms, ...){
   onto_chars_list=list2edges(ontology$annot_characters, col_order_inverse=T)
@@ -89,7 +93,7 @@ get_descendants_chars<-function(ontology, terms, ...){
 
 
 
-#' @title Get all ancestal ontology terms in a given set of characters
+#' @title Get ancestal ontology terms for a set of characters
 #' @description Returns all ontology terms which are ancestors of a given character set
 #' @param ontology ontology_index object with character annatotions included (ontology$annot_characters).
 #' @param char_id IDs of character.
@@ -98,6 +102,7 @@ get_descendants_chars<-function(ontology, terms, ...){
 #' ontology<-HAO
 #' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' get_ancestors_chars(ontology, c("CHAR:1","CHAR:2"))
+#' @export
 
 get_ancestors_chars<-function(ontology, char_id){
   ontologyIndex::get_ancestors(ontology, unlist(ontology$annot_characters[char_id], use.names = FALSE))
@@ -113,6 +118,7 @@ get_ancestors_chars<-function(ontology, char_id){
 #' ontology<-HAO
 #' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' chars_per_term(ontology)
+#' @export
 
 chars_per_term<-function(ontology){
   all_des=pblapply(ontology$id, function(x) {get_descendants_chars(ontology, x)})
@@ -126,7 +132,7 @@ chars_per_term<-function(ontology){
 #write.csv(terms_tb, file="n_characters_per_term.csv")
 
 
-#' @title Summarizes path of all ancestors (names) for every annotate character
+#' @title Get all ontology ancestors for a character
 #' @description Returns matrix with character ids and their ancestor paths
 #' @param ontology ontology_index object with character annatotions included (ontology$annot_characters).
 #' @param sep separator use to delimit ontology terms
@@ -144,6 +150,7 @@ chars_per_term<-function(ontology){
 #' ontology$id_characters<-id_characters
 #' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' #' all_char_paths(ontology)
+#' @export
 
 all_char_paths<-function(ontology, sep=" | "){
   f<-function(char) rev(get_onto_name(get_ancestors_chars(ontology, char), ontology))
@@ -246,8 +253,7 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
 
 
 
-###############################################
-#### Similar to above but for ancestors
+
 #
 # #' @title Makes dataframe of ancestors to plot using visNetwork
 # #' @description Returns a list of two dataframes: nodes and edges
@@ -327,6 +333,7 @@ get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050")
 #' @return Ontology index object named as shiny_in.
 #' @examples
 #' make_shiny_in(HAO)
+#' @export
 
 make_shiny_in<-function(ontology){
 
@@ -368,8 +375,6 @@ map_obj<-function(obj, nchar){
   return(map_f)
 }
 
-#map_f=c("checkbox1", "checkbox2", "checkbox3")
-#names(map_f)<-c("ids_selec1", "ids_selec2", "ids_selec3")
 
 
 
