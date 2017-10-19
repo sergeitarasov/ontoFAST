@@ -28,7 +28,7 @@ get_onto_name<-function(vec, onto, names=F){
   return(name.vec)
 }
 
-
+#sdfscf
 
 #' @title Get IDs for ontology names
 #' @description Returns IDs of ontology terms given terms' names
