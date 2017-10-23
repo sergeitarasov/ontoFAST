@@ -8,15 +8,16 @@ devtools::use_package("shinydashboard", type = "Depends")
 devtools::use_package("visNetwork", type = "Depends")
 devtools::use_package("stringr", type = "Depends")
 devtools::use_package("magrittr", type = "Depends")
-devtools::use_package("devtools", type = "Depends")
+#devtools::use_package("devtools", type = "Depends")
+devtools::use_package("plyr", type = "Depends")
 #############
 
 #' @title Get names for ontology IDs
 #' @description Returns names of ontology terms for ontology IDs
-#' @param vec ID or IDs
+#' @param vec ID or a vector of IDs
 #' @param onto ontology
-#' @param names add element names
-#' @return vector.
+#' @param names use element name
+#' @return vector of names.
 #' @examples
 #' get_onto_name("HAO:0002272", HAO)
 #' @export
@@ -28,16 +29,14 @@ get_onto_name<-function(vec, onto, names=F){
   return(name.vec)
 }
 
-#sdfscf
-#sfvdfv
 
 
 #' @title Get IDs for ontology names
 #' @description Returns IDs of ontology terms given terms' names
-#' @param vec_name term names
+#' @param vec_name names od terms
 #' @param onto ontology
-#' @param names add element names
-#' @return vector.
+#' @param names use element name
+#' @return vector of IDs.
 #' @examples
 #' vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
 #' get_onto_id(vec_name, HAO)
@@ -53,10 +52,10 @@ get_onto_id<-function(vec_name, ontology, names=F){
 
 
 #' @title Link synonyms with ontology terms
-#' @description Extracts and parses synonyms from ontology to make them readable
+#' @description Extracts and parses synonyms from ontology to make them readable and searchable
 #' @param ontology ontology_index object.
-#' @param list_id theu ID of list element where synonyms are stored
-#' @return The vector with ontology IDs and synonym names.
+#' @param list_id ID of list where synonyms are stored
+#' @return vector of ontology IDs and synonym names.
 #' @examples
 #' parsed_synonyms<-syn_extract(HAO)
 #' @export
@@ -72,10 +71,10 @@ syn_extract<-function(ontology, list_id="synonym"){
 
 #' @title Annotate a character statement with ontology terms
 #' @description Matches character statement and returns most similar ontology terms
-#' @param ontology ontology_index object.
+#' @param ontology ontology.
 #' @param char.statement character statement
-#' @param use.synonyms using synonyms list during search. It has to be included in ontology,
-#' see syn_extract()
+#' @param use.synonyms if TRUE then the synonyms are used during search. The synonyms have to be included in the ontology using
+#' syn_extract() function
 #' @param min_set if TRUE eliminates higher order inferred ontology terms
 #' @return The vector of matches ontology terms.
 #' @examples
@@ -175,3 +174,17 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
 "HAO"
 
+
+#' Ontology terms to exclude for sunburst plot
+#'
+#' LIst of ontology terms from Hymenoptera Anatomy ontology that migh be thought of
+#' as redundant and excluded from some operations.
+#'
+#' @docType data
+#'
+#' @format List containing ontological terms.
+#'
+#'
+#' @examples
+#' exlude_terms
+"exlude_terms"

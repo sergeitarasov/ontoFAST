@@ -1,7 +1,4 @@
-#list to table
-#plyr::ldply(annotated.char.list, rbind) #list to table
-#################################################### BASIC LIST FUNCTIOINS
-#' @title Converts table to list
+#' @title Convert table to list
 #' @description Takes table where each row consists of charcter number and ontology annotations and returns a list.
 #' Each character is assigned its own ID CHAR:XXXX
 #' @param table A character table with annotations.
@@ -25,15 +22,18 @@ return(annotated.char.list)
 
 
 
-#' @title Converts list to edge matrix
+#' @title Convert list to edge matrix
 #' @description Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
+#' The list to table conversion can be done using ldply function from plyr package: plyr::ldply(list, rbind).
 #' @param annotated.char.list Character list with ontology annotations.
 #' @param col_order_inverse The default creates the first columns consisting if character IDs and the second columns consisting of ontology annatotaions.
 #' The inverse order changes the columns order.
-#' @return Two-columns matrix.
+#' @return Two-column matrix.
 #' @examples
 #' annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 #' list2edges(annot_list)
+#' # attache plyr package and run
+#' # ldply(annot_list, rbind)
 #' @export
 
 list2edges<-function(annotated.char.list, col_order_inverse=F){
@@ -48,7 +48,7 @@ return(edge.matrix)
 
 
 
-#' @title Converts edge matrix to list
+#' @title Convert edge matrix to list
 #' @description Takes two columns edge matrix (columns from and two) and produces list
 #' @param edge.matrix Two-columns edge matrix.
 #' @return The list.
@@ -74,17 +74,33 @@ return(list.from.edge)
 #' @title Get characters that descendants of selected ontology term
 #' @description Returns all characters located (associated) with a given ontology terms
 #' @param ontology ontology_index object.
+#' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
+#' Alternatively, any othe list element containing annotations can be specified.
 #' @param terms IDs of ontology terms for which descendants are queried.
 #' @param ... other parameters for ontologyIndex::get_descendants() function
 #' @return The vector of character IDs.
 #' @examples
 #' ontology<-HAO
-#' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
-#' get_descendants_chars(ontology, "HAO:0000653")
+#' ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+#' get_descendants_chars(ontology, annotations="manual", "HAO:0000653")
 #' @export
 
-get_descendants_chars<-function(ontology, terms, ...){
-  onto_chars_list=list2edges(ontology$annot_characters, col_order_inverse=T)
+get_descendants_chars<-function(ontology, annotations="auto", terms, ...){
+
+  if (is.list(annotations)){
+    annot_list<-annotations # specify your annotation list
+  } else {
+
+    if (annotations=="auto"){
+      annot_list<-ontology$auto_annot_characters
+    }
+    if (annotations=="manual"){
+      annot_list<-ontology$terms_selected_id
+    }
+  }
+
+
+  onto_chars_list=list2edges(annot_list, col_order_inverse=T)
   descen<-unique(onto_chars_list[,2][onto_chars_list[,1] %in%
                                        ontologyIndex::get_descendants(ontology=ontology, roots=terms, ...)])
   return(descen)
@@ -97,31 +113,53 @@ get_descendants_chars<-function(ontology, terms, ...){
 #' @description Returns all ontology terms which are ancestors of a given character set
 #' @param ontology ontology_index object with character annatotions included (ontology$annot_characters).
 #' @param char_id IDs of character.
+#' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
+#' Alternatively, any othe list element containing annotations can be specified.
 #' @return The vector of ontology terms IDs.
 #' @examples
 #' ontology<-HAO
-#' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
-#' get_ancestors_chars(ontology, c("CHAR:1","CHAR:2"))
+#' ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+#' get_ancestors_chars(ontology, c("CHAR:1","CHAR:2"), annotations="manual")
 #' @export
 
-get_ancestors_chars<-function(ontology, char_id){
-  ontologyIndex::get_ancestors(ontology, unlist(ontology$annot_characters[char_id], use.names = FALSE))
+get_ancestors_chars<-function(ontology, char_id, annotations="auto" ){
+
+  if (is.list(annotations)){
+    annot_list<-annotations # specify your annotation list
+  } else {
+
+    if (annotations=="auto"){
+      annot_list<-ontology$auto_annot_characters
+    }
+    if (annotations=="manual"){
+      annot_list<-ontology$terms_selected_id
+    }
+  }
+
+
+  ontologyIndex::get_ancestors(ontology, unlist(annot_list[char_id], use.names = FALSE))
 }
+
+
 
 
 
 #' @title Get number of chracters per each ontology term
 #' @description Returns matrix summarizing  number of characters per each ontology terms in descending order
 #' @param ontology ontology_index object with character annatotions included (ontology$annot_characters).
+#' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
+#' Alternatively, any othe list element containing annotations can be specified.
 #' @return The matrix of ontology terms IDs, their names and character number.
 #' @examples
 #' ontology<-HAO
-#' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
-#' chars_per_term(ontology)
+#' ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+#' chars_per_term(ontology, annotations="manual")
 #' @export
 
-chars_per_term<-function(ontology){
-  all_des=pblapply(ontology$id, function(x) {get_descendants_chars(ontology, x)})
+
+chars_per_term<-function(ontology, annotations="auto"){
+
+  all_des=pblapply(ontology$id, function(x) {get_descendants_chars(ontology, annotations=annotations, x)})
   char_per_term=unlist(lapply(all_des, length))
   term_tb=char_per_term[order(char_per_term, decreasing=T)]
   term_tb=cbind(names(term_tb), get_onto_name(names(term_tb), ontology, names=F), unname(term_tb))
@@ -132,35 +170,67 @@ chars_per_term<-function(ontology){
 #write.csv(terms_tb, file="n_characters_per_term.csv")
 
 
-#' @title Get all ontology ancestors for a character
-#' @description Returns matrix with character ids and their ancestor paths
-#' @param ontology ontology_index object with character annatotions included (ontology$annot_characters).
-#' @param sep separator use to delimit ontology terms
-#' @return The matrix.
+#' @title Return ontology paths for characters
+#' @description Returns ontology paths for all characters. These paths can be used to create a sunburst plot of
+#' ontological dependencies.
+#' @param ontology ontology_index object with character annatotions included.
+#' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
+#' Alternatively, any othe list element containing annotations can be specified.
+#' @param exclude.terms list of terms to exclude
+#' @param sep separator used to delimit ontology terms
+#' @return Table.
 #' @examples
-#' #getting ontology
-#' ontology<-HAO
-#' # reading in characters
-#' char_et_states<-Sharkey_2011
-#' # embedding characters and character ids into ontology
-#' id_characters<-paste("CHAR:",c(1:392), sep="")
-#' name_characters<-char_et_states[,1]
-#' names(name_characters)<-id_characters
-#' ontology$name_characters<-name_characters
-#' ontology$id_characters<-id_characters
-#' ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
-#' #' all_char_paths(ontology)
+#' # reading in ontology and part_of relatinships only
+#' # ontology_partof=get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+#' #                        extract_tags="everything", propagate_relationships = c("BFO:0000050"))
+#' # atomatically annotating ontology
+#' # ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
+#' # creating character paths; exluding redundant terms
+#' # tb<-paths_sunburst(ontology_partof, annotations = ontology_annot$auto_annot_characters, exclude.terms=exlude_terms)
+#' # intall sunburstR package if you lack it
+#' # library(sunburstR)
+#' # create sunburst plot
+#' # sunburst(tb)
 #' @export
 
-all_char_paths<-function(ontology, sep=" | "){
-  f<-function(char) rev(get_onto_name(get_ancestors_chars(ontology, char), ontology))
-  list_paths=lapply(names(ontology$annot_characters), function(x) paste(f(x), collapse=sep))
-  slec_names=ontology$name_characters[ontology$id_characters%in%names(ontology$annot_characters)]
-  out<-cbind(names(ontology$annot_characters), slec_names, unlist(list_paths))
-  colnames(out)<-c("ID", "Statement", "Full_ontology_anotation")
-  return(out)
+paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, sep="-"){
+
+  if (is.list(annotations)){
+    annot_list<-annotations # specify your annotation list
+  } else {
+
+    if (annotations=="auto"){
+      annot_list<-ontology$auto_annot_characters
+    }
+    if (annotations=="manual"){
+      annot_list<-ontology$terms_selected_id
+    }
+  }
+
+  annot_list<-list2edges(annot_list)
+
+  f<-function(char_id) {
+    anc<-get_onto_name(ontologyIndex::get_ancestors(ontology, char_id), ontology)
+    # if (length(exclude.terms)>1){
+    anc<-anc[!anc%in%exclude.terms]
+    # }
+    return(anc)
+  }
+
+  list_paths=c()
+  for (i in 1:nrow(annot_list)){
+    list_paths=c(list_paths, paste(c( gsub("-", " ", f(annot_list[i,2])),
+                                      annot_list[i,1]), collapse=sep))
+  }
+
+
+  tb<-data.frame(paths=list_paths, count=rep(1, length(list_paths)), stringsAsFactors =F)
+
+  return(tb)
 
 }
+
+
 
 
 #
@@ -367,12 +437,171 @@ return(shiny_in)
 
 
 
+#' @title Export annotation data
+#' @description This function converts character annotations stored in shiny_in object to table format.
+#' @param ontology Ontology
+#' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
+#' Alternatively, any othe list element containing annotations can be specified.
+#' @param incl.names if TRUE includes terms' names and IDs, otherwise includes just IDs.
+#' @param sep.head if incl.names=TRUE, this is a separator attached to the begining of term's ID
+#' @param sep.tail if incl.names=TRUE, this is a separator attached to the end of term's ID
+#' @param collapse if NULL all annotations of a term placed in separate columns, if a value is specified (e.g., "; ") then all anotations
+#' are collapsed in one line given that values
+#' @return Returns a table
+#' @examples
+#' # tb<-export_annotations(shiny_in, annotations="manual", incl.names=T,collapse="; ")
+#' # tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse="; ")
+#' # tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse=NULL)
+#' # save annotations in csv
+#' # write.csv(tb, "annotated_characters.csv")
+#' @export
 
-####Function to create mapping for Shiny
+
+export_annotations<-function(ontology, annotations="auto", incl.names=F, sep.head=", ", sep.tail=NULL, collapse=NULL){
+
+  if (is.list(annotations)){
+    annot_list<-annotations # specify your annotation list
+  } else {
+
+    if (annotations=="auto"){
+      annot_list<-ontology$auto_annot_characters
+    }
+    if (annotations=="manual"){
+      annot_list<-ontology$terms_selected_id
+    }
+  }
+
+  annot.export<-annot_list
+
+  if (incl.names==TRUE){
+    annot.export<- lapply(
+    annot_list, function(x) {
+      paste(get_onto_name(x, ontology), paste(sep.head, x, sep.tail, sep=""), sep="")
+    })
+  }
+
+ #annot.export[["CHAR:391"]]<-NULL
+  annot.export[annot.export ==", "]<-NA
+
+  #which are absent
+ absent<-ontology$id_characters[!(ontology$id_characters %in% names(annot.export))]
+
+ # insert absent
+ annot.export<-c(annot.export, as.list(setNames(rep(NA, length(absent)), absent)))
+
+ #sort list
+ annot.export<-annot.export[ontology$id_characters]
+
+ annot.export<-lapply(annot.export, function(x){paste(x, collapse=collapse)})
+
+
+ table_annot<-plyr::ldply(annot.export, rbind)
+ table_annot<-as.matrix(table_annot)
+ table_annot<-cbind(table_annot[,1], unname(ontology$name_characters), table_annot[,2:ncol(table_annot)])
+ colnames(table_annot)<-c("ID", "Character statement", rep("Annotation", ncol(table_annot)-2))
+
+ return(table_annot)
+
+
+}
+
+#' @title Export to Cytoscape format
+#' @description This function converts character annotations to Cytoscape format. It returns a table that can be saved as in csv format
+#' and imported using Cytoscape. In Cytoscape choose File -> Import -> Network -> File. The assign columns to nodes and edges. Do not select
+#' columns that enumerated the tables' rows.
+#' @param ontology Ontology
+#' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
+#' Alternatively, any othe list element containing annotations can be specified.
+#' @param is_a is_a
+#' @param part_of part_of
+#' @return Returns a table
+#' @examples
+#' # cyto<-export_cytoscape(shiny_in)
+#' # write.csv(cyto, "cyto_exp.csv")
+#' @export
+
+
+export_cytoscape<-function(ontology, annotations="auto", is_a=c("is_a"), part_of=c("BFO:0000050")   ){
+
+  if (is.list(annotations)){
+    annot_list<-annotations # specify your annotation list
+  } else {
+
+    if (annotations=="auto"){
+      annot_list<-ontology$auto_annot_characters
+    }
+    if (annotations=="manual"){
+      annot_list<-ontology$terms_selected_id
+    }
+  }
+
+
+  # get Part_of relatinshisp
+  partof<-list2edges(ontology[[part_of]])
+  partof<-cbind(partof, rep("part_of", nrow(partof)))
+  partof<-cbind(get_onto_name(partof[,1], ontology), partof)
+
+  # get is_a
+  isa<-list2edges(ontology[[is_a]])
+  isa<-cbind(isa, rep("is_a", nrow(isa)))
+  isa<-cbind(get_onto_name(isa[,1], ontology), isa)
+
+  # get char_of
+  charof<-list2edges(annot_list)
+  charof<-cbind(charof, rep("char_of", nrow(charof)))
+  charof<-cbind(unname(
+  ontology$name_characters[c(na.omit(match(unlist(charof[,1], use.names = FALSE), names(ontology$name_characters)  )))]
+  ), charof)
+
+  # bind all
+  cyto<-rbind(charof, partof, isa)
+
+  return(cyto)
+
+}
+
+
+
+
+####Function to create mapping for Shiny objects
 map_obj<-function(obj, nchar){
   map_f=paste(obj, c(1:nchar), sep="")
   names(map_f)<-paste(c(1:nchar), sep="")
   return(map_f)
+}
+#############
+
+
+
+#' @title Shortcut to process characters and ontology
+#' @description This is a shortcut function to make characters and ontology suitable for visualization using ontoFAST interactive tools.
+#' @param ontology Ontology
+#' @param name_characters a vector of character names
+#' @param do.annot specifiees if you need to run automatic annotations or not
+#' @return Ontology index object named
+#' @examples
+#' ## automatically preprocess ontology
+#' # onto<-onto_process(HAO, Sharkey_2011[,1])
+#' ## make shiny_in object
+#' # shiny_in<<-make_shiny_in(onto)
+#' ## run interactively to show only 50 characters
+#' # runOntoFast(nchar=50, show.chars=T)
+#' @export
+
+
+onto_process<-function(ontology, name_characters, do.annot=TRUE, ...){
+  id_characters<-paste("CHAR:", c(1:length(name_characters)), sep="")
+  ontology$id_characters<-id_characters
+  names(name_characters)<-id_characters
+  ontology$name_characters<-name_characters
+
+  if (do.annot){
+ ontology$parsed_synonyms<-syn_extract(ontology)
+ ontology$auto_annot_characters<-annot_all_chars(ontology, ...)
+  }
+
+ return(ontology)
+
 }
 
 

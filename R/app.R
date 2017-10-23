@@ -1,10 +1,10 @@
-#' @title Run OntoFAST interactively
-#' @description Runh shiny
-#' @param is_a is_a
-#' @param part_of part_of
+#' @title Run ontoFAST interactively
+#' @description This function runs ontoFAST in interactive mode. Interactive mode allows manual character annotation and navigation through ontology network.
+#' @param is_a term for is_a relatinships
+#' @param part_of term for part_of relatinships
 #' @param nchar number of characters to show
-#' @param show.chars Shows character statements
-#' @return runs app.
+#' @param show.chars shows character statements
+#' @return runs ontoFAST intereactively using Shiny.
 #' @examples
 #' #shiny_in<-make_shiny_in(HAO)
 #' #runOntoFast(show.chars=F)
@@ -212,7 +212,12 @@ server <- function(input, output, session) {
                                                 textInput(paste0("ids_in", n), label = "", value = "", placeholder="Enter your ID"),
                                                 actionButton(paste0("add_btn", n), label = "Add",
                                                              icon = icon("glyphicon glyphicon-download", lib="glyphicon")),
-                                                checkboxGroupInput(paste0("checkbox",n),label=NA, choices=shiny_in$auto_annot_characters_id_name[[shiny_in$id_characters[n]]],
+
+
+
+
+                                                checkboxGroupInput(paste0("checkbox",n),label=NA,
+                                                                   choices=shiny_in$auto_annot_characters_id_name[[shiny_in$id_characters[n]]],
                                                                    selected=shiny_in$terms_selected[[shiny_in$id_characters[n]]]),
 
 
