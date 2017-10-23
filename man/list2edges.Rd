@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{list2edges}
 \alias{list2edges}
-\title{Converts list to edge matrix}
+\title{Convert list to edge matrix}
 \usage{
 list2edges(annotated.char.list, col_order_inverse = F)
 }
@@ -13,12 +13,15 @@ list2edges(annotated.char.list, col_order_inverse = F)
 The inverse order changes the columns order.}
 }
 \value{
-Two-columns matrix.
+Two-column matrix.
 }
 \description{
 Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
+The list to table conversion can be done using ldply function from plyr package: plyr::ldply(list, rbind).
 }
 \examples{
 annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 list2edges(annot_list)
+# attache plyr package and run
+# ldply(annot_list, rbind)
 }

@@ -2,6 +2,7 @@
 # package Dependencies
 devtools::use_package("pbapply", type = "Depends")
 devtools::use_package("ontologyIndex", type = "Depends")
+devtools::use_package("plyr", type = "Depends")
 devtools::use_package("dplyr", type = "Depends")
 devtools::use_package("shiny", type = "Depends")
 devtools::use_package("shinydashboard", type = "Depends")
@@ -9,7 +10,7 @@ devtools::use_package("visNetwork", type = "Depends")
 devtools::use_package("stringr", type = "Depends")
 devtools::use_package("magrittr", type = "Depends")
 #devtools::use_package("devtools", type = "Depends")
-devtools::use_package("plyr", type = "Depends")
+#devtools::use_package("sunburstR", "Suggests")
 #############
 
 #' @title Get names for ontology IDs
@@ -34,7 +35,7 @@ get_onto_name<-function(vec, onto, names=F){
 #' @title Get IDs for ontology names
 #' @description Returns IDs of ontology terms given terms' names
 #' @param vec_name names od terms
-#' @param onto ontology
+#' @param ontology ontology
 #' @param names use element name
 #' @return vector of IDs.
 #' @examples

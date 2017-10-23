@@ -4,10 +4,13 @@
 \alias{chars_per_term}
 \title{Get number of chracters per each ontology term}
 \usage{
-chars_per_term(ontology)
+chars_per_term(ontology, annotations = "auto")
 }
 \arguments{
 \item{ontology}{ontology_index object with character annatotions included (ontology$annot_characters).}
+
+\item{annotations}{which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
+Alternatively, any othe list element containing annotations can be specified.}
 }
 \value{
 The matrix of ontology terms IDs, their names and character number.
@@ -17,6 +20,6 @@ Returns matrix summarizing  number of characters per each ontology terms in desc
 }
 \examples{
 ontology<-HAO
-ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
-chars_per_term(ontology)
+ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+chars_per_term(ontology, annotations="manual")
 }

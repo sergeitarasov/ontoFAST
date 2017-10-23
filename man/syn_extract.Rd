@@ -9,13 +9,13 @@ syn_extract(ontology, list_id = "synonym")
 \arguments{
 \item{ontology}{ontology_index object.}
 
-\item{list_id}{theu ID of list element where synonyms are stored}
+\item{list_id}{ID of list where synonyms are stored}
 }
 \value{
-The vector with ontology IDs and synonym names.
+vector of ontology IDs and synonym names.
 }
 \description{
-Extracts and parses synonyms from ontology to make them readable
+Extracts and parses synonyms from ontology to make them readable and searchable
 }
 \examples{
 parsed_synonyms<-syn_extract(HAO)

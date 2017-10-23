@@ -8,12 +8,12 @@ annot_char_grep(ontology, char.statement, use.synonyms = TRUE,
   min_set = TRUE)
 }
 \arguments{
-\item{ontology}{ontology_index object.}
+\item{ontology}{ontology.}
 
 \item{char.statement}{character statement}
 
-\item{use.synonyms}{using synonyms list during search. It has to be included in ontology,
-see syn_extract()}
+\item{use.synonyms}{if TRUE then the synonyms are used during search. The synonyms have to be included in the ontology using
+syn_extract() function}
 
 \item{min_set}{if TRUE eliminates higher order inferred ontology terms}
 }

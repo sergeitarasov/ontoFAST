@@ -4,12 +4,15 @@
 \alias{get_ancestors_chars}
 \title{Get ancestal ontology terms for a set of characters}
 \usage{
-get_ancestors_chars(ontology, char_id)
+get_ancestors_chars(ontology, char_id, annotations = "auto")
 }
 \arguments{
 \item{ontology}{ontology_index object with character annatotions included (ontology$annot_characters).}
 
 \item{char_id}{IDs of character.}
+
+\item{annotations}{which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
+Alternatively, any othe list element containing annotations can be specified.}
 }
 \value{
 The vector of ontology terms IDs.
@@ -19,6 +22,6 @@ Returns all ontology terms which are ancestors of a given character set
 }
 \examples{
 ontology<-HAO
-ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
-get_ancestors_chars(ontology, c("CHAR:1","CHAR:2"))
+ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+get_ancestors_chars(ontology, c("CHAR:1","CHAR:2"), annotations="manual")
 }

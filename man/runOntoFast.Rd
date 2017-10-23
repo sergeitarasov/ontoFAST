@@ -2,25 +2,25 @@
 % Please edit documentation in R/app.R
 \name{runOntoFast}
 \alias{runOntoFast}
-\title{Run OntoFAST interactively}
+\title{Run ontoFAST interactively}
 \usage{
 runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), nchar = "all",
   show.chars = T, ...)
 }
 \arguments{
-\item{is_a}{is_a}
+\item{is_a}{term for is_a relatinships}
 
-\item{part_of}{part_of}
+\item{part_of}{term for part_of relatinships}
 
 \item{nchar}{number of characters to show}
 
-\item{show.chars}{Shows character statements}
+\item{show.chars}{shows character statements}
 }
 \value{
-runs app.
+runs ontoFAST intereactively using Shiny.
 }
 \description{
-Runh shiny
+This function runs ontoFAST in interactive mode. Interactive mode allows manual character annotation and navigation through ontology network.
 }
 \examples{
 #shiny_in<-make_shiny_in(HAO)

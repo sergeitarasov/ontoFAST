@@ -7,14 +7,14 @@
 get_onto_id(vec_name, ontology, names = F)
 }
 \arguments{
-\item{vec_name}{term names}
+\item{vec_name}{names od terms}
 
-\item{names}{add element names}
+\item{ontology}{ontology}
 
-\item{onto}{ontology}
+\item{names}{use element name}
 }
 \value{
-vector.
+vector of IDs.
 }
 \description{
 Returns IDs of ontology terms given terms' names

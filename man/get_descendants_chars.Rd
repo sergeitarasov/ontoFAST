@@ -4,10 +4,13 @@
 \alias{get_descendants_chars}
 \title{Get characters that descendants of selected ontology term}
 \usage{
-get_descendants_chars(ontology, terms, ...)
+get_descendants_chars(ontology, annotations = "auto", terms, ...)
 }
 \arguments{
 \item{ontology}{ontology_index object.}
+
+\item{annotations}{which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
+Alternatively, any othe list element containing annotations can be specified.}
 
 \item{terms}{IDs of ontology terms for which descendants are queried.}
 
@@ -21,6 +24,6 @@ Returns all characters located (associated) with a given ontology terms
 }
 \examples{
 ontology<-HAO
-ontology$annot_characters<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
-get_descendants_chars(ontology, "HAO:0000653")
+ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
+get_descendants_chars(ontology, annotations="manual", "HAO:0000653")
 }

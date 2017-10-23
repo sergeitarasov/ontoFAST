@@ -79,7 +79,7 @@ sunburst(sequences)
 
 tb_viz<-system.file("examples/visit-sequences.csv",package="sunburstR")
 
-all_char_paths(ontology, sep = " | ")
+
 
 
 test<-data.frame(id = c("a-b-3", "a-b-2", "c-d-3", "c-d-2"),count=c(1,1,1,1))
