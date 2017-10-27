@@ -1,3 +1,5 @@
+install.packages()
+
 #save ontology
 #save(ontology, file="Ontology_HAO-save_before_expereminet.RData")
 require("ontologyIndex")
@@ -15,6 +17,8 @@ hao_obo$id_characters<-id_characters
 # reading characters and states
 #char_et_states<-read.csv("Sharkey_chars.csv", header=T,  stringsAsFactors = F, na.strings = "")
 char_et_states<-Sharkey_2011
+
+char_et_states<-read.csv(system.file("data_onto", "Sharkey_2011.csv", package = "ontoFAST"), header=T,  stringsAsFactors = F, na.strings = "")
 
 # creating character name vector
 name_characters<-char_et_states[,1]
@@ -34,7 +38,7 @@ hao_obo$auto_annot_characters<-annot_all_chars(hao_obo, use.synonyms=TRUE, min_s
 #make a global object
 shiny_in<<-make_shiny_in(hao_obo)
 #run OntoFast
-runOntoFast(nchar=5, show.chars=T)
+runOntoFast(nchar=156, show.chars=T)
 ontoFAST::runOntoFast()
 
 HAO$synonym
@@ -125,4 +129,17 @@ exlude_terms<-c("anatomical entity",
             "portion of tissue"
 )
 
+######### Read Istvan's annotations
 
+setwd("/home/tarasov/my-papers-2017/HAO_new")
+ist.annot<-read.csv("Istvan-annotations.csv", header=F,  stringsAsFactors = F, na.strings = "")
+Sharkey_2011_annot<-edges2list(ist.annot)
+length(ist.annot)
+devtools::use_data(exclude_terms)
+
+HAO$annot_characters<-
+
+  load(file="shiny_in.Rdata")
+exclude_terms <-exlude_terms
+
+devtools::use_build_ignore()

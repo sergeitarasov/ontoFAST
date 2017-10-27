@@ -1,9 +1,9 @@
 
 # package Dependencies
+devtools::use_package("plyr", type = "Depends")
 devtools::use_package("pbapply", type = "Depends")
 devtools::use_package("ontologyIndex", type = "Depends")
-devtools::use_package("plyr", type = "Depends")
-devtools::use_package("dplyr", type = "Depends")
+#devtools::use_package("dplyr", type = "Depends")
 devtools::use_package("shiny", type = "Depends")
 devtools::use_package("shinydashboard", type = "Depends")
 devtools::use_package("visNetwork", type = "Depends")
@@ -151,6 +151,9 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #'
 #' @examples
 #' chars<-Sharkey_2011
+#' # read .csv file directly
+#' #char_et_states<-read.csv(system.file("data_onto", "Sharkey_2011.csv", package = "ontoFAST"),
+#' # header=T,  stringsAsFactors = F, na.strings = "")
 "Sharkey_2011"
 
 
@@ -178,7 +181,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 
 #' Ontology terms to exclude for sunburst plot
 #'
-#' LIst of ontology terms from Hymenoptera Anatomy ontology that migh be thought of
+#' List of ontology terms from Hymenoptera Anatomy ontology that migh be thought of
 #' as redundant and excluded from some operations.
 #'
 #' @docType data
@@ -187,5 +190,24 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #'
 #'
 #' @examples
-#' exlude_terms
-"exlude_terms"
+#' exclude_terms
+"exclude_terms"
+
+
+
+#' Characters annotated with ontology terms
+#'
+#' List of character IDs and their ontology annotations. The characters are from Hymenoptera phylogeny (Sharkey et al., 2011: Cladistics).
+#' The ontology annotations are from Hymenoptera Anatomy Ontology (HAO).
+#'
+#' @docType data
+#'
+#' @format List containing characters and ontology terms.
+#'
+#' @references Sharkey, M.J., et al. 2011. Phylogenetic relationships among superfamilies of Hymenoptera. Cladistics 28(1), 80-112.
+#' (\href{http://onlinelibrary.wiley.com/doi/10.1111/j.1096-0031.2011.00366.x/full}{Read})
+#'
+#' @examples
+#' Sharkey_2011_annot
+"Sharkey_2011_annot"
+

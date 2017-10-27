@@ -186,7 +186,7 @@ chars_per_term<-function(ontology, annotations="auto"){
 #' # atomatically annotating ontology
 #' # ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
 #' # creating character paths; exluding redundant terms
-#' # tb<-paths_sunburst(ontology_partof, annotations = ontology_annot$auto_annot_characters, exclude.terms=exlude_terms)
+#' # tb<-paths_sunburst(ontology_partof, annotations = ontology_annot$auto_annot_characters, exclude.terms=exclude_terms)
 #' # intall sunburstR package if you lack it
 #' # library(sunburstR)
 #' # create sunburst plot

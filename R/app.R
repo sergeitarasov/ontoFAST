@@ -100,7 +100,7 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
              box(width = 5, height = "auto", title = NULL, style="padding:0px;",
 
                  fluidRow(box(style="padding:0px;",
-                              radioButtons("des_chk", label="Show upon expansion",  inline = T,
+                              radioButtons("des_chk", label="Show upon rendering",  inline = T,
                                            choices =list("descendants", "ancestors", "both"),
                                            selected =list("descendants")
                               )),
@@ -116,7 +116,7 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
                  selectizeInput("selectize", label = NULL, choices=NULL, selected = FALSE, multiple = FALSE, width = "auto",
                                 options = list(openOnFocus=F, maxOptions=100, placeholder="Enter term or ID"
                                 )),
-                 actionButton("select_descen", label = "Expand", icon = icon("glyphicon glyphicon-fullscreen", lib="glyphicon"))
+                 actionButton("select_descen", label = "Visualize", icon = icon("glyphicon glyphicon-fullscreen", lib="glyphicon"))
 
 
 
