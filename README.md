@@ -3,6 +3,8 @@
 # ontoFAST
 ### This is the R package for interactive, semi-automatic annotation of character matrices (character statements) with biological ontologies. 
 
+[Installation and Manual](https://github.com/sergeitarasov/ontoFAST/wiki)
+
 The package provides convenient and efficient tools that allow linking character statements used in phylogenetics with anatomy and phenotype ontologies. It also provides functions to query linked characters using ontological relationships. The prime aim of this package is to enhance integration of comparative phylogenetic methods with ontological approaches.
 
 #### The workflow:
