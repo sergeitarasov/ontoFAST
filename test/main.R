@@ -34,11 +34,13 @@ hao_obo$parsed_synonyms<-syn_extract(hao_obo)
 # automatic annotation
 hao_obo$auto_annot_characters<-annot_all_chars(hao_obo, use.synonyms=TRUE, min_set=TRUE)
 
+hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = F)
+
 #shiny_in<<-c()
 #make a global object
 shiny_in<<-make_shiny_in(hao_obo)
 #run OntoFast
-runOntoFast(nchar=156, show.chars=T)
+runOntoFast(nchar=5, show.chars=T)
 ontoFAST::runOntoFast()
 
 HAO$synonym

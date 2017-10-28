@@ -100,15 +100,29 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
              box(width = 5, height = "auto", title = NULL, style="padding:0px;",
 
                  fluidRow(box(style="padding:0px;",
-                              radioButtons("des_chk", label="Show upon rendering",  inline = T,
-                                           choices =list("descendants", "ancestors", "both"),
-                                           selected =list("descendants")
-                              )),
-                          box(style='padding:0px;',
-                              radioButtons("links_chk", label="Links to show",  inline = T,
-                                           choices =list("part_of", "is_a", "both"),
-                                           selected =list("both")
+
+                              selectInput("des_chk", "Show upon rendering",
+                                          choices =list("descendants", "ancestors", "both"),
+                                          selected =list("descendants")
                               )
+
+                              # radioButtons("des_chk", label="Show upon rendering",  inline = T,
+                              #              choices =list("descendants", "ancestors", "both"),
+                              #              selected =list("descendants")
+                              # )
+
+                              ),
+                          box(style='padding:0px;',
+
+                              selectInput("links_chk", label="Links to show",
+                                          choices =list("part_of", "is_a", "both"),
+                                          selected =list("both")
+                              )
+
+                              # radioButtons("links_chk", label="Links to show",  inline = T,
+                              #              choices =list("part_of", "is_a", "both"),
+                              #              selected =list("both")
+                              # )
                           )),
 
 
