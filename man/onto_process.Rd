@@ -13,7 +13,7 @@ onto_process(ontology, name_characters, do.annot = TRUE, ...)
 
 \item{do.annot}{specifiees if you need to run automatic annotations or not}
 
-\item{...}{other arguments}
+\item{...}{other arguments for annot_all_chars() function}
 }
 \value{
 Ontology index object named

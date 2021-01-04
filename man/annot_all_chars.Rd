@@ -36,5 +36,5 @@ ontology$name_characters<-name_characters
 ontology$id_characters<-id_characters
 
 # running annotations
-auto_annotations<-annot_all_chars(ontology)
+# auto_annotations<-annot_all_chars(ontology)
 }

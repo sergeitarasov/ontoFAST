@@ -18,11 +18,11 @@ Imports:
     stringr,
     utils,
     stats,
+    dplyr,
+    plyr,
     sunburstR
 Depends: 
     R (>= 3.5),
-    plyr,
-    dplyr,
     shiny
 Suggests: knitr,
     rmarkdown,

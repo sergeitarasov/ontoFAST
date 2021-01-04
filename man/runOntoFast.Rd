@@ -9,6 +9,7 @@ runOntoFast(
   part_of = c("BFO:0000050"),
   nchar = "all",
   show.chars = T,
+  shiny_in,
   ...
 )
 }
@@ -20,6 +21,8 @@ runOntoFast(
 \item{nchar}{number of characters to show}
 
 \item{show.chars}{shows character statements}
+
+\item{shiny_in}{shiny_in object}
 
 \item{...}{other arguments}
 }

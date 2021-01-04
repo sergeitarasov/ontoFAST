@@ -1,16 +1,18 @@
 #' @importFrom shinydashboard dashboardBody dashboardHeader dashboardPage dashboardSidebar box
 #' @importFrom utils head stack
 #' @importFrom visNetwork renderVisNetwork visIgraphLayout visLayout visLegend visNetwork visNetworkOutput visNodes visOptions
-#' @importFrom ontologyIndex minimal_set get_OBO
+#' @importFrom ontologyIndex minimal_set get_OBO get_ancestors get_descendants
 #' @importFrom pbapply pblapply
 #' @importFrom stats setNames na.omit
 #' @importFrom stringr str_match
-# @importFrom shiny a actionButton checkboxGroupInput column fluidRow h2 h3 h5 hr HTML icon incProgress isolate observe observeEvent renderText renderUI selectInput selectizeInput shinyApp textInput uiOutput updateCheckboxGroupInput updateSelectizeInput updateTextInput verbatimTextOutput withProgress
+#' @importFrom shiny a actionButton tags runApp stopApp checkboxGroupInput column fluidRow h2 h3 h5 hr HTML icon incProgress isolate observe observeEvent renderText renderUI selectInput selectizeInput shinyApp textInput uiOutput updateCheckboxGroupInput updateSelectizeInput updateTextInput verbatimTextOutput withProgress
+#' @importFrom dplyr %>%
+#' @importFrom plyr ldply
+#' @importFrom sunburstR sunburst
 
-
-usethis::use_package("shiny", type = "Depends")
-usethis::use_package("plyr", type = "Depends")
-usethis::use_package("dplyr", type = "Depends")
+utils::globalVariables("shiny_in", package="ontoFAST")
+# usethis::use_package("shiny", type = "Depends")
+# usethis::use_package("dplyr", type = "Depends")
 
 
 # devtools::document()
@@ -146,7 +148,7 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 #' ontology$id_characters<-id_characters
 #'
 #' # running annotations
-#' auto_annotations<-annot_all_chars(ontology)
+#' # auto_annotations<-annot_all_chars(ontology)
 #' @export
 
 annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){

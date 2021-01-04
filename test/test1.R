@@ -34,9 +34,13 @@ Sharkey_characters<-read.csv(system.file("data_onto", "Sharkey_2011.csv",
 
 hao_obo<-onto_process(hao_obo, Sharkey_characters[,1], do.annot = F)
 
-shiny_in<<-make_shiny_in(hao_obo)
+#shiny_in<<-make_shiny_in(hao_obo)
+shiny_in<-make_shiny_in(hao_obo)
 
-runOntoFast()
+shiny_in<-runOntoFast(shiny_in=shiny_in)
+
+shiny_in$terms_selected
+shiny_in$terms_selected_id
 
 hao_obo$`BFO:0000050`
 
@@ -79,7 +83,7 @@ spdr$id_characters
 spdr$name_characters
 
 shiny_in<<-make_shiny_in(spdr)
-runOntoFast(part_of=c("part_of"))
+runOntoFast(part_of=c("part_of"), shiny_in=shiny_in)
 
 
 #------------------

@@ -4,6 +4,7 @@
 #' @param part_of term for part_of relatinships
 #' @param nchar number of characters to show
 #' @param show.chars shows character statements
+#' @param shiny_in shiny_in object
 #' @param ... other arguments
 #' @return runs ontoFAST intereactively using Shiny.
 #' @examples
@@ -11,7 +12,7 @@
 #' #runOntoFast(show.chars=F)
 #' @export
 
-runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", show.chars=T,  ...){
+runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", show.chars=T, shiny_in, ...){
 
 
   # nchar to display
@@ -185,7 +186,7 @@ hr(),
 ########################################################################################################################
 server <- function(input, output, session) {
 
-
+  session$onSessionEnded(stopApp)
 
   ########### Network
   output$network <- renderVisNetwork({
@@ -539,7 +540,9 @@ server <- function(input, output, session) {
  # end of app list
 
 #######
-  shinyApp(ui = ui, server = server)
+  runApp(shinyApp(ui = ui, server = server))
+  return(shiny_in)
+  #shinyApp(ui = ui, server = server)
 
   #shiny::runApp(sh)
 }

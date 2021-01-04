@@ -177,24 +177,27 @@ chars_per_term<-function(ontology, annotations="auto"){
 #' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
 #' Alternatively, any othe list element containing annotations can be specified.
 #' @param exclude.terms list of terms to exclude
+#' @param include.terms list of terms to include
+#' @param use.chars indicate whether character ids should be included in output
 #' @param sep separator used to delimit ontology terms
 #' @return Table.
 #' @examples
 #' # reading in ontology and part_of relatinships only
-#' # ontology_partof=get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+#' # ontology_partof=ontologyIndex::get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
 #' #                        extract_tags="everything", propagate_relationships = c("BFO:0000050"))
 #' # atomatically annotating ontology
 #' # ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
 #' # creating character paths; exluding redundant terms
-#' # tb<-paths_sunburst(ontology_partof, annotations = ontology_annot$auto_annot_characters,
-#' # exclude.terms=exclude_terms)
+#' # tb<-paths_sunburst(ontology_partof, annotations =
+#' # ontology_annot$auto_annot_characters, exclude.terms=exclude_terms)
 #' # intall sunburstR package if you lack it
 #' # library(sunburstR)
 #' # create sunburst plot
-#' # sunburst(tb)
+#' # sunburstR::sunburst(tb)
 #' @export
 
-paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, sep="-"){
+paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, include.terms=NULL, use.chars=T,
+                         sep="-"){
 
   if (is.list(annotations)){
     annot_list<-annotations # specify your annotation list
@@ -214,18 +217,32 @@ paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, sep="
     anc<-get_onto_name(ontologyIndex::get_ancestors(ontology, char_id), ontology)
     # if (length(exclude.terms)>1){
     anc<-anc[!anc%in%exclude.terms]
-    # }
+    if (is.null(include.terms)==F){
+      anc<-anc[anc%in%include.terms]
+    }
+
     return(anc)
   }
 
+
   list_paths=c()
   for (i in 1:nrow(annot_list)){
-    list_paths=c(list_paths, paste(c( gsub("-", " ", f(annot_list[i,2])),
-                                      annot_list[i,1]), collapse=sep))
+    tmp=f(annot_list[i,2])
+
+    if (use.chars){
+      ps=paste(c( gsub("-", " ", tmp ),
+                  annot_list[i,1]), collapse=sep)
+    }
+    if (use.chars==F){
+      ps=paste(c( gsub("-", " ", tmp )),
+               collapse=sep)
+    }
+    names(ps)=length(tmp)
+    list_paths=c(list_paths,  ps )
   }
 
 
-  tb<-data.frame(paths=list_paths, count=rep(1, length(list_paths)), stringsAsFactors =F)
+  tb<-data.frame(paths=unname(list_paths), size=rep(1, length(list_paths)), length=names(list_paths), stringsAsFactors =F)
 
   return(tb)
 
@@ -255,9 +272,6 @@ paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, sep="
 # #' visOptions(highlightNearest = TRUE)%>%
 # #' visLayout(randomSeed = 12)
 #
-
-#dt=ontoFAST:::get_part_descen(ontology=shiny_in, terms=get_onto_id("head", shiny_in), is_a=c("is_a"), part_of=c("part_of"))
-#dt=ontoFAST:::get_part_descen(ontology=hao_obo, terms=get_onto_id("mouthparts", hao_obo) , is_a=c("is_a"), part_of=c("BFO:0000050"))
 
 get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
                           all_links=F, incl.top.anc=T, highliht_focus=T){
@@ -512,6 +526,7 @@ export_annotations<-function(ontology, annotations="auto", incl.names=F, sep.hea
 
 }
 
+
 #' @title Export to Cytoscape format
 #' @description This function converts character annotations to Cytoscape format. It returns a table that can be saved as in csv format
 #' and imported using Cytoscape. In Cytoscape choose File -> Import -> Network -> File. The assign columns to nodes and edges. Do not select
@@ -527,8 +542,10 @@ export_annotations<-function(ontology, annotations="auto", incl.names=F, sep.hea
 #' # write.csv(cyto, "cyto_exp.csv")
 #' @export
 
-
 export_cytoscape<-function(ontology, annotations="auto", is_a=c("is_a"), part_of=c("BFO:0000050")   ){
+
+  if (is.null(names(ontology$name_characters)) ) stop("Error: ontology object must contain character names")
+
 
   if (is.list(annotations)){
     annot_list<-annotations # specify your annotation list
@@ -557,15 +574,18 @@ export_cytoscape<-function(ontology, annotations="auto", is_a=c("is_a"), part_of
   charof<-list2edges(annot_list)
   charof<-cbind(charof, rep("char_of", nrow(charof)))
   charof<-cbind(unname(
-  ontology$name_characters[c(na.omit(match(unlist(charof[,1], use.names = FALSE), names(ontology$name_characters)  )))]
+    ontology$name_characters[c(na.omit(match(unlist(charof[,1], use.names = FALSE), names(ontology$name_characters)  )))]
   ), charof)
 
   # bind all
   cyto<-rbind(charof, partof, isa)
+  colnames(cyto)<-c("character/term_name", "id_from", "id_to", "relationship")
+
 
   return(cyto)
 
 }
+
 
 
 
@@ -580,12 +600,13 @@ map_obj<-function(obj, nchar){
 
 
 
+
 #' @title Shortcut to process characters and ontology
 #' @description This is a shortcut function to make characters and ontology suitable for visualization using ontoFAST interactive tools.
 #' @param ontology Ontology
 #' @param name_characters a vector of character names
 #' @param do.annot specifiees if you need to run automatic annotations or not
-#' @param ... other arguments
+#' @param ... other arguments for annot_all_chars() function
 #' @return Ontology index object named
 #' @examples
 #' ## automatically preprocess ontology
@@ -596,7 +617,6 @@ map_obj<-function(obj, nchar){
 #' # runOntoFast(nchar=50, show.chars=T)
 #' @export
 
-
 onto_process<-function(ontology, name_characters, do.annot=TRUE, ...){
   id_characters<-paste("CHAR:", c(1:length(name_characters)), sep="")
   ontology$id_characters<-id_characters
@@ -604,14 +624,13 @@ onto_process<-function(ontology, name_characters, do.annot=TRUE, ...){
   ontology$name_characters<-name_characters
 
   if (do.annot){
- ontology$parsed_synonyms<-syn_extract(ontology)
- ontology$auto_annot_characters<-annot_all_chars(ontology, ...)
+    ontology$parsed_synonyms<-syn_extract(ontology)
+    ontology$auto_annot_characters<-annot_all_chars(ontology, ...)
   }
 
- return(ontology)
+  return(ontology)
 
 }
-
 
 
 
