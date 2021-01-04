@@ -10,8 +10,11 @@
 #' @importFrom plyr ldply
 #' @importFrom sunburstR sunburst
 
+
 utils::globalVariables("shiny_in", package="ontoFAST")
-# usethis::use_package("shiny", type = "Depends")
+
+usethis::use_package("shiny", type = "Depends")
+usethis::use_package("ontologyIndex", type = "Depends")
 # usethis::use_package("dplyr", type = "Depends")
 
 

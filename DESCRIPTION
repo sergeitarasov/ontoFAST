@@ -13,7 +13,6 @@ RoxygenNote: 7.0.2
 Imports: 
     shinydashboard,
     pbapply,
-    ontologyIndex,
     visNetwork,
     stringr,
     utils,
@@ -23,7 +22,8 @@ Imports:
     sunburstR
 Depends: 
     R (>= 3.5),
-    shiny
+    shiny,
+    ontologyIndex
 Suggests: knitr,
     rmarkdown,
 VignetteBuilder: knitr
