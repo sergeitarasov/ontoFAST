@@ -1,10 +1,19 @@
 # package Dependencies
-devtools::use_package("pbapply")
-devtools::use_package("ontologyIndex")
-devtools::use_package("dplyr")
-devtools::use_package("shiny")
-devtools::use_package("shydashboard")
-devtools::use_package("visNetwork")
+usethis::use_package("pbapply")
+usethis::use_package("ontologyIndex")
+usethis::use_package("dplyr")
+usethis::use_package("shiny")
+usethis::use_package("shydashboard")
+usethis::use_package("visNetwork")
+
+
+# # package Dependencies
+# devtools::use_package("pbapply")
+# devtools::use_package("ontologyIndex")
+# devtools::use_package("dplyr")
+# devtools::use_package("shiny")
+# devtools::use_package("shydashboard")
+# devtools::use_package("visNetwork")
 
 #############
 

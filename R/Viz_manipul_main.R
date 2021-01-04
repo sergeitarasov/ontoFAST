@@ -186,7 +186,8 @@ chars_per_term<-function(ontology, annotations="auto"){
 #' # atomatically annotating ontology
 #' # ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
 #' # creating character paths; exluding redundant terms
-#' # tb<-paths_sunburst(ontology_partof, annotations = ontology_annot$auto_annot_characters, exclude.terms=exclude_terms)
+#' # tb<-paths_sunburst(ontology_partof, annotations = ontology_annot$auto_annot_characters,
+#' # exclude.terms=exclude_terms)
 #' # intall sunburstR package if you lack it
 #' # library(sunburstR)
 #' # create sunburst plot
@@ -255,6 +256,9 @@ paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, sep="
 # #' visLayout(randomSeed = 12)
 #
 
+#dt=ontoFAST:::get_part_descen(ontology=shiny_in, terms=get_onto_id("head", shiny_in), is_a=c("is_a"), part_of=c("part_of"))
+#dt=ontoFAST:::get_part_descen(ontology=hao_obo, terms=get_onto_id("mouthparts", hao_obo) , is_a=c("is_a"), part_of=c("BFO:0000050"))
+
 get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
                           all_links=F, incl.top.anc=T, highliht_focus=T){
   des=get_descendants(ontology, terms)
@@ -289,11 +293,14 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
   nodes_color<-rep(NA, length(nodes))
   if (highliht_focus){nodes_color[which(nodes==terms)]<-"orange"}
 
+  #length(nodes)
+  #length(nodes_color)
+
   dt_nodes=data.frame(id=nodes,
                       label=get_onto_name(nodes, ontology),
                       title=nodes,
                       color.background =nodes_color,
-                      color.highlight.background=nodes_color)
+                      color.highlight.background=nodes_color) #check.rows = T)
 
 
   dt_edges=data.frame(from=all_edges[,1],
@@ -578,6 +585,7 @@ map_obj<-function(obj, nchar){
 #' @param ontology Ontology
 #' @param name_characters a vector of character names
 #' @param do.annot specifiees if you need to run automatic annotations or not
+#' @param ... other arguments
 #' @return Ontology index object named
 #' @examples
 #' ## automatically preprocess ontology

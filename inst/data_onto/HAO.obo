@@ -570,15 +570,15 @@ synonym: "epipygium" [http://api.hymao.org/api/ref/78442]
 synonym: "female T9" [http://api.hymao.org/api/ref/67791]
 synonym: "hintere platten" [http://api.hymao.org/api/ref/67823]
 synonym: "hypopygial valves" [http://api.hymao.org/api/ref/67823]
-synonym: "obere hälfte d. seitenwand" [http://api.hymao.org/api/ref/67823, http://books.google.com/books?id=2ZGVteDRKisC&lpg=PA139&ots=LjhoWCO-yu&dq=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&pg=PA135#v=onepage&q=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&f=]
+synonym: "obere hlfte d. seitenwand" [http://api.hymao.org/api/ref/67823, http://books.google.com/books?id=2ZGVteDRKisC&lpg=PA139&ots=LjhoWCO-yu&dq=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&pg=PA135#v=onepage&q=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&f=]
 synonym: "outer ovipositor plate" [http://api.hymao.org/api/ref/96647]
 synonym: "outer plate" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/67863]
 synonym: "outer plate of ovipositor" [http://canacoll.org/Hym/Staff/Gibson/apss/chalglos.htm]
 synonym: "plaques carrees" [http://api.hymao.org/api/ref/67823]
 synonym: "quadratische platte" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68582]
 synonym: "quadratplatte" [http://api.hymao.org/api/ref/67823]
-synonym: "écaille anale" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68583]
-synonym: "écaille chitineuse" [http://api.hymao.org/api/ref/67823]
+synonym: "caille anale" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68583]
+synonym: "caille chitineuse" [http://api.hymao.org/api/ref/67823]
 is_a: HAO:0001006 ! tergum
 relationship: BFO:0000050 HAO:0000034 ! abdominal segment 9
 
@@ -768,7 +768,7 @@ relationship: BFO:0000050 HAO:0000575 ! mesoscutum
 id: HAO:0000101
 name: antenna
 def: "The appendage that is composed of ringlike sclerites and the anatomical structures encircled by these sclerites and that is articulated with the cranium." [http://api.hymao.org/api/ref/67791]
-synonym: "Fühler" [http://api.hymao.org/api/ref/78598]
+synonym: "Fhler" [http://api.hymao.org/api/ref/78598]
 is_a: HAO:0000144 ! appendage
 relationship: BFO:0000050 HAO:0000397 ! head
 
@@ -1724,7 +1724,7 @@ is_a: HAO:0001093 ! wing membrane
 id: HAO:0000228
 name: coxa
 def: "The leg segment that is connected to the body and to the trochanter via conjunctivae and muscles." [http://api.hymao.org/api/ref/67791]
-synonym: "Hüfte" [http://api.hymao.org/api/ref/78598]
+synonym: "Hfte" [http://api.hymao.org/api/ref/78598]
 is_a: HAO:0000495 ! leg segment
 relationship: BFO:0000050 HAO:0000494 ! leg
 
@@ -1800,7 +1800,7 @@ synonym: "Kapsel" [http://www.schulmeister.us/malereproductivesystem.html, http:
 synonym: "annular lamina" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67828]
 synonym: "annulus" [http://api.hymao.org/api/ref/67798]
 synonym: "basal ring" [http://www.schulmeister.us/malereproductivesystem.html, http://api.hymao.org/api/ref/67789, http://api.hymao.org/api/ref/67670, http://api.hymao.org/api/ref/67794, http://api.hymao.org/api/ref/67798, http://api.hymao.org/api/ref/36875, http://api.hymao.org/api/ref/36907, http://api.hymao.org/api/ref/67820, http://api.hymao.org/api/ref/67785, http://api.hymao.org/api/ref/78428]
-synonym: "basalstück" [http://api.hymao.org/api/ref/67781, http://api.hymao.org/api/ref/67800]
+synonym: "basalstck" [http://api.hymao.org/api/ref/67781, http://api.hymao.org/api/ref/67800]
 synonym: "cardo" [http://api.hymao.org/api/ref/67801, http://api.hymao.org/api/ref/67818, http://api.hymao.org/api/ref/67819]
 synonym: "cupule" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67799]
 synonym: "dernier anneau" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67802]
@@ -1810,15 +1810,15 @@ synonym: "hornringe" [http://www.schulmeister.us/malereproductivesystem.html, ht
 synonym: "horny ring" [http://www.schulmeister.us/malereproductivesystem.html, http://api.hymao.org/api/ref/67805]
 synonym: "lame basialire" [http://api.hymao.org/api/ref/67791, http://api.hymao.org/api/ref/67809]
 synonym: "lamina annularis" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67670, http://api.hymao.org/api/ref/67797]
-synonym: "pièce annulaire" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67817]
-synonym: "pièce basilaire" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67810]
+synonym: "pice annulaire" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67817]
+synonym: "pice basilaire" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67810]
 synonym: "plaque basilaire" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67812]
 synonym: "praeputium" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67813]
-synonym: "ringstück" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67797]
+synonym: "ringstck" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67797]
 synonym: "sclerite accessorio" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67815]
-synonym: "sclérite accessoire" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67817]
+synonym: "sclrite accessoire" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67817]
 synonym: "sections 1" [http://www.schulmeister.us/malereproductivesystem.html, http://api.hymao.org/api/ref/67780]
-synonym: "écailles" [http://api.hymao.org/api/ref/68619, http://www.biodiversitylibrary.org/bibliography/10281 ]
+synonym: "cailles" [http://api.hymao.org/api/ref/68619, http://www.biodiversitylibrary.org/bibliography/10281 ]
 is_a: HAO:0000909 ! sclerite
 relationship: BFO:0000050 HAO:0000713 ! phallobase
 
@@ -2621,7 +2621,7 @@ synonym: "triangular plate" [http://api.hymao.org/api/ref/67823]
 synonym: "winkel" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68582]
 synonym: "winkelplatte" [http://api.hymao.org/api/ref/67823]
 synonym: "winkelstuck" [http://api.hymao.org/api/ref/67823]
-synonym: "écaille du stylet" [http://api.hymao.org/api/ref/67823]
+synonym: "caille du stylet" [http://api.hymao.org/api/ref/67823]
 is_a: HAO:0000146 ! area
 relationship: BFO:0000050 HAO:0002158 ! first valvifer-first valvula complex
 
@@ -2631,7 +2631,7 @@ name: first valvula
 def: "The area of the first valvifer-first valvula complex that is delimited distally by the proximal margin of the aulax." [http://api.hymao.org/api/ref/96758]
 synonym: "bohrborste" [http://api.hymao.org/api/ref/67823]
 synonym: "first gonapophysis" [http://canacoll.org/Hym/Staff/Gibson/apss/chalglos.htm]
-synonym: "gräte" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68574]
+synonym: "grte" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68574]
 synonym: "lame de l'aiguillon" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/67810]
 synonym: "lancet" [http://api.hymao.org/api/ref/68619]
 synonym: "saw" [http://api.hymao.org/api/ref/67823]
@@ -2642,8 +2642,8 @@ synonym: "stachelgrate" [http://api.hymao.org/api/ref/67823]
 synonym: "stechborste" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68582, http://api.hymao.org/api/ref/29835]
 synonym: "stilet" [http://api.hymao.org/api/ref/67823]
 synonym: "stylet" [http://api.hymao.org/api/ref/67823]
-synonym: "sägeblatt" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/67800]
-synonym: "sägeplatte" [http://api.hymao.org/api/ref/67823]
+synonym: "sgeblatt" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/67800]
+synonym: "sgeplatte" [http://api.hymao.org/api/ref/67823]
 synonym: "vordere gonapophyse" [http://api.hymao.org/api/ref/67823]
 is_a: HAO:0000146 ! area
 relationship: BFO:0000050 HAO:0002158 ! first valvifer-first valvula complex
@@ -2994,7 +2994,7 @@ synonym: "gonolacinia" [http://api.hymao.org/api/ref/68619, http://api.hymao.org
 synonym: "inner paramere" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67840]
 synonym: "lacinia" [http://api.hymao.org/api/ref/67828]
 synonym: "parameres interiores" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67835]
-synonym: "pièce en trèbuchet" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67784]
+synonym: "pice en trbuchet" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67784]
 synonym: "sagitta" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/36901, http://api.hymao.org/api/ref/67785]
 synonym: "squama" [http://api.hymao.org/api/ref/67801, http://api.hymao.org/api/ref/68619]
 synonym: "valva interna" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67818]
@@ -3014,7 +3014,7 @@ synonym: "coxopodite" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/
 synonym: "gonocoxite" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67786, http://api.hymao.org/api/ref/67788, http://api.hymao.org/api/ref/67832, http://api.hymao.org/api/ref/67876]
 synonym: "lamina parameralis" [http://www.schulmeister.us/malereproductivesystem.html, http://api.hymao.org/api/ref/67670]
 synonym: "parameral plate" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67670]
-synonym: "pièce principale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67784]
+synonym: "pice principale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67784]
 synonym: "section 2" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67780]
 synonym: "stipes" [http://api.hymao.org/api/ref/67801, http://api.hymao.org/api/ref/67818, http://api.hymao.org/api/ref/67828]
 is_a: HAO:0000909 ! sclerite
@@ -3424,7 +3424,7 @@ relationship: BFO:0000050 HAO:0000909 ! sclerite
 id: HAO:0000439
 name: intertorular carina
 def: "The carina that extends between the dorsal margin of the antennal rims." [http://api.hymao.org/api/ref/67766]
-synonym: "carène intertorulaire" [http://api.hymao.org/api/ref/68619]
+synonym: "carne intertorulaire" [http://api.hymao.org/api/ref/68619]
 is_a: HAO:0000188 ! carina
 relationship: BFO:0000050 HAO:0000316 ! face
 
@@ -4740,7 +4740,7 @@ relationship: BFO:0000050 HAO:0000603 ! metanotum
 id: HAO:0000601
 name: metanotal-propodeal sulcus
 def: "The sulcus that extends along the anterior margin of the fused metanotum and abdominal tergum 1 and delimit an anterior narrow, usually differently sculptured area." [http://api.hymao.org/api/ref/67766]
-synonym: "foveole métanotale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67771]
+synonym: "foveole mtanotale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67771]
 synonym: "sillon metanotal" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67772]
 is_a: HAO:0000978 ! sulcus
 relationship: BFO:0000050 HAO:0000576 ! mesosoma
@@ -5531,7 +5531,7 @@ id: HAO:0000703
 name: parossiculus
 def: "The sclerite that is connected via conjunctiva distomedially to the gonostipes, and articulates with the gonossiculus." [http://api.hymao.org/api/ref/96550]
 synonym: "copulatory sclerite" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67785]
-synonym: "pièce complèmentaire" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67784]
+synonym: "pice complmentaire" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67784]
 synonym: "plaques volsellaires" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67767]
 synonym: "volsella" [http://api.hymao.org/api/ref/36901, http://api.hymao.org/api/ref/67779, http://api.hymao.org/api/ref/67785, http://api.hymao.org/api/ref/67828]
 is_a: HAO:0000909 ! sclerite
@@ -5575,7 +5575,7 @@ synonym: "penis valve" [http://api.hymao.org/api/ref/68619, http://api.hymao.org
 synonym: "sagitta" [http://api.hymao.org/api/ref/67801]
 synonym: "thyrses" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67799]
 synonym: "thyrsos" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67779]
-synonym: "valve du pénis" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67816]
+synonym: "valve du pnis" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67816]
 synonym: "valves composing penis" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67785]
 is_a: HAO:0000909 ! sclerite
 relationship: BFO:0000050 HAO:0000091 ! aedeagus
@@ -6081,7 +6081,7 @@ relationship: BFO:0000050 HAO:0000566 ! mesopleuron
 id: HAO:0000772
 name: posterolateral pronotal area
 def: "The area that is limited anteriorly by the posterolateral pronotal sulcus." [http://api.hymao.org/api/ref/67766]
-synonym: "prépectus" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67771]
+synonym: "prpectus" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67771]
 is_a: HAO:0000146 ! area
 relationship: BFO:0000050 HAO:0000853 ! pronotum
 
@@ -6331,7 +6331,7 @@ relationship: BFO:0000050 HAO:0000453 ! labium
 id: HAO:0000805
 name: preoccipital carina
 def: "The carina that is transverse and extends posteriorly of the lateral ocelli and compound eye and delimits anteriorly the preoccipital lunula." [http://api.hymao.org/api/ref/67766]
-synonym: "carene préoccipitale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67776]
+synonym: "carene proccipitale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67776]
 is_a: HAO:0000188 ! carina
 relationship: BFO:0000050 HAO:0000234 ! cranium
 
@@ -6339,7 +6339,7 @@ relationship: BFO:0000050 HAO:0000234 ! cranium
 id: HAO:0000806
 name: preoccipital furrow
 def: "The sulcus that arises medially from the anterior margin of the occipital carina and extends towards the anterior ocellus." [http://api.hymao.org/api/ref/67766]
-synonym: "sillon préoccipita" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67774]
+synonym: "sillon proccipita" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67774]
 is_a: HAO:0000978 ! sulcus
 relationship: BFO:0000050 HAO:0000234 ! cranium
 
@@ -6347,7 +6347,7 @@ relationship: BFO:0000050 HAO:0000234 ! cranium
 id: HAO:0000807
 name: preoccipital lunula
 def: "The area that is concave, is located on the vertex and is limited anteriorly by the preoccipital carina and posteriorly by the occipital carina." [http://api.hymao.org/api/ref/67766]
-synonym: "lunule préoccipitale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67774]
+synonym: "lunule proccipitale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67774]
 is_a: HAO:0000146 ! area
 relationship: BFO:0000050 HAO:0000234 ! cranium
 
@@ -7288,10 +7288,10 @@ synonym: "portion invaginale" [http://api.hymao.org/api/ref/67823, http://api.hy
 synonym: "scheide grundtheil" [http://api.hymao.org/api/ref/67823]
 synonym: "scheidenplatte" [http://api.hymao.org/api/ref/67823]
 synonym: "second gonocoxa" [http://canacoll.org/Hym/Staff/Gibson/apss/chalglos.htm]
-synonym: "untere hälfte d. seitenwand" [http://api.hymao.org/api/ref/67823, http://books.google.com/books?id=2ZGVteDRKisC&lpg=PA139&ots=LjhoWCO-yu&dq=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&pg=PA135#v=onepage&q=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&f=]
+synonym: "untere hlfte d. seitenwand" [http://api.hymao.org/api/ref/67823, http://books.google.com/books?id=2ZGVteDRKisC&lpg=PA139&ots=LjhoWCO-yu&dq=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&pg=PA135#v=onepage&q=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&f=]
 synonym: "vordere platte" [http://api.hymao.org/api/ref/67823]
-synonym: "écaille du gorgeret" [http://api.hymao.org/api/ref/67823]
-synonym: "écaille latérale" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68583]
+synonym: "caille du gorgeret" [http://api.hymao.org/api/ref/67823]
+synonym: "caille latrale" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68583]
 is_a: HAO:0000146 ! area
 relationship: BFO:0000050 HAO:0002181 ! second valvifer-third valvula complex
 
@@ -7769,7 +7769,7 @@ relationship: BFO:0000050 HAO:0000820 ! pretarsus
 id: HAO:0000990
 name: tarsal plantula
 def: "The projection that is median, membraneous and is located distally on the ventral margin of the tarsomere." [http://api.hymao.org/api/ref/67791]
-synonym: "Sohlenbläschen" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/36886]
+synonym: "Sohlenblschen" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/36886]
 synonym: "euplantula" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/36903]
 synonym: "plantar lobe" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/36874]
 synonym: "plantula" [http://api.hymao.org/api/ref/36896, http://api.hymao.org/api/ref/78602]
@@ -7949,11 +7949,11 @@ synonym: "fourreau" [http://api.hymao.org/api/ref/67823]
 synonym: "gaines de l'aiguillon" [http://api.hymao.org/api/ref/67823]
 synonym: "gonoplac" [http://canacoll.org/Hym/Staff/Gibson/apss/chalglos.htm, http://api.hymao.org/api/ref/41396]
 synonym: "hintere gonapophysen" [http://api.hymao.org/api/ref/67823]
-synonym: "hüllschuppen" [http://api.hymao.org/api/ref/67823, http://books.google.com/books?id=2ZGVteDRKisC&lpg=PA139&ots=LjhoWCO-yu&dq=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&pg=PA135#v=onepage&q=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&f=]
+synonym: "hllschuppen" [http://api.hymao.org/api/ref/67823, http://books.google.com/books?id=2ZGVteDRKisC&lpg=PA139&ots=LjhoWCO-yu&dq=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&pg=PA135#v=onepage&q=Anatomie%20und%20Physiologie%20des%20Giftapparates%20bei%20den%20Hymenopteren.&f=]
 synonym: "klappen" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/29835]
 synonym: "outer sheaths" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68151]
 synonym: "ovipositor sheath" [http://canacoll.org/Hym/Staff/Gibson/apss/chalglos.htm]
-synonym: "portion évaginale" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/67825]
+synonym: "portion vaginale" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/67825]
 synonym: "scheide spitze" [http://api.hymao.org/api/ref/67823]
 synonym: "scheidenklappen" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68546]
 synonym: "sheath of saw" [http://api.hymao.org/api/ref/67823]
@@ -8251,7 +8251,7 @@ def: "The area that is located proximally of the ergot on the penisvalva." [http
 synonym: "aedeagal apodeme" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67670]
 synonym: "apodema thyrsou" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67779]
 synonym: "apodeme of penis valve" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67832]
-synonym: "apophyse péniale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67784]
+synonym: "apophyse pniale" [http://api.hymao.org/api/ref/68619, http://api.hymao.org/api/ref/67784]
 is_a: HAO:0000146 ! area
 relationship: BFO:0000050 HAO:0000707 ! penisvalva
 
@@ -8660,7 +8660,7 @@ name: gaine
 def: "The anatomical cluster composed of the second valvifer and the third valvula." [http://api.hymao.org/api/ref/68116]
 synonym: "Legescheide" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68563]
 synonym: "Scheide" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68574]
-synonym: "Sägescheide" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/67800]
+synonym: "Sgescheide" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/67800]
 synonym: "oblonge platte" [http://api.hymao.org/api/ref/67823]
 synonym: "sawsheath" [http://api.hymao.org/api/ref/67823, http://api.hymao.org/api/ref/68584]
 is_a: HAO:0000041 ! anatomical cluster
@@ -18561,7 +18561,7 @@ is_a: HAO:0000008 ! anatomical line
 [Term]
 id: HAO:0002430
 name: scute
-def: "The area that is 5–35 µm wide, polygonal, repetitive, is delimited by lines and is the element of the reticulate sculpture." [http://api.hymao.org/api/ref/97939]
+def: "The area that is 535 m wide, polygonal, repetitive, is delimited by lines and is the element of the reticulate sculpture." [http://api.hymao.org/api/ref/97939]
 is_a: HAO:0000146 ! area
 relationship: BFO:0000050 HAO:0000240 ! cuticle
 

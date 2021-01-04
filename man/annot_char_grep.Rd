@@ -4,8 +4,7 @@
 \alias{annot_char_grep}
 \title{Annotate a character statement with ontology terms}
 \usage{
-annot_char_grep(ontology, char.statement, use.synonyms = TRUE,
-  min_set = TRUE)
+annot_char_grep(ontology, char.statement, use.synonyms = TRUE, min_set = TRUE)
 }
 \arguments{
 \item{ontology}{ontology.}

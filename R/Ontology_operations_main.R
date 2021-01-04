@@ -1,16 +1,43 @@
+#' @importFrom shinydashboard dashboardBody dashboardHeader dashboardPage dashboardSidebar box
+#' @importFrom utils head stack
+#' @importFrom visNetwork renderVisNetwork visIgraphLayout visLayout visLegend visNetwork visNetworkOutput visNodes visOptions
+#' @importFrom ontologyIndex minimal_set get_OBO
+#' @importFrom pbapply pblapply
+#' @importFrom stats setNames na.omit
+#' @importFrom stringr str_match
+# @importFrom shiny a actionButton checkboxGroupInput column fluidRow h2 h3 h5 hr HTML icon incProgress isolate observe observeEvent renderText renderUI selectInput selectizeInput shinyApp textInput uiOutput updateCheckboxGroupInput updateSelectizeInput updateTextInput verbatimTextOutput withProgress
 
-# package Dependencies
-devtools::use_package("plyr", type = "Depends")
-devtools::use_package("pbapply", type = "Depends")
-devtools::use_package("ontologyIndex", type = "Depends")
-#devtools::use_package("dplyr", type = "Depends")
-devtools::use_package("shiny", type = "Depends")
-devtools::use_package("shinydashboard", type = "Depends")
-devtools::use_package("visNetwork", type = "Depends")
-devtools::use_package("stringr", type = "Depends")
-devtools::use_package("magrittr", type = "Depends")
-#devtools::use_package("devtools", type = "Depends")
-#devtools::use_package("sunburstR", "Suggests")
+
+usethis::use_package("shiny", type = "Depends")
+usethis::use_package("plyr", type = "Depends")
+usethis::use_package("dplyr", type = "Depends")
+
+
+# devtools::document()
+# # # package Dependencies
+# usethis::use_package("plyr", type = "Depends")
+# usethis::use_package("pbapply", type = "Depends")
+# usethis::use_package("ontologyIndex", type = "Depends")
+# #devtools::use_package("dplyr", type = "Depends")
+# usethis::use_package("shiny", type = "Depends")
+# usethis::use_package("shinydashboard", type = "Depends")
+# usethis::use_package("visNetwork", type = "Depends")
+# usethis::use_package("stringr", type = "Depends")
+# usethis::use_package("magrittr", type = "Depends")
+
+
+# # package Dependencies
+# devtools::use_package("plyr", type = "Depends")
+# devtools::use_package("pbapply", type = "Depends")
+# devtools::use_package("ontologyIndex", type = "Depends")
+# #devtools::use_package("dplyr", type = "Depends")
+# devtools::use_package("shiny", type = "Depends")
+# devtools::use_package("shinydashboard", type = "Depends")
+# devtools::use_package("visNetwork", type = "Depends")
+# devtools::use_package("stringr", type = "Depends")
+# devtools::use_package("magrittr", type = "Depends")
+# #devtools::use_package("devtools", type = "Depends")
+# #devtools::use_package("sunburstR", "Suggests")
 #############
 
 #' @title Get names for ontology IDs
@@ -25,11 +52,11 @@ devtools::use_package("magrittr", type = "Depends")
 
 get_onto_name<-function(vec, onto, names=F){
   #name.vec=onto$name[onto$id%in%unlist(vec, use.names = FALSE)]
-  name.vec=onto$name[c(na.omit(match(unlist(vec, use.names = FALSE), onto$id)))]
+  #name.vec=onto$name[c(na.omit(match(unlist(vec, use.names = FALSE), onto$id)))]
+  name.vec=onto$name[c(match(unlist(vec, use.names = FALSE), onto$id))]
   if (names==F) {name.vec=unname(name.vec)}
   return(name.vec)
 }
-
 
 
 #' @title Get IDs for ontology names
@@ -174,8 +201,8 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' @examples
 #' ontology<-HAO
 #' # you can also parse the original .obo file
-#' ontology<-get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
-#' extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
+#' # ontology<-get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+#' # extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
 "HAO"
 
 

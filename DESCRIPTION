@@ -1,31 +1,29 @@
 Package: ontoFAST
 Type: Package
-Title: Interactive, semi-automatic annotation of character matrices with biological ontologies. 
+Title: Interactive, semi-automatic annotation of character matrices with biological ontologies 
 Version: 0.1.0
 Author: Sergei Tarasov
-Maintainer: Sergei Tarasov <sergxf@yandex.ru>
+Maintainer: Sergei Tarasov <sergei.tarasov@helsinki.fi>
 Description: The package provides convenient and efficient tools that allow linking character matrices (character statements) used in phylogenetics, with anatomy and phenotype ontologies. It also provides functions to query linked characters using ontological relationships. The prime aim of this package is to stimulate integration of comparative phylogenetic methods with ontological approaches.
 URL: https://github.com/sergeitarasov/ontoFAST
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
-Imports: pbapply, ontologyIndex, dplyr, shiny, shinydashboard, visNetwork,
-    stringr,
-    magrittr,
-    devtools
-Depends: R (>= 2.10),
-	pbapply,
-    ontologyIndex,
-    dplyr,
-    shiny,
+RoxygenNote: 7.0.2
+Imports: 
     shinydashboard,
+    pbapply,
+    ontologyIndex,
     visNetwork,
     stringr,
-    magrittr,
-    devtools,
-    plyr
+    utils,
+    stats,
+    sunburstR
+Depends: 
+    R (>= 3.5),
+    plyr,
+    dplyr,
+    shiny
 Suggests: knitr,
     rmarkdown,
-    sunburstR
 VignetteBuilder: knitr

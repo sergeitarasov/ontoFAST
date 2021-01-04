@@ -4,8 +4,12 @@
 \alias{export_cytoscape}
 \title{Export to Cytoscape format}
 \usage{
-export_cytoscape(ontology, annotations = "auto", is_a = c("is_a"),
-  part_of = c("BFO:0000050"))
+export_cytoscape(
+  ontology,
+  annotations = "auto",
+  is_a = c("is_a"),
+  part_of = c("BFO:0000050")
+)
 }
 \arguments{
 \item{ontology}{Ontology}

@@ -4,8 +4,14 @@
 \alias{export_annotations}
 \title{Export annotation data}
 \usage{
-export_annotations(ontology, annotations = "auto", incl.names = F,
-  sep.head = ", ", sep.tail = NULL, collapse = NULL)
+export_annotations(
+  ontology,
+  annotations = "auto",
+  incl.names = F,
+  sep.head = ", ",
+  sep.tail = NULL,
+  collapse = NULL
+)
 }
 \arguments{
 \item{ontology}{Ontology}

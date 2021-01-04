@@ -12,6 +12,8 @@ onto_process(ontology, name_characters, do.annot = TRUE, ...)
 \item{name_characters}{a vector of character names}
 
 \item{do.annot}{specifiees if you need to run automatic annotations or not}
+
+\item{...}{other arguments}
 }
 \value{
 Ontology index object named

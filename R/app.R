@@ -4,6 +4,7 @@
 #' @param part_of term for part_of relatinships
 #' @param nchar number of characters to show
 #' @param show.chars shows character statements
+#' @param ... other arguments
 #' @return runs ontoFAST intereactively using Shiny.
 #' @examples
 #' #shiny_in<-make_shiny_in(HAO)

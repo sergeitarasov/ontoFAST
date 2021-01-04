@@ -4,8 +4,13 @@
 \alias{runOntoFast}
 \title{Run ontoFAST interactively}
 \usage{
-runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), nchar = "all",
-  show.chars = T, ...)
+runOntoFast(
+  is_a = c("is_a"),
+  part_of = c("BFO:0000050"),
+  nchar = "all",
+  show.chars = T,
+  ...
+)
 }
 \arguments{
 \item{is_a}{term for is_a relatinships}
@@ -15,6 +20,8 @@ runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), nchar = "all",
 \item{nchar}{number of characters to show}
 
 \item{show.chars}{shows character statements}
+
+\item{...}{other arguments}
 }
 \value{
 runs ontoFAST intereactively using Shiny.

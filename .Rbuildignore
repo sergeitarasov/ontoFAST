@@ -2,3 +2,5 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^onto_wiki/
+^test/
+^\.travis.yml
