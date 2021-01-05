@@ -1,6 +1,9 @@
 ![Build Status](https://travis-ci.org/sergeitarasov/ontoFAST.svg?branch=main)
 
 # ontoFAST
+ <p align="left">
+  <img src="https://github.com/sergeitarasov/PARAMO/blob/master/icon-paramo.png" width="100" title="hover text">
+</p>  
 ### This is the R package for interactive, semi-automatic annotation of character matrices (character statements) with biological ontologies. 
 
 [Installation and Manual](https://github.com/sergeitarasov/ontoFAST/wiki)
