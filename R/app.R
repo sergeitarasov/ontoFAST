@@ -157,8 +157,14 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
              box(width = 4, height = "auto", title = NULL, style='padding:0px;',
                  h5("Definition:", style='padding:0px;'),
                  verbatimTextOutput("def_txt", placeholder = T),
-                 tags$head(tags$style("#def_txt{overflow-y:scroll; height: 11vh; hyphens: auto; word-break: break-word; -webkit-hyphens: manual;
-                                      font-family: Arial; padding:0px;}"))
+                 tags$head(tags$style("#def_txt{overflow-y:scroll; height: 11vh; white-space: pre-wrap; word-break: keep-all; font-family: Arial; padding:0px;}"))
+                 # tags$head(tags$style("#def_txt{overflow-y:scroll; overflow-x:visible; height: 11vh; word-break: break-all;
+                 #                      font-family: Arial; hyphens: auto;  -webkit-hyphens: manual; padding:0px;}"))
+
+                 # ui <- fluidPage(
+                 #   tags$head(tags$style(HTML("pre { white-space: pre-wrap; word-break: keep-all; }"))),
+                 #   textOutput("text")
+                 # )
 
              )
 
