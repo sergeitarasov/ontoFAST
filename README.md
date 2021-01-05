@@ -2,7 +2,7 @@
 
 # ontoFAST
  <p align="left">
-  <img src="https://github.com/sergeitarasov/ontoFAST/blob/master/test/Icon_ontofast.png" width="100" title="hover text">
+  <img src="https://github.com/sergeitarasov/ontoFAST/blob/master/test/Icon_ontofast.png" width="150" title="hover text">
 </p> 
 
 ### This is the R package for interactive, semi-automatic annotation of character matrices (character statements) with biological ontologies. 
