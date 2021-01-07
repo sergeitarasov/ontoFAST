@@ -240,7 +240,7 @@ server <- function(input, output, session) {
 
 
 
-                                                checkboxGroupInput(paste0("checkbox",n),label=NA,
+                                                checkboxGroupInput(paste0("checkbox",n),label=NULL, #label=NA,
                                                                    choices=shiny_in$auto_annot_characters_id_name[[shiny_in$id_characters[n]]],
                                                                    selected=shiny_in$terms_selected[[shiny_in$id_characters[n]]]),
 
