@@ -19,4 +19,4 @@ The package provides convenient and efficient tools that allow linking character
 
 *The interactive environment for ontoFAST is created using R package [Shiny](https://shiny.rstudio.com/). Shiny builds interactive web apps right within R. The interactive tools of ontoFAST can be run in Rstudio or a web-browser.*
 
-![ontoFAST in interactive mode](https://raw.githubusercontent.com/sergeitarasov/ontoFAST/main/test/ontoFAST.jpg)
+![ontoFAST in interactive mode](https://raw.githubusercontent.com/sergeitarasov/ontoFAST/main/test/ontoFAST.png)
