@@ -6,8 +6,10 @@
 #' @param descendants_cols IDs of columns corresponding to character annotations
 #' @return The list.
 #' @examples
-#' # converting Sharkey_2011 data set to list of characater states
+#'\dontrun{
+#' converting Sharkey_2011 data set to list of characater states
 #' list_data<-table2list(Sharkey_2011)
+#' }
 #' @export
 
 table2list<-function(table, id_col=c(1), descendants_cols=c(2:ncol(table))){
@@ -18,7 +20,6 @@ for (i in 1:nrow(table)) {
 #names(annotated.char.list)<-paste("CHAR:", table[,id_col], sep="")
 return(annotated.char.list)
 }
-#annotated.char.list=table2list(char.dt, 1, 3:9)
 
 
 
@@ -30,10 +31,12 @@ return(annotated.char.list)
 #' The inverse order changes the columns order.
 #' @return Two-column matrix.
 #' @examples
+#' \dontrun{
 #' annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 #' list2edges(annot_list)
-#' # attache plyr package and run
-#' # ldply(annot_list, rbind)
+#' attache plyr package and run
+#' ldply(annot_list, rbind)
+#' }
 #' @export
 
 list2edges<-function(annotated.char.list, col_order_inverse=F){

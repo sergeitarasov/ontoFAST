@@ -1,10 +1,10 @@
 Package: ontoFAST
 Type: Package
-Title: Interactive, semi-automatic annotation of character matrices with biological ontologies 
-Version: 0.1.0
+Title: Interactive and semi-automatic annotation of characters with biological ontologies 
+Version: 1.0.0
 Author: Sergei Tarasov
 Maintainer: Sergei Tarasov <sergei.tarasov@helsinki.fi>
-Description: The package provides convenient and efficient tools that allow linking character matrices (character statements) used in phylogenetics, with anatomy and phenotype ontologies. It also provides functions to query linked characters using ontological relationships. The prime aim of this package is to stimulate integration of comparative phylogenetic methods with ontological approaches.
+Description: The package provides convenient tools for annotating characters or character matrices, used in phylogenetics, with anatomy ontologies. It also provides functions for simple queuing of characters using ontological relationships. The main aim of this package is to stimulate integration of comparative phylogenetics and ontological approaches.
 URL: https://github.com/sergeitarasov/ontoFAST
 License: GPL (>= 2)
 Encoding: UTF-8
