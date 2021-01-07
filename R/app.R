@@ -415,9 +415,9 @@ server <- function(input, output, session) {
 
               #update checkbox
               updateCheckboxGroupInput(session, paste0("checkbox", names(map_btn_check)[which(map_btn_check==x)]),
-                                       label=NA, choices=shiny_in$auto_annot_characters_id_name[[CHAR_id]],
+                                       label=NULL, choices=shiny_in$auto_annot_characters_id_name[[CHAR_id]],
                                        selected=shiny_in$terms_selected[[CHAR_id]]
-              )
+              ) #label=NA
 
               withProgress(message = "Added", value = 1, { Sys.sleep(.1) })
 
@@ -490,13 +490,14 @@ server <- function(input, output, session) {
   observe({
     lapply(map_checkbox, function(x) {
       observeEvent(
-        input[[x]], # rhe input is the vector of selected terms
+        input[[x]], ignoreNULL = F, # rhe input is the vector of selected terms
         {
           #print("observed")
           CHAR_id<-paste0("CHAR:", names(map_checkbox)[which(map_checkbox==x)])
 
           #update terms selected
           shiny_in$terms_selected[[CHAR_id]] <<- input[[x]]
+          #print(input[[x]])
 
           #update terms selected id
           #print(names(shiny_in$terms_map[shiny_in$terms_map %in%input[[x]]]))

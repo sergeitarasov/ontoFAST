@@ -9,6 +9,8 @@
 # HAO (full version)
 #
 #------------------
+setwd("~/Documents/My_papers/OntoFast_ms/Test_OntoFast")
+#library(ontoFAST)
 
 # Ontology and chars
 HAO
@@ -34,6 +36,23 @@ shiny_in[['terms_selected_id']]
 shiny_in[['terms_map']]
 shiny_in[['srch_items']]
 shiny_in[['auto_annot_characters_id_name']]
+
+# read in saved file
+load('OntoFAST_annotation_shiny_in.RData')
+
+#------------------
+#
+# HAO (viz)
+#
+#------------------
+#library("sunburstR")
+ontology_partof=get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"), extract_tags="everything", propagate_relationships = c("BFO:0000050"))
+ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1], do.annot = F)
+ontology_partof$annot_characters<-Sharkey_2011_annot
+
+tb<-paths_sunburst(ontology_partof, annotations = ontology_partof$annot_characters, exclude.terms=NULL)
+sunburst(tb)
+
 
 
 #------------------
