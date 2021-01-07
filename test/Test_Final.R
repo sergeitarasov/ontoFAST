@@ -42,7 +42,7 @@ load('OntoFAST_annotation_shiny_in.RData')
 
 #------------------
 #
-# HAO (viz)
+# HAO (viz sunburst)
 #
 #------------------
 #library("sunburstR")
@@ -54,10 +54,34 @@ tb<-paths_sunburst(ontology_partof, annotations = ontology_partof$annot_characte
 sunburst(tb)
 
 
+#------------------
+#
+# HAO export Cytoscape
+#
+#------------------
+ontology<-HAO
+# processing ontology to incorporate character statements
+ontology<-onto_process(ontology, Sharkey_2011[,1], do.annot = F)
+# embedding manual annotations
+ontology$annot_characters<-Sharkey_2011_annot
+
+# exporting
+cyto<-export_cytoscape(ontology, annotations = ontology$annot_characters, is_a = c("is_a"), part_of = c("BFO:0000050"))
+write.csv(cyto, file="HAO_chars.csv")
 
 #------------------
 #
-# HAO (no annotation, kust for viewing)
+# HAO Query characters
+#
+#------------------
+chars_per_term(ontology, annotations = ontology$annot_characters) %>% head()
+get_ancestors_chars(ontology, c("CHAR:1", "CHAR:2", "CHAR:3"),  annotations = ontology$annot_characters)
+get_descendants_chars(ontology, annotations = ontology$annot_characters, terms="HAO:0000653")
+
+
+#------------------
+#
+# HAO (no annotation,just for viewing)
 #
 #------------------
 
@@ -86,6 +110,22 @@ shiny_in<-runOntoFast(shiny_in=shiny_in, is_a = c("is_a"), part_of=c("part_of"))
 
 shiny_in[['terms_selected']]
 shiny_in[['terms_selected_id']]
+
+
+#------------------
+#
+# Spider (viz sunburst)
+#
+#------------------
+#library("sunburstR")
+onto.folder <- '/Users/taravser/Documents/My_papers/OntoFast_ms/ontoFAST/test/ontologies'
+ontology_partof=get_OBO(file.path(onto.folder, 'spider_comparative_biology_1.1.obo') , extract_tags="everything")
+
+ontology_partof<-onto_process(ontology_partof, name_characters=F, do.annot = F)
+ontology_partof$annot_characters<-Sharkey_2011_annot
+tb<-paths_sunburst(ontology_partof, annotations = ontology_partof$annot_characters, exclude.terms=NULL)
+sunburst(tb)
+
 
 #------------------
 #
