@@ -8,8 +8,10 @@
 #' @param ... other arguments
 #' @return runs ontoFAST intereactively using Shiny.
 #' @examples
-#' #shiny_in<-make_shiny_in(HAO)
-#' #runOntoFast(show.chars=F)
+#' \dontrun{
+#' shiny_in<-make_shiny_in(HAO)
+#' shiny_in<-runOntoFast(show.chars=F)
+#' }
 #' @export
 
 runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", show.chars=T, shiny_in, ...){

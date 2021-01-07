@@ -16,5 +16,7 @@ Ontology index object named as shiny_in.
 Make ontology object for vizualization
 }
 \examples{
+\dontrun{
 make_shiny_in(HAO)
+}
 }

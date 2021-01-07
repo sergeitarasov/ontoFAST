@@ -16,7 +16,9 @@ The list.
 Takes two columns edge matrix (columns from and two) and produces list
 }
 \examples{
+\dontrun{
 annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 edge.matrix<-list2edges(annot_list)
 edges2list(edge.matrix)
+}
 }

@@ -33,6 +33,8 @@ runs ontoFAST intereactively using Shiny.
 This function runs ontoFAST in interactive mode. Interactive mode allows manual character annotation and navigation through ontology network.
 }
 \examples{
-#shiny_in<-make_shiny_in(HAO)
-#runOntoFast(show.chars=F)
+\dontrun{
+shiny_in<-make_shiny_in(HAO)
+shiny_in<-runOntoFast(show.chars=F)
+}
 }

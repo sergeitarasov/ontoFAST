@@ -22,10 +22,12 @@ Ontology index object named
 This is a shortcut function to make characters and ontology suitable for visualization using ontoFAST interactive tools.
 }
 \examples{
+\dontrun{
 ## automatically preprocess ontology
-# onto<-onto_process(HAO, Sharkey_2011[,1])
+onto<-onto_process(HAO, Sharkey_2011[,1])
 ## make shiny_in object
-# shiny_in<<-make_shiny_in(onto)
+shiny_in<-make_shiny_in(onto)
 ## run interactively to show only 50 characters
-# runOntoFast(nchar=50, show.chars=T)
+shiny_in<-runOntoFast(nchar=50, show.chars=T)
+}
 }

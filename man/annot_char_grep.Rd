@@ -23,5 +23,7 @@ The vector of matches ontology terms.
 Matches character statement and returns most similar ontology terms
 }
 \examples{
+\dontrun{
 annot_char_grep(HAO, "Mola on right mandible")
+}
 }

@@ -30,6 +30,8 @@ and imported using Cytoscape. In Cytoscape choose File -> Import -> Network -> F
 columns that enumerated the tables' rows.
 }
 \examples{
-# cyto<-export_cytoscape(shiny_in)
-# write.csv(cyto, "cyto_exp.csv")
+\dontrun{
+cyto<-export_cytoscape(shiny_in)
+write.csv(cyto, "cyto_exp.csv")
+}
 }

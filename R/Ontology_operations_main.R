@@ -15,35 +15,12 @@ utils::globalVariables("shiny_in", package="ontoFAST")
 
 usethis::use_package("shiny", type = "Depends")
 usethis::use_package("ontologyIndex", type = "Depends")
-# usethis::use_package("dplyr", type = "Depends")
 
 
 # devtools::document()
-# # # package Dependencies
-# usethis::use_package("plyr", type = "Depends")
-# usethis::use_package("pbapply", type = "Depends")
-# usethis::use_package("ontologyIndex", type = "Depends")
-# #devtools::use_package("dplyr", type = "Depends")
-# usethis::use_package("shiny", type = "Depends")
-# usethis::use_package("shinydashboard", type = "Depends")
-# usethis::use_package("visNetwork", type = "Depends")
-# usethis::use_package("stringr", type = "Depends")
-# usethis::use_package("magrittr", type = "Depends")
 
 
-# # package Dependencies
-# devtools::use_package("plyr", type = "Depends")
-# devtools::use_package("pbapply", type = "Depends")
-# devtools::use_package("ontologyIndex", type = "Depends")
-# #devtools::use_package("dplyr", type = "Depends")
-# devtools::use_package("shiny", type = "Depends")
-# devtools::use_package("shinydashboard", type = "Depends")
-# devtools::use_package("visNetwork", type = "Depends")
-# devtools::use_package("stringr", type = "Depends")
-# devtools::use_package("magrittr", type = "Depends")
-# #devtools::use_package("devtools", type = "Depends")
-# #devtools::use_package("sunburstR", "Suggests")
-#############
+
 
 #' @title Get names for ontology IDs
 #' @description Returns names of ontology terms for ontology IDs
@@ -52,7 +29,9 @@ usethis::use_package("ontologyIndex", type = "Depends")
 #' @param names use element name
 #' @return vector of names.
 #' @examples
+#' \dontrun{
 #' get_onto_name("HAO:0002272", HAO)
+#' }
 #' @export
 
 get_onto_name<-function(vec, onto, names=F){
@@ -71,8 +50,10 @@ get_onto_name<-function(vec, onto, names=F){
 #' @param names use element name
 #' @return vector of IDs.
 #' @examples
+#' \dontrun{
 #' vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
 #' get_onto_id(vec_name, HAO)
+#' }
 #' @export
 
 get_onto_id<-function(vec_name, ontology, names=F){
@@ -90,7 +71,9 @@ get_onto_id<-function(vec_name, ontology, names=F){
 #' @param list_id ID of list where synonyms are stored
 #' @return vector of ontology IDs and synonym names.
 #' @examples
+#' \dontrun{
 #' parsed_synonyms<-syn_extract(HAO)
+#' }
 #' @export
 
 syn_extract<-function(ontology, list_id="synonym"){
@@ -111,7 +94,9 @@ syn_extract<-function(ontology, list_id="synonym"){
 #' @param min_set if TRUE eliminates higher order inferred ontology terms
 #' @return The vector of matches ontology terms.
 #' @examples
+#' \dontrun{
 #' annot_char_grep(HAO, "Mola on right mandible")
+#' }
 #' @export
 
 annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=TRUE){
@@ -137,6 +122,7 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 #' @param min_set if TRUE eliminates higher order inferred ontology terms
 #' @return The list of matched ontology terms and their charatcter ids.
 #' @examples
+#' \dontrun{
 #' #getting ontology
 #' ontology<-HAO
 #' #parsing synonyms
@@ -149,9 +135,9 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 #' names(name_characters)<-id_characters
 #' ontology$name_characters<-name_characters
 #' ontology$id_characters<-id_characters
-#'
 #' # running annotations
-#' # auto_annotations<-annot_all_chars(ontology)
+#' auto_annotations<-annot_all_chars(ontology)
+#' }
 #' @export
 
 annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){

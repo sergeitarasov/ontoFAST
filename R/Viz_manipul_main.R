@@ -56,9 +56,11 @@ return(edge.matrix)
 #' @param edge.matrix Two-columns edge matrix.
 #' @return The list.
 #' @examples
+#' \dontrun{
 #' annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 #' edge.matrix<-list2edges(annot_list)
 #' edges2list(edge.matrix)
+#' }
 #' @export
 
 edges2list<-function(edge.matrix){
@@ -83,9 +85,11 @@ return(list.from.edge)
 #' @param ... other parameters for ontologyIndex::get_descendants() function
 #' @return The vector of character IDs.
 #' @examples
+#' \dontrun{
 #' ontology<-HAO
 #' ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' get_descendants_chars(ontology, annotations="manual", "HAO:0000653")
+#' }
 #' @export
 
 get_descendants_chars<-function(ontology, annotations="auto", terms, ...){
@@ -120,9 +124,11 @@ get_descendants_chars<-function(ontology, annotations="auto", terms, ...){
 #' Alternatively, any othe list element containing annotations can be specified.
 #' @return The vector of ontology terms IDs.
 #' @examples
+#' \dontrun{
 #' ontology<-HAO
 #' ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' get_ancestors_chars(ontology, c("CHAR:1","CHAR:2"), annotations="manual")
+#' }
 #' @export
 
 get_ancestors_chars<-function(ontology, char_id, annotations="auto" ){
@@ -154,9 +160,11 @@ get_ancestors_chars<-function(ontology, char_id, annotations="auto" ){
 #' Alternatively, any othe list element containing annotations can be specified.
 #' @return The matrix of ontology terms IDs, their names and character number.
 #' @examples
+#' \dontrun{
 #' ontology<-HAO
 #' ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' chars_per_term(ontology, annotations="manual")
+#' }
 #' @export
 
 
@@ -169,8 +177,7 @@ chars_per_term<-function(ontology, annotations="auto"){
   colnames(term_tb)<-c("ID", "names", "N_chars")
   return(term_tb)
 }
-#terms_tb=chars_per_term(hao.obo)
-#write.csv(terms_tb, file="n_characters_per_term.csv")
+
 
 
 #' @title Return ontology paths for characters
@@ -185,18 +192,20 @@ chars_per_term<-function(ontology, annotations="auto"){
 #' @param sep separator used to delimit ontology terms
 #' @return Table.
 #' @examples
+#' \dontrun{
 #' # reading in ontology and part_of relatinships only
-#' # ontology_partof=ontologyIndex::get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
-#' #                        extract_tags="everything", propagate_relationships = c("BFO:0000050"))
+#' ontology_partof=ontologyIndex::get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+#'                         extract_tags="everything", propagate_relationships = c("BFO:0000050"))
 #' # atomatically annotating ontology
-#' # ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
+#' ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
 #' # creating character paths; exluding redundant terms
-#' # tb<-paths_sunburst(ontology_partof, annotations =
-#' # ontology_annot$auto_annot_characters, exclude.terms=exclude_terms)
-#' # intall sunburstR package if you lack it
-#' # library(sunburstR)
+#' tb<-paths_sunburst(ontology_partof, annotations =
+#' ontology_annot$auto_annot_characters, exclude.terms=exclude_terms)
+#' # use sunburstR package if you lack it
+#' library(sunburstR)
 #' # create sunburst plot
-#' # sunburstR::sunburst(tb)
+#' sunburstR::sunburst(tb)
+#' }
 #' @export
 
 paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, include.terms=NULL, use.chars=T,
@@ -253,8 +262,6 @@ paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, inclu
 
 
 
-
-#
 # #' @title Makes dataframe of descndanrts to plot using visNetwork
 # #' @description Returns a list of two dataframes: nodes and edges
 # #' @param ontology ontology_index object.
@@ -426,7 +433,9 @@ get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050")
 #' @param ontology Ontology
 #' @return Ontology index object named as shiny_in.
 #' @examples
+#' \dontrun{
 #' make_shiny_in(HAO)
+#' }
 #' @export
 
 make_shiny_in<-function(ontology){
@@ -473,11 +482,13 @@ return(shiny_in)
 #' are collapsed in one line given that values
 #' @return Returns a table
 #' @examples
-#' # tb<-export_annotations(shiny_in, annotations="manual", incl.names=T,collapse="; ")
-#' # tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse="; ")
-#' # tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse=NULL)
+#' \dontrun{
+#' tb<-export_annotations(shiny_in, annotations="manual", incl.names=T,collapse="; ")
+#' tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse="; ")
+#' tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse=NULL)
 #' # save annotations in csv
-#' # write.csv(tb, "annotated_characters.csv")
+#' write.csv(tb, "annotated_characters.csv")
+#' }
 #' @export
 
 
@@ -541,8 +552,10 @@ export_annotations<-function(ontology, annotations="auto", incl.names=F, sep.hea
 #' @param part_of part_of
 #' @return Returns a table
 #' @examples
-#' # cyto<-export_cytoscape(shiny_in)
-#' # write.csv(cyto, "cyto_exp.csv")
+#' \dontrun{
+#' cyto<-export_cytoscape(shiny_in)
+#' write.csv(cyto, "cyto_exp.csv")
+#' }
 #' @export
 
 export_cytoscape<-function(ontology, annotations="auto", is_a=c("is_a"), part_of=c("BFO:0000050")   ){
@@ -612,12 +625,14 @@ map_obj<-function(obj, nchar){
 #' @param ... other arguments for annot_all_chars() function
 #' @return Ontology index object named
 #' @examples
+#' \dontrun{
 #' ## automatically preprocess ontology
-#' # onto<-onto_process(HAO, Sharkey_2011[,1])
+#' onto<-onto_process(HAO, Sharkey_2011[,1])
 #' ## make shiny_in object
-#' # shiny_in<<-make_shiny_in(onto)
+#' shiny_in<-make_shiny_in(onto)
 #' ## run interactively to show only 50 characters
-#' # runOntoFast(nchar=50, show.chars=T)
+#' shiny_in<-runOntoFast(nchar=50, show.chars=T)
+#' }
 #' @export
 
 onto_process<-function(ontology, name_characters, do.annot=TRUE, ...){

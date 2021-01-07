@@ -20,6 +20,8 @@ vector of IDs.
 Returns IDs of ontology terms given terms' names
 }
 \examples{
+\dontrun{
 vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
 get_onto_id(vec_name, HAO)
+}
 }

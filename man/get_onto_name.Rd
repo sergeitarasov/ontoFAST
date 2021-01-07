@@ -20,5 +20,7 @@ vector of names.
 Returns names of ontology terms for ontology IDs
 }
 \examples{
+\dontrun{
 get_onto_name("HAO:0002272", HAO)
+}
 }

@@ -18,5 +18,7 @@ vector of ontology IDs and synonym names.
 Extracts and parses synonyms from ontology to make them readable and searchable
 }
 \examples{
+\dontrun{
 parsed_synonyms<-syn_extract(HAO)
+}
 }

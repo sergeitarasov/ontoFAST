@@ -35,9 +35,11 @@ Returns a table
 This function converts character annotations stored in shiny_in object to table format.
 }
 \examples{
-# tb<-export_annotations(shiny_in, annotations="manual", incl.names=T,collapse="; ")
-# tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse="; ")
-# tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse=NULL)
+\dontrun{
+tb<-export_annotations(shiny_in, annotations="manual", incl.names=T,collapse="; ")
+tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse="; ")
+tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse=NULL)
 # save annotations in csv
-# write.csv(tb, "annotated_characters.csv")
+write.csv(tb, "annotated_characters.csv")
+}
 }
