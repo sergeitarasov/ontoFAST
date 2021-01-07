@@ -18,7 +18,9 @@ usethis::use_package("ontologyIndex", type = "Depends")
 
 
 # devtools::document()
-
+# devtools::build()
+# devtools::install()
+# devtools::check()
 
 
 
