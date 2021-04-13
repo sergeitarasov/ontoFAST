@@ -50,7 +50,7 @@ ontology_partof=get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"
 ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1], do.annot = F)
 ontology_partof$annot_characters<-Sharkey_2011_annot
 
-tb<-paths_sunburst(ontology_partof, annotations = ontology_partof$annot_characters, exclude.terms=NULL)
+tb<-paths_sunburst(ontology_partof, annotations = ontology_partof$annot_characters, exclude.terms=exclude_terms)
 sunburst(tb)
 
 
