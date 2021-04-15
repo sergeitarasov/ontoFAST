@@ -19,6 +19,8 @@ hao_obo=get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),extrac
 Sharkey_2011
 Sharkey_characters<-read.csv(system.file("data_onto", "Sharkey_2011.csv", package = "ontoFAST"), header=T,  stringsAsFactors = F, na.strings = "")
 
+
+
 # Make object for annotation
 hao_obo<-onto_process(hao_obo, Sharkey_characters[,1], do.annot = T)
 shiny_in<-make_shiny_in(hao_obo)
@@ -162,6 +164,8 @@ shiny_in<-runOntoFast(shiny_in=shiny_in, is_a = c("is_a"), part_of=c("part_of"))
 shiny_in[['parsed_synonyms']]
 shiny_in[['terms_selected']]
 shiny_in[['terms_selected_id']]
+
+
 
 #------------------
 #

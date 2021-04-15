@@ -199,6 +199,27 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 "HAO"
 
 
+#' A modified Hymenoptera Anatomy Ontology (HAO) to accommodate anatomy of dung beetles
+#'
+#' Anatomy ontology of Hymenoptera + Dung beetles. This ontology was imported into R using get_OBO() function from ontologyIndex packages (see the examples). The added terms for dung beetle anatomy have prefix "SCR".
+#'
+#' @docType data
+#'
+#' @format List containing various ontological relationships and terms.
+#'
+#' @references Yoder MJ, Mikó I, Seltmann KC, Bertone MA, Deans AR. 2010. A Gross Anatomy Ontology for Hymenoptera. PLoS ONE 5 (12): e15991.
+#' (\href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0015991}{Read})
+#'
+#' \href{http://portal.hymao.org/projects/32/public/ontology/}{Hymenoptera Anatomy Ontology Portal}
+#'
+#' @examples
+#' \dontrun{
+#' ontology<-Scarab
+#' #you can also parse the original .obo file
+#' ontology<-get_OBO(system.file("data_onto", "HAO4scarabs.obo", package = "ontoFAST"),
+#' extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))}
+"Scarab"
+
 #' Ontology terms to exclude for sunburst plot
 #'
 #' List of ontology terms from Hymenoptera Anatomy ontology that migh be thought of
@@ -215,7 +236,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 
 
 
-#' Characters annotated with ontology terms
+#' Hymenoptera characters annotated with ontology terms
 #'
 #' List of character IDs and their ontology annotations. The characters are from Hymenoptera phylogeny (Sharkey et al., 2011: Cladistics).
 #' The ontology annotations are from Hymenoptera Anatomy Ontology (HAO).
@@ -230,4 +251,22 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' @examples
 #' Sharkey_2011_annot
 "Sharkey_2011_annot"
+
+
+
+#' Dung beetle characters annotated with ontology terms
+#'
+#' List of character IDs and their ontology annotations. The characters are from Scarabaeinae phylogeny (Tarasov, 2017: Zootaxa).
+#' The ontology annotations are from a modified version Hymenoptera Anatomy Ontology (HAO) that was enriched with additional terms (SCR:) to accommodate anatomy of the dung beetles.
+#'
+#' @docType data
+#'
+#' @format List containing characters and ontology terms.
+#'
+#' @references Tarasov, S., 2017. A cybertaxonomic revision of the new dung beetle tribe Parachoriini (Coleoptera: Scarabaeidae: Scarabaeinae) and its phylogenetic assessment using molecular and morphological data. Zootaxa, 4329(2), pp.101-149.
+#' (\href{https://www.mapress.com/j/zt/article/view/zootaxa.4329.2.1}{Read})
+#'
+#' @examples
+#' Tarasov_2017_annot
+"Tarasov_2017_annot"
 

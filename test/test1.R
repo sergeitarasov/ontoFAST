@@ -33,9 +33,11 @@ Sharkey_characters<-read.csv(system.file("data_onto", "Sharkey_2011.csv",
                                          package = "ontoFAST"), header=T,  stringsAsFactors = F, na.strings = "")
 
 hao_obo<-onto_process(hao_obo, Sharkey_characters[,1], do.annot = F)
+class(hao_obo)
 
 #shiny_in<<-make_shiny_in(hao_obo)
 shiny_in<-make_shiny_in(hao_obo)
+class(shiny_in)
 
 shiny_in<-runOntoFast(shiny_in=shiny_in)
 

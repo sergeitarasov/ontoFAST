@@ -4,7 +4,7 @@ Title: Interactive and Semi-Automatic Annotation of Characters with Biological O
 Version: 1.0.0
 Author: Sergei Tarasov
 Maintainer: Sergei Tarasov <sergei.tarasov@helsinki.fi>
-Description: Tools for annotating phylogenetic characters or character matrices with anatomy ontologies. Also, includes functions for visualising character annotations and simple querying using ontological relationships.
+Description: Tools for annotating characters (character matrices) with anatomical and phenotype ontologies. Includes functions for visualising character annotations and creating simple queries using ontological relationships.
 URL: https://github.com/sergeitarasov/ontoFAST
 License: GPL (>= 2)
 Encoding: UTF-8

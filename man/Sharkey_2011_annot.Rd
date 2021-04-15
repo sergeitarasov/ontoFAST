@@ -3,7 +3,7 @@
 \docType{data}
 \name{Sharkey_2011_annot}
 \alias{Sharkey_2011_annot}
-\title{Characters annotated with ontology terms}
+\title{Hymenoptera characters annotated with ontology terms}
 \format{List containing characters and ontology terms.}
 \usage{
 Sharkey_2011_annot
