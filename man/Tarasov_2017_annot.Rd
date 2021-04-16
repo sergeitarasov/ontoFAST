@@ -9,7 +9,7 @@
 Tarasov_2017_annot
 }
 \description{
-List of character IDs and their ontology annotations. The characters are from Scarabaeinae phylogeny (Tarasov, 2017: Zootaxa).
+List of character IDs and their ontology annotations. All 232 characters are from Scarabaeinae phylogeny (Tarasov, 2017: Zootaxa).
 The ontology annotations are from a modified version Hymenoptera Anatomy Ontology (HAO) that was enriched with additional terms (SCR:) to accommodate anatomy of the dung beetles.
 }
 \examples{

@@ -1,5 +1,5 @@
 #' @title Run ontoFAST interactively
-#' @description This function runs ontoFAST in interactive mode. Interactive mode allows manual character annotation and navigation through ontology network.
+#' @description This function runs ontoFAST in interactive mode. Interactive mode allows character annotation and navigation through ontology network.
 #' @param is_a term for is_a relatinships
 #' @param part_of term for part_of relatinships
 #' @param nchar number of characters to show

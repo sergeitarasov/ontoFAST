@@ -26,8 +26,8 @@ Returns a table
 }
 \description{
 This function converts character annotations to Cytoscape format. It returns a table that can be saved as in csv format
-and imported using Cytoscape. In Cytoscape choose File -> Import -> Network -> File. The assign columns to nodes and edges. Do not select
-columns that enumerated the tables' rows.
+and imported in Cytoscape. In Cytoscape choose File -> Import -> Network -> File. Then assign columns to nodes and edges. Do not select
+columns that enumerate the tables' rows!
 }
 \examples{
 \dontrun{

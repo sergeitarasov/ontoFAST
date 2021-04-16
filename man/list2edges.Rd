@@ -16,7 +16,7 @@ The inverse order changes the columns order.}
 Two-column matrix.
 }
 \description{
-Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
+Takes a list of character annotations and creates an edge matrix comprising two columns: from and to.
 The list to table conversion can be done using ldply function from plyr package: plyr::ldply(list, rbind).
 }
 \examples{

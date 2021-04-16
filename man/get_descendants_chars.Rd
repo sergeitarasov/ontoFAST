@@ -20,7 +20,7 @@ Alternatively, any othe list element containing annotations can be specified.}
 The vector of character IDs.
 }
 \description{
-Returns all characters located (associated) with a given ontology terms
+Returns all characters located (associated) with given ontology term(s)
 }
 \examples{
 \dontrun{

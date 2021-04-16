@@ -9,8 +9,8 @@
 exclude_terms
 }
 \description{
-List of ontology terms from Hymenoptera Anatomy ontology that migh be thought of
-as redundant and excluded from some operations.
+List of ontology terms from Hymenoptera Anatomy Ontology that can be considered
+redundant and need to be excluded from some operations.
 }
 \examples{
 exclude_terms

@@ -14,7 +14,7 @@ Anatomy ontology of Hymenoptera + Dung beetles. This ontology was imported into 
 \examples{
 \dontrun{
 ontology<-Scarab
-you can also parse the original .obo file
+#you can also parse the original .obo file
 ontology<-get_OBO(system.file("data_onto", "HAO4scarabs.obo", package = "ontoFAST"),
 extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))}
 }

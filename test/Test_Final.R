@@ -9,6 +9,12 @@
 # HAO (full version)
 #
 #------------------
+
+install.packages("ontoFAST")
+library(ontoFAST)
+data(Sharkey_2011)
+
+
 setwd("~/Documents/My_papers/OntoFast_ms/Test_OntoFast")
 #library(ontoFAST)
 
@@ -38,6 +44,9 @@ shiny_in[['terms_selected_id']]
 shiny_in[['terms_map']]
 shiny_in[['srch_items']]
 shiny_in[['auto_annot_characters_id_name']]
+
+tb <- list2edges(Sharkey_2011_annot, col_order_inverse = F)
+write.csv(tb, 'annots.csv')
 
 # read in saved file
 load('OntoFAST_annotation_shiny_in.RData')

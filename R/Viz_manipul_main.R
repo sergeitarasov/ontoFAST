@@ -1,5 +1,5 @@
-#' @title Convert table to list
-#' @description Takes table where each row consists of charcter number and ontology annotations and returns a list.
+#' @title Converts a table to list
+#' @description Takes a table where each row consists of character ID + an ontology annotation and returns a list.
 #' Each character is assigned its own ID CHAR:XXXX
 #' @param table A character table with annotations.
 #' @param id_col A column ID corresponding to character
@@ -24,7 +24,7 @@ return(annotated.char.list)
 
 
 #' @title Convert list to edge matrix
-#' @description Takes list of charater annotations amd creates an edge matrix comprising two columns: from and to.
+#' @description Takes a list of character annotations and creates an edge matrix comprising two columns: from and to.
 #' The list to table conversion can be done using ldply function from plyr package: plyr::ldply(list, rbind).
 #' @param annotated.char.list Character list with ontology annotations.
 #' @param col_order_inverse The default creates the first columns consisting if character IDs and the second columns consisting of ontology annatotaions.
@@ -52,8 +52,8 @@ return(edge.matrix)
 
 
 #' @title Convert edge matrix to list
-#' @description Takes two columns edge matrix (columns from and two) and produces list
-#' @param edge.matrix Two-columns edge matrix.
+#' @description Takes two-column edge matrix (columns from and two) and produces a list
+#' @param edge.matrix Two-column edge matrix.
 #' @return The list.
 #' @examples
 #' \dontrun{
@@ -77,7 +77,7 @@ return(list.from.edge)
 
 
 #' @title Get characters that descendants of selected ontology term
-#' @description Returns all characters located (associated) with a given ontology terms
+#' @description Returns all characters located (associated) with given ontology term(s)
 #' @param ontology ontology_index object.
 #' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
 #' Alternatively, any othe list element containing annotations can be specified.
@@ -543,8 +543,8 @@ export_annotations<-function(ontology, annotations="auto", incl.names=F, sep.hea
 
 #' @title Export to Cytoscape format
 #' @description This function converts character annotations to Cytoscape format. It returns a table that can be saved as in csv format
-#' and imported using Cytoscape. In Cytoscape choose File -> Import -> Network -> File. The assign columns to nodes and edges. Do not select
-#' columns that enumerated the tables' rows.
+#' and imported in Cytoscape. In Cytoscape choose File -> Import -> Network -> File. Then assign columns to nodes and edges. Do not select
+#' columns that enumerate the tables' rows!
 #' @param ontology Ontology
 #' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
 #' Alternatively, any othe list element containing annotations can be specified.

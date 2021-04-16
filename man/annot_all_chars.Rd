@@ -15,7 +15,7 @@ see syn_extract()}
 \item{min_set}{if TRUE eliminates higher order inferred ontology terms}
 }
 \value{
-The list of matched ontology terms and their charatcter ids.
+The list of matched ontology terms and their character ids.
 }
 \description{
 Matches character statement and returns most similar ontology terms using

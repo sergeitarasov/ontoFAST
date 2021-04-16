@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{table2list}
 \alias{table2list}
-\title{Convert table to list}
+\title{Converts a table to list}
 \usage{
 table2list(table, id_col = c(1), descendants_cols = c(2:ncol(table)))
 }
@@ -17,7 +17,7 @@ table2list(table, id_col = c(1), descendants_cols = c(2:ncol(table)))
 The list.
 }
 \description{
-Takes table where each row consists of charcter number and ontology annotations and returns a list.
+Takes a table where each row consists of character ID + an ontology annotation and returns a list.
 Each character is assigned its own ID CHAR:XXXX
 }
 \examples{

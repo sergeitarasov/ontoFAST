@@ -30,7 +30,7 @@ runOntoFast(
 runs ontoFAST intereactively using Shiny.
 }
 \description{
-This function runs ontoFAST in interactive mode. Interactive mode allows manual character annotation and navigation through ontology network.
+This function runs ontoFAST in interactive mode. Interactive mode allows character annotation and navigation through ontology network.
 }
 \examples{
 \dontrun{

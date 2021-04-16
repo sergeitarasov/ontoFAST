@@ -9,7 +9,7 @@
 HAO
 }
 \description{
-Anatomy ontology of Hymenoptera. This ontology was imported into R using get_OBO() function from ontologyIndex packages (see the examples).
+Anatomy ontology of Hymenoptera. This ontology was imported into R using get_OBO() function from ontologyIndex package (see the examples).
 }
 \examples{
 ontology<-HAO

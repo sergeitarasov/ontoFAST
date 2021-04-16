@@ -122,7 +122,7 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 #' @param use.synonyms using synonyms list during search. It has to be included in ontology,
 #' see syn_extract()
 #' @param min_set if TRUE eliminates higher order inferred ontology terms
-#' @return The list of matched ontology terms and their charatcter ids.
+#' @return The list of matched ontology terms and their character ids.
 #' @examples
 #' \dontrun{
 #' #getting ontology
@@ -154,7 +154,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 
 #' Hymenoptera character statements
 #'
-#' A table of characters and characters states from
+#' A table of characters and character states from
 #' Hymenoptera character matrix (Sharkey et al., 2011: Cladistics). The table contains 392 character statements.
 #'
 #' @docType data
@@ -180,7 +180,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 
 #' Hymenoptera Anatomy Ontology (HAO)
 #'
-#' Anatomy ontology of Hymenoptera. This ontology was imported into R using get_OBO() function from ontologyIndex packages (see the examples).
+#' Anatomy ontology of Hymenoptera. This ontology was imported into R using get_OBO() function from ontologyIndex package (see the examples).
 #'
 #' @docType data
 #'
@@ -222,8 +222,8 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 
 #' Ontology terms to exclude for sunburst plot
 #'
-#' List of ontology terms from Hymenoptera Anatomy ontology that migh be thought of
-#' as redundant and excluded from some operations.
+#' List of ontology terms from Hymenoptera Anatomy Ontology that can be considered
+#' redundant and need to be excluded from some operations.
 #'
 #' @docType data
 #'
@@ -256,7 +256,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 
 #' Dung beetle characters annotated with ontology terms
 #'
-#' List of character IDs and their ontology annotations. The characters are from Scarabaeinae phylogeny (Tarasov, 2017: Zootaxa).
+#' List of character IDs and their ontology annotations. All 232 characters are from Scarabaeinae phylogeny (Tarasov, 2017: Zootaxa).
 #' The ontology annotations are from a modified version Hymenoptera Anatomy Ontology (HAO) that was enriched with additional terms (SCR:) to accommodate anatomy of the dung beetles.
 #'
 #' @docType data

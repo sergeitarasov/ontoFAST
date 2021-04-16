@@ -14,7 +14,7 @@
 Sharkey_2011
 }
 \description{
-A table of characters and characters states from
+A table of characters and character states from
 Hymenoptera character matrix (Sharkey et al., 2011: Cladistics). The table contains 392 character statements.
 }
 \examples{

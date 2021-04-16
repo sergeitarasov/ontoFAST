@@ -7,13 +7,13 @@
 edges2list(edge.matrix)
 }
 \arguments{
-\item{edge.matrix}{Two-columns edge matrix.}
+\item{edge.matrix}{Two-column edge matrix.}
 }
 \value{
 The list.
 }
 \description{
-Takes two columns edge matrix (columns from and two) and produces list
+Takes two-column edge matrix (columns from and two) and produces a list
 }
 \examples{
 \dontrun{
