@@ -9,6 +9,7 @@
 #' @importFrom dplyr %>%
 #' @importFrom plyr ldply
 #' @importFrom sunburstR sunburst
+#' @importFrom usethis use_package
 
 
 utils::globalVariables("shiny_in", package="ontoFAST")

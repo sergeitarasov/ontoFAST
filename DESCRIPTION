@@ -18,12 +18,12 @@ Imports:
     stats,
     dplyr,
     plyr,
-    sunburstR
+    sunburstR,
+    usethis
 Depends: 
     R (>= 3.5),
     shiny,
     ontologyIndex,
     visNetwork
 Suggests: knitr,
-    rmarkdown,
-VignetteBuilder: knitr
+    rmarkdown
