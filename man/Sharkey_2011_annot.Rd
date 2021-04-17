@@ -17,6 +17,6 @@ Sharkey_2011_annot
 }
 \references{
 Sharkey, M.J., et al. 2011. Phylogenetic relationships among superfamilies of Hymenoptera. Cladistics 28(1), 80-112.
-(\href{http://onlinelibrary.wiley.com/doi/10.1111/j.1096-0031.2011.00366.x/full}{Read})
+(\href{https://onlinelibrary.wiley.com/doi/full/10.1111/j.1096-0031.2011.00366.x}{Read})
 }
 \keyword{datasets}

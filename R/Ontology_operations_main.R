@@ -168,7 +168,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' }
 #'
 #' @references Sharkey, M.J., et al. 2011. Phylogenetic relationships among superfamilies of Hymenoptera. Cladistics 28(1), 80-112.
-#' (\href{http://onlinelibrary.wiley.com/doi/10.1111/j.1096-0031.2011.00366.x/full}{Read})
+#' (\href{https://onlinelibrary.wiley.com/doi/full/10.1111/j.1096-0031.2011.00366.x}{Read})
 #'
 #' @examples
 #' chars<-Sharkey_2011
@@ -188,7 +188,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' @format List containing various ontological relationships and terms.
 #'
 #' @references Yoder MJ, Mikó I, Seltmann KC, Bertone MA, Deans AR. 2010. A Gross Anatomy Ontology for Hymenoptera. PLoS ONE 5 (12): e15991.
-#' (\href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0015991}{Read})
+#' (\href{https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0015991}{Read})
 #'
 #' \href{http://portal.hymao.org/projects/32/public/ontology/}{Hymenoptera Anatomy Ontology Portal}
 #'
@@ -209,7 +209,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' @format List containing various ontological relationships and terms.
 #'
 #' @references Yoder MJ, Mikó I, Seltmann KC, Bertone MA, Deans AR. 2010. A Gross Anatomy Ontology for Hymenoptera. PLoS ONE 5 (12): e15991.
-#' (\href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0015991}{Read})
+#' (\href{https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0015991}{Read})
 #'
 #' \href{http://portal.hymao.org/projects/32/public/ontology/}{Hymenoptera Anatomy Ontology Portal}
 #'
@@ -247,7 +247,7 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' @format List containing characters and ontology terms.
 #'
 #' @references Sharkey, M.J., et al. 2011. Phylogenetic relationships among superfamilies of Hymenoptera. Cladistics 28(1), 80-112.
-#' (\href{http://onlinelibrary.wiley.com/doi/10.1111/j.1096-0031.2011.00366.x/full}{Read})
+#' (\href{https://onlinelibrary.wiley.com/doi/full/10.1111/j.1096-0031.2011.00366.x}{Read})
 #'
 #' @examples
 #' Sharkey_2011_annot

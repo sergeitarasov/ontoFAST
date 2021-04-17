@@ -19,7 +19,7 @@ ontology<-HAO
 }
 \references{
 Yoder MJ, Mikó I, Seltmann KC, Bertone MA, Deans AR. 2010. A Gross Anatomy Ontology for Hymenoptera. PLoS ONE 5 (12): e15991.
-(\href{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0015991}{Read})
+(\href{https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0015991}{Read})
 
 \href{http://portal.hymao.org/projects/32/public/ontology/}{Hymenoptera Anatomy Ontology Portal}
 }
