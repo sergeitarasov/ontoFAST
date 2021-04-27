@@ -1,6 +1,6 @@
 Package: ontoFAST
 Type: Package
-Title: Interactive and Semi-Automatic Annotation of Characters with Biological Ontologies 
+Title: Interactive Annotation of Characters with Biological Ontologies 
 Version: 1.0.0
 Author: Sergei Tarasov
 Maintainer: Sergei Tarasov <sergei.tarasov@helsinki.fi>
