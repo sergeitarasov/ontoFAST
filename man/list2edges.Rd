@@ -4,7 +4,7 @@
 \alias{list2edges}
 \title{Convert list to edge matrix}
 \usage{
-list2edges(annotated.char.list, col_order_inverse = F)
+list2edges(annotated.char.list, col_order_inverse = FALSE)
 }
 \arguments{
 \item{annotated.char.list}{Character list with ontology annotations.}
@@ -20,10 +20,8 @@ Takes a list of character annotations and creates an edge matrix comprising two 
 The list to table conversion can be done using ldply function from plyr package: plyr::ldply(list, rbind).
 }
 \examples{
-\dontrun{
 annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 list2edges(annot_list)
-attache plyr package and run
-ldply(annot_list, rbind)
-}
+# use plyr package and run
+plyr::ldply(annot_list, rbind)
 }

@@ -9,7 +9,7 @@ paths_sunburst(
   annotations = "auto",
   exclude.terms = NULL,
   include.terms = NULL,
-  use.chars = T,
+  use.chars = TRUE,
   sep = "-"
 )
 }
@@ -35,7 +35,7 @@ Returns ontology paths for all characters. These paths can be used to create a s
 ontological dependencies.
 }
 \examples{
-\dontrun{
+\donttest{
 # reading in ontology and part_of relatinships only
 ontology_partof=ontologyIndex::get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
                         extract_tags="everything", propagate_relationships = c("BFO:0000050"))
@@ -43,9 +43,9 @@ ontology_partof=ontologyIndex::get_OBO(system.file("data_onto", "HAO.obo", packa
 ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
 # creating character paths; exluding redundant terms
 tb<-paths_sunburst(ontology_partof, annotations =
-ontology_annot$auto_annot_characters, exclude.terms=exclude_terms)
+ontology_partof$auto_annot_characters, exclude.terms=exclude_terms)
 # use sunburstR package if you lack it
-library(sunburstR)
+# library(sunburstR)
 # create sunburst plot
 sunburstR::sunburst(tb)
 }

@@ -19,9 +19,8 @@ The matrix of ontology terms IDs, their names and character number.
 Returns matrix summarizing  number of characters per each ontology terms in descending order
 }
 \examples{
-\dontrun{
+data(HAO)
 ontology<-HAO
 ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 chars_per_term(ontology, annotations="manual")
-}
 }

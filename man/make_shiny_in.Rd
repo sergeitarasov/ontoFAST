@@ -2,7 +2,7 @@
 % Please edit documentation in R/Viz_manipul_main.R
 \name{make_shiny_in}
 \alias{make_shiny_in}
-\title{Make ontology object for vizualization}
+\title{Make an ontology object for visualization}
 \usage{
 make_shiny_in(ontology)
 }
@@ -13,10 +13,13 @@ make_shiny_in(ontology)
 Ontology index object named as shiny_in.
 }
 \description{
-Make ontology object for vizualization
+Make an ontology object for visualization in a separate environment "ontofast"
 }
 \examples{
-\dontrun{
-make_shiny_in(HAO)
-}
+data(Sharkey_2011)
+data(HAO)
+hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = FALSE)
+ontofast <- new.env(parent = emptyenv())
+ontofast$shiny_in <- make_shiny_in(hao_obo)
+runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
 }

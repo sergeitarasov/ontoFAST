@@ -7,7 +7,7 @@
 export_annotations(
   ontology,
   annotations = "auto",
-  incl.names = F,
+  incl.names = FALSE,
   sep.head = ", ",
   sep.tail = NULL,
   collapse = NULL
@@ -35,11 +35,15 @@ Returns a table
 This function converts character annotations stored in shiny_in object to table format.
 }
 \examples{
-\dontrun{
-tb<-export_annotations(shiny_in, annotations="manual", incl.names=T,collapse="; ")
-tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse="; ")
-tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse=NULL)
+data(Sharkey_2011)
+data(HAO)
+hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = FALSE)
+ontofast <- new.env(parent = emptyenv())
+ontofast$shiny_in <- make_shiny_in(hao_obo)
+# runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
+tb<-export_annotations(ontofast$shiny_in, annotations="manual", incl.names=TRUE,collapse="; ")
+tb<-export_annotations(ontofast$shiny_in, annotations="auto", incl.names=TRUE,collapse="; ")
+tb<-export_annotations(ontofast$shiny_in, annotations="auto", incl.names=TRUE,collapse=NULL)
 # save annotations in csv
-write.csv(tb, "annotated_characters.csv")
-}
+# write.csv(tb, "annotated_characters.csv")
 }

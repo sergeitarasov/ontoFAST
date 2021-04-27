@@ -6,10 +6,8 @@
 #' @param descendants_cols IDs of columns corresponding to character annotations
 #' @return The list.
 #' @examples
-#'\dontrun{
-#' converting Sharkey_2011 data set to list of characater states
-#' list_data<-table2list(Sharkey_2011)
-#' }
+#' # converting Sharkey_2011 dataset to list of character states
+#' table2list(Sharkey_2011)
 #' @export
 
 table2list<-function(table, id_col=c(1), descendants_cols=c(2:ncol(table))){
@@ -31,17 +29,15 @@ return(annotated.char.list)
 #' The inverse order changes the columns order.
 #' @return Two-column matrix.
 #' @examples
-#' \dontrun{
 #' annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 #' list2edges(annot_list)
-#' attache plyr package and run
-#' ldply(annot_list, rbind)
-#' }
+#' # use plyr package and run
+#' plyr::ldply(annot_list, rbind)
 #' @export
 
-list2edges<-function(annotated.char.list, col_order_inverse=F){
-annotated.vec=setNames(unlist(annotated.char.list, use.names=F),rep(names(annotated.char.list), lengths(annotated.char.list)))
-if (col_order_inverse==T){
+list2edges<-function(annotated.char.list, col_order_inverse=FALSE){
+annotated.vec=setNames(unlist(annotated.char.list, use.names=FALSE),rep(names(annotated.char.list), lengths(annotated.char.list)))
+if (col_order_inverse==TRUE){
   edge.matrix=cbind(unname(annotated.vec), names(annotated.vec))
 } else
 edge.matrix=cbind(names(annotated.vec), unname(annotated.vec))
@@ -56,11 +52,9 @@ return(edge.matrix)
 #' @param edge.matrix Two-column edge matrix.
 #' @return The list.
 #' @examples
-#' \dontrun{
 #' annot_list<-list(`CHAR:1`=c("HAO:0000933", "HAO:0000958"), `CHAR:2`=c("HAO:0000833", "HAO:0000258"))
 #' edge.matrix<-list2edges(annot_list)
 #' edges2list(edge.matrix)
-#' }
 #' @export
 
 edges2list<-function(edge.matrix){
@@ -85,11 +79,10 @@ return(list.from.edge)
 #' @param ... other parameters for ontologyIndex::get_descendants() function
 #' @return The vector of character IDs.
 #' @examples
-#' \dontrun{
+#' data(HAO)
 #' ontology<-HAO
 #' ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' get_descendants_chars(ontology, annotations="manual", "HAO:0000653")
-#' }
 #' @export
 
 get_descendants_chars<-function(ontology, annotations="auto", terms, ...){
@@ -107,7 +100,7 @@ get_descendants_chars<-function(ontology, annotations="auto", terms, ...){
   }
 
 
-  onto_chars_list=list2edges(annot_list, col_order_inverse=T)
+  onto_chars_list=list2edges(annot_list, col_order_inverse=TRUE)
   descen<-unique(onto_chars_list[,2][onto_chars_list[,1] %in%
                                        ontologyIndex::get_descendants(ontology=ontology, roots=terms, ...)])
   return(descen)
@@ -124,11 +117,10 @@ get_descendants_chars<-function(ontology, annotations="auto", terms, ...){
 #' Alternatively, any othe list element containing annotations can be specified.
 #' @return The vector of ontology terms IDs.
 #' @examples
-#' \dontrun{
+#' data(HAO)
 #' ontology<-HAO
 #' ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' get_ancestors_chars(ontology, c("CHAR:1","CHAR:2"), annotations="manual")
-#' }
 #' @export
 
 get_ancestors_chars<-function(ontology, char_id, annotations="auto" ){
@@ -160,11 +152,10 @@ get_ancestors_chars<-function(ontology, char_id, annotations="auto" ){
 #' Alternatively, any othe list element containing annotations can be specified.
 #' @return The matrix of ontology terms IDs, their names and character number.
 #' @examples
-#' \dontrun{
+#' data(HAO)
 #' ontology<-HAO
 #' ontology$terms_selected_id<-list(`CHAR:1`=c("HAO:0000653"), `CHAR:2`=c("HAO:0000653"))
 #' chars_per_term(ontology, annotations="manual")
-#' }
 #' @export
 
 
@@ -172,8 +163,8 @@ chars_per_term<-function(ontology, annotations="auto"){
 
   all_des=pblapply(ontology$id, function(x) {get_descendants_chars(ontology, annotations=annotations, x)})
   char_per_term=unlist(lapply(all_des, length))
-  term_tb=char_per_term[order(char_per_term, decreasing=T)]
-  term_tb=cbind(names(term_tb), get_onto_name(names(term_tb), ontology, names=F), unname(term_tb))
+  term_tb=char_per_term[order(char_per_term, decreasing=TRUE)]
+  term_tb=cbind(names(term_tb), get_onto_name(names(term_tb), ontology, names=FALSE), unname(term_tb))
   colnames(term_tb)<-c("ID", "names", "N_chars")
   return(term_tb)
 }
@@ -192,7 +183,7 @@ chars_per_term<-function(ontology, annotations="auto"){
 #' @param sep separator used to delimit ontology terms
 #' @return Table.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # reading in ontology and part_of relatinships only
 #' ontology_partof=ontologyIndex::get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
 #'                         extract_tags="everything", propagate_relationships = c("BFO:0000050"))
@@ -200,15 +191,15 @@ chars_per_term<-function(ontology, annotations="auto"){
 #' ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
 #' # creating character paths; exluding redundant terms
 #' tb<-paths_sunburst(ontology_partof, annotations =
-#' ontology_annot$auto_annot_characters, exclude.terms=exclude_terms)
+#' ontology_partof$auto_annot_characters, exclude.terms=exclude_terms)
 #' # use sunburstR package if you lack it
-#' library(sunburstR)
+#' # library(sunburstR)
 #' # create sunburst plot
 #' sunburstR::sunburst(tb)
 #' }
 #' @export
 
-paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, include.terms=NULL, use.chars=T,
+paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, include.terms=NULL, use.chars=TRUE,
                          sep="-"){
 
   if (is.list(annotations)){
@@ -229,7 +220,7 @@ paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, inclu
     anc<-get_onto_name(ontologyIndex::get_ancestors(ontology, char_id), ontology)
     # if (length(exclude.terms)>1){
     anc<-anc[!anc%in%exclude.terms]
-    if (is.null(include.terms)==F){
+    if (is.null(include.terms)==FALSE){
       anc<-anc[anc%in%include.terms]
     }
 
@@ -245,7 +236,7 @@ paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, inclu
       ps=paste(c( gsub("-", " ", tmp ),
                   annot_list[i,1]), collapse=sep)
     }
-    if (use.chars==F){
+    if (use.chars==FALSE){
       ps=paste(c( gsub("-", " ", tmp )),
                collapse=sep)
     }
@@ -254,7 +245,7 @@ paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, inclu
   }
 
 
-  tb<-data.frame(paths=unname(list_paths), size=rep(1, length(list_paths)), length=names(list_paths), stringsAsFactors =F)
+  tb<-data.frame(paths=unname(list_paths), size=rep(1, length(list_paths)), length=names(list_paths), stringsAsFactors =FALSE)
 
   return(tb)
 
@@ -284,7 +275,7 @@ paths_sunburst<-function(ontology, annotations="auto", exclude.terms=NULL, inclu
 #
 
 get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
-                          all_links=F, incl.top.anc=T, highliht_focus=T){
+                          all_links=FALSE, incl.top.anc=TRUE, highliht_focus=TRUE){
   des=get_descendants(ontology, terms)
   all_edges=c()
   if (all_links){ k=1
@@ -292,9 +283,9 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
 
   if (length(is_a)>0){
     edges=list2edges(ontology[[is_a]])
-    rows=which(edges[,k]%in%des==T)
+    rows=which(edges[,k]%in%des==TRUE)
     if (length(rows)>0){
-      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
+      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==TRUE))}
       all_edges=cbind(matrix(edges[rows,], ncol = 2), color[1])
       #all_edges=cbind(edges[rows,], color[1])
     }
@@ -302,15 +293,15 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
 
   if (length(part_of)>0){
     edges=list2edges(ontology[[part_of]])
-    rows=which(edges[,1]%in%des==T)
+    rows=which(edges[,1]%in%des==TRUE)
     if (length(rows)>0){
-      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
+      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==TRUE))}
       all_edges=rbind(all_edges, cbind(matrix(edges[rows,], ncol = 2), color[2]))
       #all_edges=rbind(all_edges, cbind(edges[rows,], color[2]))
     }
   }
 
-  if(is.null(all_edges)==T) return(dt=list(nodes=NULL, edges=NULL))
+  if(is.null(all_edges)==TRUE) return(dt=list(nodes=NULL, edges=NULL))
 
   #nodes=unique(des)
   nodes=unique(c(all_edges[,1], all_edges[,2]))
@@ -324,7 +315,7 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
                       label=get_onto_name(nodes, ontology),
                       title=nodes,
                       color.background =nodes_color,
-                      color.highlight.background=nodes_color) #check.rows = T)
+                      color.highlight.background=nodes_color) #check.rows = TRUE)
 
 
   dt_edges=data.frame(from=all_edges[,1],
@@ -378,7 +369,7 @@ get_part_descen<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:000005
 
 
 get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050"), color=c("red", "blue"),
-                          all_links=F, incl.top.anc=T, highliht_focus=T){
+                          all_links=FALSE, incl.top.anc=TRUE, highliht_focus=TRUE){
   des=get_ancestors(ontology, terms)
   all_edges=c()
   if (all_links){ k=2
@@ -386,9 +377,9 @@ get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050")
 
   if (length(is_a)>0){
     edges=list2edges(ontology[[is_a]])
-    rows=which(edges[,k]%in%des==T)
+    rows=which(edges[,k]%in%des==TRUE)
     if (length(rows)>0){
-      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
+      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==TRUE))}
       all_edges=cbind(matrix(edges[rows,], ncol = 2), color[1])
       #all_edges=cbind(edges[rows,], color[1])
     }
@@ -396,15 +387,15 @@ get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050")
 
   if (length(part_of)>0){
     edges=list2edges(ontology[[part_of]])
-    rows=which(edges[,2]%in%des==T)
+    rows=which(edges[,2]%in%des==TRUE)
     if (length(rows)>0){
-      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==T))}
+      if (incl.top.anc){ rows=c(rows, which(edges[,1]%in%terms==TRUE))}
       all_edges=rbind(all_edges, cbind(matrix(edges[rows,], ncol = 2), color[2]))
       #all_edges=rbind(all_edges, cbind(edges[rows,], color[2]))
     }
   }
 
-  if(is.null(all_edges)==T) return(dt=list(nodes=NULL, edges=NULL))
+  if(is.null(all_edges)==TRUE) return(dt=list(nodes=NULL, edges=NULL))
 
   #nodes=unique(des)
   nodes=unique(c(all_edges[,1], all_edges[,2]))
@@ -428,17 +419,25 @@ get_part_anc<-function(ontology, terms, is_a=c("is_a"), part_of=c("BFO:0000050")
 
 
 
-#' @title Make ontology object for vizualization
-#' @description Make ontology object for vizualization
+#' @title Make an ontology object for visualization
+#' @description Make an ontology object for visualization in a separate environment "ontofast"
 #' @param ontology Ontology
 #' @return Ontology index object named as shiny_in.
 #' @examples
-#' \dontrun{
-#' make_shiny_in(HAO)
-#' }
+#' data(Sharkey_2011)
+#' data(HAO)
+#' hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = FALSE)
+#' ontofast <- new.env(parent = emptyenv())
+#' ontofast$shiny_in <- make_shiny_in(hao_obo)
+#' runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
 #' @export
 
 make_shiny_in<-function(ontology){
+
+  if(exists("ontofast", mode="environment")==FALSE){
+    msg <- message("Create and assign objects in ontofast enviroment:\nontofast <- new.env(parent = emptyenv())\nontofast$shiny_in <- make_shiny_in(hao_obo)\nSee the tutorial for details.\n")
+    return(msg)
+  }
 
 shiny_in<- ontology
 shiny_in$terms_selected<-list()
@@ -464,6 +463,16 @@ shiny_in$auto_annot_characters_id_name <-lapply(
     })
 shiny_in$auto_annot_characters_id_name[shiny_in$auto_annot_characters_id_name ==", "]<-NULL #making empty annot as na
 
+#---- working with environment ontofast
+# if(exists("ontofast", mode="environment")==FALSE){
+#   message("Making envriroment ontofast to store the ontology. Use ls(ontofast) to see the objects")
+#   env <- new.env(parent = emptyenv())
+#   env <- new.env(parent = emptyenv())
+#   env$shiny_in <- shiny_in
+#   return(env)
+# }
+# ontofast[[output.name]] <- shiny_in
+#-----------
 
 return(shiny_in)
 }
@@ -482,17 +491,21 @@ return(shiny_in)
 #' are collapsed in one line given that values
 #' @return Returns a table
 #' @examples
-#' \dontrun{
-#' tb<-export_annotations(shiny_in, annotations="manual", incl.names=T,collapse="; ")
-#' tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse="; ")
-#' tb<-export_annotations(shiny_in, annotations="auto", incl.names=T,collapse=NULL)
+#' data(Sharkey_2011)
+#' data(HAO)
+#' hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = FALSE)
+#' ontofast <- new.env(parent = emptyenv())
+#' ontofast$shiny_in <- make_shiny_in(hao_obo)
+#' # runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
+#' tb<-export_annotations(ontofast$shiny_in, annotations="manual", incl.names=TRUE,collapse="; ")
+#' tb<-export_annotations(ontofast$shiny_in, annotations="auto", incl.names=TRUE,collapse="; ")
+#' tb<-export_annotations(ontofast$shiny_in, annotations="auto", incl.names=TRUE,collapse=NULL)
 #' # save annotations in csv
-#' write.csv(tb, "annotated_characters.csv")
-#' }
+#' # write.csv(tb, "annotated_characters.csv")
 #' @export
 
 
-export_annotations<-function(ontology, annotations="auto", incl.names=F, sep.head=", ", sep.tail=NULL, collapse=NULL){
+export_annotations<-function(ontology, annotations="auto", incl.names=FALSE, sep.head=", ", sep.tail=NULL, collapse=NULL){
 
   if (is.list(annotations)){
     annot_list<-annotations # specify your annotation list
@@ -547,13 +560,20 @@ export_annotations<-function(ontology, annotations="auto", incl.names=F, sep.hea
 #' columns that enumerate the tables' rows!
 #' @param ontology Ontology
 #' @param annotations which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
-#' Alternatively, any othe list element containing annotations can be specified.
+#' Alternatively, any other list containing annotations can be specified.
 #' @param is_a is_a
 #' @param part_of part_of
 #' @return Returns a table
 #' @examples
-#' \dontrun{
-#' cyto<-export_cytoscape(shiny_in)
+#' \donttest{
+#' data(Sharkey_2011)
+#' data(HAO)
+#' # do.annot = T takes a while
+#' hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = T)
+#' ontofast <- new.env(parent = emptyenv())
+#' ontofast$shiny_in <- make_shiny_in(hao_obo)
+#' # runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
+#' cyto<-export_cytoscape(ontofast$shiny_in)
 #' write.csv(cyto, "cyto_exp.csv")
 #' }
 #' @export
@@ -625,14 +645,12 @@ map_obj<-function(obj, nchar){
 #' @param ... other arguments for annot_all_chars() function
 #' @return Ontology index object named
 #' @examples
-#' \dontrun{
-#' ## automatically preprocess ontology
-#' onto<-onto_process(HAO, Sharkey_2011[,1])
-#' ## make shiny_in object
-#' shiny_in<-make_shiny_in(onto)
-#' ## run interactively to show only 50 characters
-#' shiny_in<-runOntoFast(nchar=50, show.chars=T)
-#' }
+#' data(Sharkey_2011)
+#' data(HAO)
+#' hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = FALSE)
+#' ontofast <- new.env(parent = emptyenv())
+#' ontofast$shiny_in <- make_shiny_in(hao_obo)
+#' runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
 #' @export
 
 onto_process<-function(ontology, name_characters, do.annot=TRUE, ...){

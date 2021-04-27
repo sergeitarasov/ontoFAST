@@ -1,25 +1,28 @@
 #' @title Run ontoFAST interactively
 #' @description This function runs ontoFAST in interactive mode. Interactive mode allows character annotation and navigation through ontology network.
-#' @param is_a term for is_a relatinships
-#' @param part_of term for part_of relatinships
+#' @param is_a term for is_a relationships
+#' @param part_of term for part_of relationships
 #' @param nchar number of characters to show
 #' @param show.chars shows character statements
-#' @param shiny_in shiny_in object
+#' @param shiny_in a name of ontology (shiny_in) object in "ontofast" enviroment
+#' @param file2save a name of the file to which shiny_in object is saved in interactive mode
 #' @param ... other arguments
-#' @return runs ontoFAST intereactively using Shiny.
+#' @return runs ontoFAST interactively using Shiny.
 #' @examples
-#' \dontrun{
-#' shiny_in<-make_shiny_in(HAO)
-#' shiny_in<-runOntoFast(show.chars=F)
-#' }
+#' data(Sharkey_2011)
+#' data(HAO)
+#' hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = FALSE)
+#' ontofast <- new.env(parent = emptyenv())
+#' ontofast$shiny_in <- make_shiny_in(hao_obo)
+#' runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
 #' @export
 
-runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", show.chars=T, shiny_in, ...){
+runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", show.chars=TRUE, shiny_in="shiny_in", file2save="OntoFAST_shiny_in.RData",  ...){
 
 
   # nchar to display
   if (nchar=="all"){
-    nchar=length(shiny_in$id_characters)
+    nchar=length(ontofast[[shiny_in]]$id_characters)
   }
 
 
@@ -110,7 +113,7 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
                                           selected =list("descendants")
                               )
 
-                              # radioButtons("des_chk", label="Show upon rendering",  inline = T,
+                              # radioButtons("des_chk", label="Show upon rendering",  inline = TRUE,
                               #              choices =list("descendants", "ancestors", "both"),
                               #              selected =list("descendants")
                               # )
@@ -123,7 +126,7 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
                                           selected =list("both")
                               )
 
-                              # radioButtons("links_chk", label="Links to show",  inline = T,
+                              # radioButtons("links_chk", label="Links to show",  inline = TRUE,
                               #              choices =list("part_of", "is_a", "both"),
                               #              selected =list("both")
                               # )
@@ -132,7 +135,7 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
 
 
                  selectizeInput("selectize", label = NULL, choices=NULL, selected = FALSE, multiple = FALSE, width = "auto",
-                                options = list(openOnFocus=F, maxOptions=100, placeholder="Enter term or ID"
+                                options = list(openOnFocus=FALSE, maxOptions=100, placeholder="Enter term or ID"
                                 )),
                  actionButton("select_descen", label = "Visualize", icon = icon("glyphicon glyphicon-fullscreen", lib="glyphicon"))
 
@@ -144,11 +147,11 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
 
              box(width = 3, height = "auto", title = NULL, style='padding:0px;',
                  h5("ID:", style='padding:0px;'),
-                 verbatimTextOutput("id_txt", placeholder = T),
+                 verbatimTextOutput("id_txt", placeholder = TRUE),
                  tags$head(tags$style("#id_txt{font-family: Arial; padding:0px;}")),
 
                  h5("Synonyms:", style='padding:0px;'),
-                 verbatimTextOutput("syn_txt", placeholder = T),
+                 verbatimTextOutput("syn_txt", placeholder = TRUE),
                  tags$head(tags$style("#syn_txt{overflow-y:scroll; height: 5vh; font-family: Arial; padding:0px;
                                       hyphens: auto; word-break: break-word;-webkit-hyphens: manual;}"))
 
@@ -158,7 +161,7 @@ runOntoFast <- function(is_a=c("is_a"), part_of=c("BFO:0000050"), nchar="all", s
 
              box(width = 4, height = "auto", title = NULL, style='padding:0px;',
                  h5("Definition:", style='padding:0px;'),
-                 verbatimTextOutput("def_txt", placeholder = T),
+                 verbatimTextOutput("def_txt", placeholder = TRUE),
                  tags$head(tags$style("#def_txt{overflow-y:scroll; height: 11vh; white-space: pre-wrap; word-break: keep-all; font-family: Arial; padding:0px;}"))
                  # tags$head(tags$style("#def_txt{overflow-y:scroll; overflow-x:visible; height: 11vh; word-break: break-all;
                  #                      font-family: Arial; hyphens: auto;  -webkit-hyphens: manual; padding:0px;}"))
@@ -206,32 +209,33 @@ server <- function(input, output, session) {
 
       visNetwork(nodes, edges, width = "100%", height = "100%", main = "Ontology Network",
                  submain = "Select terms or IDs above to begin visualization") %>%
-        visNodes( size=30, shadow =T)
+        visNodes( size=30, shadow =TRUE)
     })
   })
 
 
   ##### Selectize
 
-  updateSelectizeInput(session, "selectize", label = NULL, choices=shiny_in$srch_items, selected = FALSE,
-                       options = list(openOnFocus=F, maxOptions=100, placeholder="Search Ontology term"
+  updateSelectizeInput(session, "selectize", label = NULL, choices=ontofast[[shiny_in]]$srch_items, selected = FALSE,
+                       options = list(openOnFocus=FALSE, maxOptions=100, placeholder="Search Ontology term"
                        ),
                        server = TRUE
   )
 
   ####
-  ####### Safe file
+  ####### Save file
   observeEvent(input$savefile_btn, {
 
-#print(session$userData$shiny_in)
-    save(shiny_in, file="OntoFAST_annotation_shiny_in.RData")
+#print(session$userData$ontofast[[shiny_in]])
+    #save(ontofast[[shiny_in]], file= "OntoFAST_annotation_shiny_in.RData"  ) #"OntoFAST_annotation_shiny_in.RData" file2save
+    saveRDS(ontofast[[shiny_in]], file= file2save)
   }
   )
 
 
   ############
   makeRadioButton=function(n=1){fluidRow(column(10,
-                                                h3(paste(shiny_in$id_characters[n], shiny_in$name_characters[n], sep=" "), style='padding-left: 12px;'),
+                                                h3(paste(ontofast[[shiny_in]]$id_characters[n], ontofast[[shiny_in]]$name_characters[n], sep=" "), style='padding-left: 12px;'),
                                                 #verbatimTextOutput(paste0("ids_selec", n)),
                                                 textInput(paste0("ids_in", n), label = "", value = "", placeholder="Enter your ID"),
                                                 actionButton(paste0("add_btn", n), label = "Add",
@@ -241,8 +245,8 @@ server <- function(input, output, session) {
 
 
                                                 checkboxGroupInput(paste0("checkbox",n),label=NULL, #label=NA,
-                                                                   choices=shiny_in$auto_annot_characters_id_name[[shiny_in$id_characters[n]]],
-                                                                   selected=shiny_in$terms_selected[[shiny_in$id_characters[n]]]),
+                                                                   choices=ontofast[[shiny_in]]$auto_annot_characters_id_name[[ontofast[[shiny_in]]$id_characters[n]]],
+                                                                   selected=ontofast[[shiny_in]]$terms_selected[[ontofast[[shiny_in]]$id_characters[n]]]),
 
 
 
@@ -253,7 +257,7 @@ server <- function(input, output, session) {
 
 
   output$WidgetVectorDisplay <-renderUI(
-    if (show.chars==T){
+    if (show.chars==TRUE){
     withProgress(message = "Creating character statements", value = 0.1, {
       incProgress(0.3)
       incProgress(0.9)
@@ -272,31 +276,31 @@ server <- function(input, output, session) {
       output$network <- renderVisNetwork({
         withProgress(message = "Creating Network", value = 0.1, {
 
-          #dt=get_part_descen(shiny_in, "HAO:0000013", is_a=c("is_a"), part_of=c("BFO:0000050"))
+          #dt=get_part_descen(ontofast[[shiny_in]], "HAO:0000013", is_a=c("is_a"), part_of=c("BFO:0000050"))
 
           if (input$des_chk=="descendants"){
-            dt=get_part_descen(shiny_in, term2show, is_a=links_chk_map[[input$links_chk]][2], #### HAO.obo to ontology index!!!!
+            dt=get_part_descen(ontofast[[shiny_in]], term2show, is_a=links_chk_map[[input$links_chk]][2], #### HAO.obo to ontology index!!!!
                                part_of=links_chk_map[[input$links_chk]][1],
-                               all_links=F, incl.top.anc=T, highliht_focus=T)
+                               all_links=FALSE, incl.top.anc=TRUE, highliht_focus=TRUE)
 
           }
 
           if (input$des_chk=="ancestors"){
 
-            dt=get_part_anc(shiny_in, term2show, is_a=links_chk_map[[input$links_chk]][2],
+            dt=get_part_anc(ontofast[[shiny_in]], term2show, is_a=links_chk_map[[input$links_chk]][2],
                             part_of=links_chk_map[[input$links_chk]][1],
-                            all_links=F, incl.top.anc=T, highliht_focus=T)
+                            all_links=FALSE, incl.top.anc=TRUE, highliht_focus=TRUE)
 
           }
 
           if (input$des_chk=="both"){ #WORK on duplicated terms
-            dt1=get_part_descen(shiny_in, term2show, is_a=links_chk_map[[input$links_chk]][2], #### HAO.obo to ontology index!!!!
+            dt1=get_part_descen(ontofast[[shiny_in]], term2show, is_a=links_chk_map[[input$links_chk]][2], #### HAO.obo to ontology index!!!!
                                 part_of=links_chk_map[[input$links_chk]][1],
-                                all_links=F, incl.top.anc=T, highliht_focus=T)
+                                all_links=FALSE, incl.top.anc=TRUE, highliht_focus=TRUE)
 
-            dt2=get_part_anc(shiny_in, term2show, is_a=links_chk_map[[input$links_chk]][2],
+            dt2=get_part_anc(ontofast[[shiny_in]], term2show, is_a=links_chk_map[[input$links_chk]][2],
                              part_of=links_chk_map[[input$links_chk]][1],
-                             all_links=F, incl.top.anc=T, highliht_focus=T)
+                             all_links=FALSE, incl.top.anc=TRUE, highliht_focus=TRUE)
             dt<-list(nodes=rbind(dt1$nodes, dt2$nodes), edges=rbind(dt1$edges, dt2$edges))
             dt$nodes<-dt$nodes[!duplicated(as.character(dt$nodes$id)),] #select unique nodes
 
@@ -332,11 +336,11 @@ server <- function(input, output, session) {
 
           visNetwork(dt$nodes, dt$edges, height = "65vh",  width ="100%", main =net_title, submain =net_submain) %>%
             visNodes(borderWidthSelected=4)%>%
-            visOptions(highlightNearest = TRUE, nodesIdSelection = T)%>%
-            visLegend(addEdges = ledges, addNodes = lnodes, useGroups = F, position = "right", width=0.09) %>%
+            visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE)%>%
+            visLegend(addEdges = ledges, addNodes = lnodes, useGroups = FALSE, position = "right", width=0.09) %>%
 
             #visLayout(randomSeed = 12) %>%
-            visLayout(randomSeed = 12, hierarchical=F) -> visNt # HIERRACHICAL TRUE can be an option!!!
+            visLayout(randomSeed = 12, hierarchical=FALSE) -> visNt # HIERRACHICAL TRUE can be an option!!!
           incProgress(0.9)
 
           visIgraphLayout(visNt, layout="layout_with_gem")
@@ -382,7 +386,7 @@ server <- function(input, output, session) {
 
             term_id<-input$selectize
 
-            term_name<-shiny_in$name[which(names(shiny_in$name)==term_id)]
+            term_name<-ontofast[[shiny_in]]$name[which(names(ontofast[[shiny_in]]$name)==term_id)]
 
             if (length(term_name)==0){ #check if term is found in ontology
               term_name="TERM NOT FOUND!!!"
@@ -392,31 +396,34 @@ server <- function(input, output, session) {
             CHAR_id<-paste0("CHAR:", names(map_btn_check)[which(map_btn_check==x)])
 
 
-            if (term_id_name %in% shiny_in$auto_annot_characters_id_name[[CHAR_id]]){#check for duplication
+            if (term_id_name %in% ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]]){#check for duplication
               updateTextInput(session, paste0("ids_in", names(map_btn_check)[which(map_btn_check==x)]),
                               label = "You are trying to add the same term twice")
             }
 
-            if (!term_id_name %in% shiny_in$auto_annot_characters_id_name[[CHAR_id]]){#check for duplication
+            if (!term_id_name %in% ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]]){#check for duplication
 
 
-
+              ### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+              ### Former global assign. <<-                                               ####
               #update terms selected
-              shiny_in$terms_selected[[CHAR_id]] <<- c(shiny_in$terms_selected[[CHAR_id]], term_id_name)
+              ontofast[[shiny_in]]$terms_selected[[CHAR_id]] <- c(ontofast[[shiny_in]]$terms_selected[[CHAR_id]], term_id_name) # <<-
 
               #update terms selected id
 
-              #shiny_in$terms_selected_id[[CHAR_id]] <<- c(shiny_in$terms_selected_id[[CHAR_id]], term_id)
+              #ontofast[[shiny_in]]$terms_selected_id[[CHAR_id]] <<- c(ontofast[[shiny_in]]$terms_selected_id[[CHAR_id]], term_id)
 
-              #print(shiny_in$terms_selected_id[[CHAR_id]])
+              #print(ontofast[[shiny_in]]$terms_selected_id[[CHAR_id]])
 
+              ### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+              ### Former global assign. <<-                                               ####
               #update terms all
-              shiny_in$auto_annot_characters_id_name[[CHAR_id]] <<- c(shiny_in$auto_annot_characters_id_name[[CHAR_id]], term_id_name)
+              ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]] <- c(ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]], term_id_name) # <<-
 
               #update checkbox
               updateCheckboxGroupInput(session, paste0("checkbox", names(map_btn_check)[which(map_btn_check==x)]),
-                                       label=NULL, choices=shiny_in$auto_annot_characters_id_name[[CHAR_id]],
-                                       selected=shiny_in$terms_selected[[CHAR_id]]
+                                       label=NULL, choices=ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]],
+                                       selected=ontofast[[shiny_in]]$terms_selected[[CHAR_id]]
               ) #label=NA
 
               withProgress(message = "Added", value = 1, { Sys.sleep(.1) })
@@ -440,7 +447,7 @@ server <- function(input, output, session) {
           if (term_id!=""){ # term fiels must be non-empty
             term_id<-gsub(" ", "", term_id) # remove white spaces
 
-            term_name<-shiny_in$name[which(names(shiny_in$name)==term_id)]
+            term_name<-ontofast[[shiny_in]]$name[which(names(ontofast[[shiny_in]]$name)==term_id)]
 
             if (length(term_name)==0){ #check if term is found in ontology
               term_name="TERM NOT FOUND!!!"
@@ -450,26 +457,30 @@ server <- function(input, output, session) {
             CHAR_id<-paste0("CHAR:", names(map_btn_check)[which(map_btn_check==x)])
 
 
-            if (term_id_name %in% shiny_in$auto_annot_characters_id_name[[CHAR_id]]){#check for duplication
+            if (term_id_name %in% ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]]){#check for duplication
               updateTextInput(session, paste0("ids_in", names(map_btn_check)[which(map_btn_check==x)]),
                               label = "You are trying to add the same term twice")
             }
 
-            if (!term_id_name %in% shiny_in$auto_annot_characters_id_name[[CHAR_id]]){#check for duplication
+            if (!term_id_name %in% ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]]){#check for duplication
 
+              ### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+              ### Former global assign. <<-                                               ####
               #update terms selected
-              shiny_in$terms_selected[[CHAR_id]] <<- c(shiny_in$terms_selected[[CHAR_id]], term_id_name)
+              ontofast[[shiny_in]]$terms_selected[[CHAR_id]] <- c(ontofast[[shiny_in]]$terms_selected[[CHAR_id]], term_id_name) # <<-
 
               #update terms selected id
-             # shiny_in$terms_selected_id[[CHAR_id]] <<- c(shiny_in$terms_selected_id[[CHAR_id]], term_id)
+             # ontofast[[shiny_in]]$terms_selected_id[[CHAR_id]] <<- c(ontofast[[shiny_in]]$terms_selected_id[[CHAR_id]], term_id)
 
+              ### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+              ### Former global assign. <<-                                               ####
               #update terms all
-              shiny_in$auto_annot_characters_id_name[[CHAR_id]] <<- c(shiny_in$auto_annot_characters_id_name[[CHAR_id]], term_id_name)
+              ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]] <- c(ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]], term_id_name) # <<-
 
               #update checkbox
               updateCheckboxGroupInput(session, paste0("checkbox", names(map_btn_check)[which(map_btn_check==x)]),
-                                       label=NA, choices=shiny_in$auto_annot_characters_id_name[[CHAR_id]],
-                                       selected=shiny_in$terms_selected[[CHAR_id]]
+                                       label=NA, choices=ontofast[[shiny_in]]$auto_annot_characters_id_name[[CHAR_id]],
+                                       selected=ontofast[[shiny_in]]$terms_selected[[CHAR_id]]
               )
 
               withProgress(message = "Added", value = 1, { Sys.sleep(.1) })
@@ -490,20 +501,24 @@ server <- function(input, output, session) {
   observe({
     lapply(map_checkbox, function(x) {
       observeEvent(
-        input[[x]], ignoreNULL = F, # rhe input is the vector of selected terms
+        input[[x]], ignoreNULL = FALSE, # rhe input is the vector of selected terms
         {
           #print("observed")
           CHAR_id<-paste0("CHAR:", names(map_checkbox)[which(map_checkbox==x)])
 
+          ### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+          ### Former global assign. <<-                                               ####
           #update terms selected
-          shiny_in$terms_selected[[CHAR_id]] <<- input[[x]]
+          ontofast[[shiny_in]]$terms_selected[[CHAR_id]] <- input[[x]] # <<-
           #print(input[[x]])
 
           #update terms selected id
-          #print(names(shiny_in$terms_map[shiny_in$terms_map %in%input[[x]]]))
+          #print(names(ontofast[[shiny_in]]$terms_map[ontofast[[shiny_in]]$terms_map %in%input[[x]]]))
 
+          ### . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ..
+          ### Former global assign. <<-                                               ####
           # TERMS NOT FOUND are not included here
-          shiny_in$terms_selected_id[[CHAR_id]] <<- names(shiny_in$terms_map[shiny_in$terms_map %in%input[[x]]])
+          ontofast[[shiny_in]]$terms_selected_id[[CHAR_id]] <- names(ontofast[[shiny_in]]$terms_map[ontofast[[shiny_in]]$terms_map %in%input[[x]]]) # <<-
 
 
 
@@ -517,8 +532,8 @@ server <- function(input, output, session) {
     input$network_selected, {
       #print(input$network_selected)
 
-      updateSelectizeInput(session, "selectize", label = NULL, choices=shiny_in$srch_items, selected = input$network_selected,
-                           options = list(openOnFocus=F, maxOptions=100, placeholder="Enter term or ID"
+      updateSelectizeInput(session, "selectize", label = NULL, choices=ontofast[[shiny_in]]$srch_items, selected = input$network_selected,
+                           options = list(openOnFocus=FALSE, maxOptions=100, placeholder="Enter term or ID"
                            ),
                            server = TRUE
       )
@@ -532,11 +547,11 @@ server <- function(input, output, session) {
       output$id_txt<-renderText({input$selectize})
 
       output$def_txt<-renderText({
-        shiny_in$def[which(names(shiny_in$def)==input$selectize)]})
+        ontofast[[shiny_in]]$def[which(names(ontofast[[shiny_in]]$def)==input$selectize)]})
 
       output$syn_txt<-renderText({
         paste(
-          shiny_in$parsed_synonyms[which(names(shiny_in$parsed_synonyms)==input$selectize)],
+          ontofast[[shiny_in]]$parsed_synonyms[which(names(ontofast[[shiny_in]]$parsed_synonyms)==input$selectize)],
           collapse = ", ")
         })
     })
@@ -549,9 +564,13 @@ server <- function(input, output, session) {
  # end of app list
 
 #######
-  runApp(shinyApp(ui = ui, server = server))
-  return(shiny_in)
-  #shinyApp(ui = ui, server = server)
+  if(interactive()){
+    runApp(shinyApp(ui = ui, server = server))
+    return(ontofast[[shiny_in]])
+    #shinyApp(ui = ui, server = server)
+    #shiny::runApp(sh)
+  } else {
+    warning("Run R interactively!")
+  }
 
-  #shiny::runApp(sh)
 }

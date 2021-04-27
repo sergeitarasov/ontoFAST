@@ -15,7 +15,7 @@ export_cytoscape(
 \item{ontology}{Ontology}
 
 \item{annotations}{which annotations to use: "auto" means automatic annotations, "manual" means manual ones.
-Alternatively, any othe list element containing annotations can be specified.}
+Alternatively, any other list containing annotations can be specified.}
 
 \item{is_a}{is_a}
 
@@ -30,8 +30,15 @@ and imported in Cytoscape. In Cytoscape choose File -> Import -> Network -> File
 columns that enumerate the tables' rows!
 }
 \examples{
-\dontrun{
-cyto<-export_cytoscape(shiny_in)
+\donttest{
+data(Sharkey_2011)
+data(HAO)
+# do.annot = T takes a while
+hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = T)
+ontofast <- new.env(parent = emptyenv())
+ontofast$shiny_in <- make_shiny_in(hao_obo)
+# runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
+cyto<-export_cytoscape(ontofast$shiny_in)
 write.csv(cyto, "cyto_exp.csv")
 }
 }

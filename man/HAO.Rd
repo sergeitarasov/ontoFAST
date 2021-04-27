@@ -12,10 +12,10 @@ HAO
 Anatomy ontology of Hymenoptera. This ontology was imported into R using get_OBO() function from ontologyIndex package (see the examples).
 }
 \examples{
-ontology<-HAO
+data(HAO)
 # you can also parse the original .obo file
-# ontology<-get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
-# extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
+get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
 }
 \references{
 Yoder MJ, Mikó I, Seltmann KC, Bertone MA, Deans AR. 2010. A Gross Anatomy Ontology for Hymenoptera. PLoS ONE 5 (12): e15991.

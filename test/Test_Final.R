@@ -28,8 +28,11 @@ Sharkey_characters<-read.csv(system.file("data_onto", "Sharkey_2011.csv", packag
 
 
 # Make object for annotation
-hao_obo<-onto_process(hao_obo, Sharkey_characters[,1], do.annot = T)
+hao_obo<-onto_process(hao_obo, Sharkey_characters[,1], do.annot = F)
 shiny_in<-make_shiny_in(hao_obo)
+
+shiny_in<-runOntoFast(shiny_in=shiny_in, is_a = c("is_a"), part_of = c("BFO:0000050") )
+
 shiny_in<-runOntoFast(shiny_in=shiny_in, is_a = c("is_a"), part_of = c("BFO:0000050") )
 
 # Unique list of shiny_in

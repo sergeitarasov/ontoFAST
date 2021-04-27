@@ -18,10 +18,10 @@ A table of characters and character states from
 Hymenoptera character matrix (Sharkey et al., 2011: Cladistics). The table contains 392 character statements.
 }
 \examples{
-chars<-Sharkey_2011
+data(Sharkey_2011)
 # read .csv file directly
-#char_et_states<-read.csv(system.file("data_onto", "Sharkey_2011.csv", package = "ontoFAST"),
-# header=T,  stringsAsFactors = F, na.strings = "")
+char_et_states<-read.csv(system.file("data_onto", "Sharkey_2011.csv",
+package = "ontoFAST"), header=TRUE,  stringsAsFactors = FALSE, na.strings = "")
 }
 \references{
 Sharkey, M.J., et al. 2011. Phylogenetic relationships among superfamilies of Hymenoptera. Cladistics 28(1), 80-112.

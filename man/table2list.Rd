@@ -21,8 +21,6 @@ Takes a table where each row consists of character ID + an ontology annotation a
 Each character is assigned its own ID CHAR:XXXX
 }
 \examples{
-\dontrun{
-converting Sharkey_2011 data set to list of characater states
-list_data<-table2list(Sharkey_2011)
-}
+# converting Sharkey_2011 dataset to list of character states
+table2list(Sharkey_2011)
 }

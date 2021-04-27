@@ -12,11 +12,10 @@ Scarab
 Anatomy ontology of Hymenoptera + Dung beetles. This ontology was imported into R using get_OBO() function from ontologyIndex packages (see the examples). The added terms for dung beetle anatomy have prefix "SCR".
 }
 \examples{
-\dontrun{
-ontology<-Scarab
+data(Scarab)
 #you can also parse the original .obo file
-ontology<-get_OBO(system.file("data_onto", "HAO4scarabs.obo", package = "ontoFAST"),
-extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))}
+get_OBO(system.file("data_onto", "HAO4scarabs.obo", package = "ontoFAST"),
+extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
 }
 \references{
 Yoder MJ, Mikó I, Seltmann KC, Bertone MA, Deans AR. 2010. A Gross Anatomy Ontology for Hymenoptera. PLoS ONE 5 (12): e15991.

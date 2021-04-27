@@ -12,7 +12,8 @@
 #' @importFrom usethis use_package
 
 
-utils::globalVariables("shiny_in", package="ontoFAST")
+#utils::globalVariables("shiny_in", package="ontoFAST")
+utils::globalVariables("ontofast", package="ontoFAST")
 
 usethis::use_package("shiny", type = "Depends")
 usethis::use_package("ontologyIndex", type = "Depends")
@@ -32,16 +33,15 @@ usethis::use_package("ontologyIndex", type = "Depends")
 #' @param names use element name
 #' @return vector of names.
 #' @examples
-#' \dontrun{
+#' data(HAO)
 #' get_onto_name("HAO:0002272", HAO)
-#' }
 #' @export
 
-get_onto_name<-function(vec, onto, names=F){
+get_onto_name<-function(vec, onto, names=FALSE){
   #name.vec=onto$name[onto$id%in%unlist(vec, use.names = FALSE)]
   #name.vec=onto$name[c(na.omit(match(unlist(vec, use.names = FALSE), onto$id)))]
   name.vec=onto$name[c(match(unlist(vec, use.names = FALSE), onto$id))]
-  if (names==F) {name.vec=unname(name.vec)}
+  if (names==FALSE) {name.vec=unname(name.vec)}
   return(name.vec)
 }
 
@@ -53,16 +53,15 @@ get_onto_name<-function(vec, onto, names=F){
 #' @param names use element name
 #' @return vector of IDs.
 #' @examples
-#' \dontrun{
+#' data(HAO)
 #' vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
 #' get_onto_id(vec_name, HAO)
-#' }
 #' @export
 
-get_onto_id<-function(vec_name, ontology, names=F){
+get_onto_id<-function(vec_name, ontology, names=FALSE){
   match_vec<-match(unlist(vec_name, use.names = FALSE), ontology$name)
   ids=names(ontology$name)[match_vec]
-  if (names==T) {names(ids)<-ontology$name[match_vec]}
+  if (names==TRUE) {names(ids)<-ontology$name[match_vec]}
   return(ids)
 }
 
@@ -74,9 +73,8 @@ get_onto_id<-function(vec_name, ontology, names=F){
 #' @param list_id ID of list where synonyms are stored
 #' @return vector of ontology IDs and synonym names.
 #' @examples
-#' \dontrun{
-#' parsed_synonyms<-syn_extract(HAO)
-#' }
+#' data(HAO)
+#' syn_extract(HAO)
 #' @export
 
 syn_extract<-function(ontology, list_id="synonym"){
@@ -97,9 +95,8 @@ syn_extract<-function(ontology, list_id="synonym"){
 #' @param min_set if TRUE eliminates higher order inferred ontology terms
 #' @return The vector of matches ontology terms.
 #' @examples
-#' \dontrun{
+#' data(HAO)
 #' annot_char_grep(HAO, "Mola on right mandible")
-#' }
 #' @export
 
 annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=TRUE){
@@ -107,8 +104,8 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
   if (!use.synonyms) search_terms=ontology$name
   #onto.names=c(ontology$name, ontology$parsed_syns)
   terms=search_terms[vapply(search_terms,
-                          function(x) {grepl(x, char.statement, ignore.case = T)}, logical(1))]
-  if (min_set==T){
+                          function(x) {grepl(x, char.statement, ignore.case = TRUE)}, logical(1))]
+  if (min_set==TRUE){
     terms=ontologyIndex::minimal_set(ontology, names(terms))
   }
   return(terms)
@@ -125,8 +122,9 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 #' @param min_set if TRUE eliminates higher order inferred ontology terms
 #' @return The list of matched ontology terms and their character ids.
 #' @examples
-#' \dontrun{
 #' #getting ontology
+#' data(HAO)
+#' data(Sharkey_2011)
 #' ontology<-HAO
 #' #parsing synonyms
 #' ontology$parsed_synonyms<-syn_extract(HAO)
@@ -139,6 +137,7 @@ annot_char_grep<-function(ontology, char.statement, use.synonyms=TRUE, min_set=T
 #' ontology$name_characters<-name_characters
 #' ontology$id_characters<-id_characters
 #' # running annotations
+#' \donttest{
 #' auto_annotations<-annot_all_chars(ontology)
 #' }
 #' @export
@@ -171,10 +170,10 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' (\href{https://onlinelibrary.wiley.com/doi/full/10.1111/j.1096-0031.2011.00366.x}{Read})
 #'
 #' @examples
-#' chars<-Sharkey_2011
+#' data(Sharkey_2011)
 #' # read .csv file directly
-#' #char_et_states<-read.csv(system.file("data_onto", "Sharkey_2011.csv", package = "ontoFAST"),
-#' # header=T,  stringsAsFactors = F, na.strings = "")
+#' char_et_states<-read.csv(system.file("data_onto", "Sharkey_2011.csv",
+#' package = "ontoFAST"), header=TRUE,  stringsAsFactors = FALSE, na.strings = "")
 "Sharkey_2011"
 
 
@@ -193,10 +192,10 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' \href{http://portal.hymao.org/projects/32/public/ontology/}{Hymenoptera Anatomy Ontology Portal}
 #'
 #' @examples
-#' ontology<-HAO
+#' data(HAO)
 #' # you can also parse the original .obo file
-#' # ontology<-get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
-#' # extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
+#' get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+#' extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
 "HAO"
 
 
@@ -214,11 +213,10 @@ annot_all_chars<-function(ontology, use.synonyms=TRUE, min_set=TRUE){
 #' \href{http://portal.hymao.org/projects/32/public/ontology/}{Hymenoptera Anatomy Ontology Portal}
 #'
 #' @examples
-#' \dontrun{
-#' ontology<-Scarab
+#' data(Scarab)
 #' #you can also parse the original .obo file
-#' ontology<-get_OBO(system.file("data_onto", "HAO4scarabs.obo", package = "ontoFAST"),
-#' extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))}
+#' get_OBO(system.file("data_onto", "HAO4scarabs.obo", package = "ontoFAST"),
+#' extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
 "Scarab"
 
 #' Ontology terms to exclude for sunburst plot

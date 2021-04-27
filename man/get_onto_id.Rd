@@ -4,7 +4,7 @@
 \alias{get_onto_id}
 \title{Get IDs for ontology names}
 \usage{
-get_onto_id(vec_name, ontology, names = F)
+get_onto_id(vec_name, ontology, names = FALSE)
 }
 \arguments{
 \item{vec_name}{names od terms}
@@ -20,8 +20,7 @@ vector of IDs.
 Returns IDs of ontology terms given terms' names
 }
 \examples{
-\dontrun{
+data(HAO)
 vec_name=c("ventral mesofurco-profurcal muscle", "anatomical entity")
 get_onto_id(vec_name, HAO)
-}
 }

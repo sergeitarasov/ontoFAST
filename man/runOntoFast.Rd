@@ -8,33 +8,38 @@ runOntoFast(
   is_a = c("is_a"),
   part_of = c("BFO:0000050"),
   nchar = "all",
-  show.chars = T,
-  shiny_in,
+  show.chars = TRUE,
+  shiny_in = "shiny_in",
+  file2save = "OntoFAST_shiny_in.RData",
   ...
 )
 }
 \arguments{
-\item{is_a}{term for is_a relatinships}
+\item{is_a}{term for is_a relationships}
 
-\item{part_of}{term for part_of relatinships}
+\item{part_of}{term for part_of relationships}
 
 \item{nchar}{number of characters to show}
 
 \item{show.chars}{shows character statements}
 
-\item{shiny_in}{shiny_in object}
+\item{shiny_in}{a name of ontology (shiny_in) object in "ontofast" enviroment}
+
+\item{file2save}{a name of the file to which shiny_in object is saved in interactive mode}
 
 \item{...}{other arguments}
 }
 \value{
-runs ontoFAST intereactively using Shiny.
+runs ontoFAST interactively using Shiny.
 }
 \description{
 This function runs ontoFAST in interactive mode. Interactive mode allows character annotation and navigation through ontology network.
 }
 \examples{
-\dontrun{
-shiny_in<-make_shiny_in(HAO)
-shiny_in<-runOntoFast(show.chars=F)
-}
+data(Sharkey_2011)
+data(HAO)
+hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = FALSE)
+ontofast <- new.env(parent = emptyenv())
+ontofast$shiny_in <- make_shiny_in(hao_obo)
+runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
 }

@@ -4,7 +4,7 @@
 \alias{get_onto_name}
 \title{Get names for ontology IDs}
 \usage{
-get_onto_name(vec, onto, names = F)
+get_onto_name(vec, onto, names = FALSE)
 }
 \arguments{
 \item{vec}{ID or a vector of IDs}
@@ -20,7 +20,6 @@ vector of names.
 Returns names of ontology terms for ontology IDs
 }
 \examples{
-\dontrun{
+data(HAO)
 get_onto_name("HAO:0002272", HAO)
-}
 }

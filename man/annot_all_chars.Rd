@@ -22,8 +22,9 @@ Matches character statement and returns most similar ontology terms using
 grep and distance-based matching
 }
 \examples{
-\dontrun{
 #getting ontology
+data(HAO)
+data(Sharkey_2011)
 ontology<-HAO
 #parsing synonyms
 ontology$parsed_synonyms<-syn_extract(HAO)
@@ -36,6 +37,7 @@ names(name_characters)<-id_characters
 ontology$name_characters<-name_characters
 ontology$id_characters<-id_characters
 # running annotations
+\donttest{
 auto_annotations<-annot_all_chars(ontology)
 }
 }
