@@ -36,17 +36,13 @@ ontological dependencies.
 }
 \examples{
 \donttest{
-# reading in ontology and part_of relatinships only
-ontology_partof=ontologyIndex::get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
-                        extract_tags="everything", propagate_relationships = c("BFO:0000050"))
-# atomatically annotating ontology
-ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
-# creating character paths; exluding redundant terms
-tb<-paths_sunburst(ontology_partof, annotations =
-ontology_partof$auto_annot_characters, exclude.terms=exclude_terms)
-# use sunburstR package if you lack it
-# library(sunburstR)
-# create sunburst plot
-sunburstR::sunburst(tb)
+ontology_partof=get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+extract_tags="everything", propagate_relationships = c("BFO:0000050"))
+ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1], do.annot = F)
+ontology_partof$annot_characters<-Sharkey_2011_annot
+tb<-paths_sunburst(ontology_partof,
+annotations = ontology_partof$annot_characters, exclude.terms=exclude_terms)
+# library(sunburst)
+sunburst(tb)
 }
 }

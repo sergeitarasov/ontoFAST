@@ -184,18 +184,14 @@ chars_per_term<-function(ontology, annotations="auto"){
 #' @return Table.
 #' @examples
 #' \donttest{
-#' # reading in ontology and part_of relatinships only
-#' ontology_partof=ontologyIndex::get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
-#'                         extract_tags="everything", propagate_relationships = c("BFO:0000050"))
-#' # atomatically annotating ontology
-#' ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1])
-#' # creating character paths; exluding redundant terms
-#' tb<-paths_sunburst(ontology_partof, annotations =
-#' ontology_partof$auto_annot_characters, exclude.terms=exclude_terms)
-#' # use sunburstR package if you lack it
-#' # library(sunburstR)
-#' # create sunburst plot
-#' sunburstR::sunburst(tb)
+#' ontology_partof=get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
+#' extract_tags="everything", propagate_relationships = c("BFO:0000050"))
+#' ontology_partof<-onto_process(ontology_partof, Sharkey_2011[,1], do.annot = F)
+#' ontology_partof$annot_characters<-Sharkey_2011_annot
+#' tb<-paths_sunburst(ontology_partof,
+#' annotations = ontology_partof$annot_characters, exclude.terms=exclude_terms)
+#' # library(sunburst)
+#' sunburst(tb)
 #' }
 #' @export
 
@@ -566,15 +562,18 @@ export_annotations<-function(ontology, annotations="auto", incl.names=FALSE, sep
 #' @return Returns a table
 #' @examples
 #' \donttest{
-#' data(Sharkey_2011)
 #' data(HAO)
-#' # do.annot = T takes a while
-#' hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = T)
-#' ontofast <- new.env(parent = emptyenv())
-#' ontofast$shiny_in <- make_shiny_in(hao_obo)
-#' # runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
-#' cyto<-export_cytoscape(ontofast$shiny_in)
-#' write.csv(cyto, "cyto_exp.csv")
+#' data(Sharkey_2011)
+#' data(Sharkey_2011_annot)
+#' ontology<-HAO
+#' # processing ontology to incorporate character statements
+#' ontology<-onto_process(ontology, Sharkey_2011[,1], do.annot = F)
+#' # embedding manual annotations
+#' ontology$annot_characters<-Sharkey_2011_annot
+#' # exporting
+#' cyto<-export_cytoscape(ontology, annotations = ontology$annot_characters,
+#' is_a = c("is_a"), part_of = c("BFO:0000050"))
+#' #write.csv(cyto, file="cyto.csv")
 #' }
 #' @export
 

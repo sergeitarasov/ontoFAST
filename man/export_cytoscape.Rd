@@ -31,14 +31,17 @@ columns that enumerate the tables' rows!
 }
 \examples{
 \donttest{
-data(Sharkey_2011)
 data(HAO)
-# do.annot = T takes a while
-hao_obo<-onto_process(HAO, Sharkey_2011[,1], do.annot = T)
-ontofast <- new.env(parent = emptyenv())
-ontofast$shiny_in <- make_shiny_in(hao_obo)
-# runOntoFast(is_a = c("is_a"), part_of = c("BFO:0000050"), shiny_in="shiny_in" )
-cyto<-export_cytoscape(ontofast$shiny_in)
-write.csv(cyto, "cyto_exp.csv")
+data(Sharkey_2011)
+data(Sharkey_2011_annot)
+ontology<-HAO
+# processing ontology to incorporate character statements
+ontology<-onto_process(ontology, Sharkey_2011[,1], do.annot = F)
+# embedding manual annotations
+ontology$annot_characters<-Sharkey_2011_annot
+# exporting
+cyto<-export_cytoscape(ontology, annotations = ontology$annot_characters,
+is_a = c("is_a"), part_of = c("BFO:0000050"))
+#write.csv(cyto, file="cyto.csv")
 }
 }
