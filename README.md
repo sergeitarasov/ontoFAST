@@ -1,4 +1,4 @@
-![Build Status](https://travis-ci.org/sergeitarasov/ontoFAST.svg?branch=main)
+[![CRAN status](https://www.r-pkg.org/badges/version/ontoFAST)](https://CRAN.R-project.org/package=ontoFAST))
 
 # ontoFAST
  <p align="left">
