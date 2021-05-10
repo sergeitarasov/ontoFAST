@@ -1,4 +1,4 @@
-[![CRAN status](https://www.r-pkg.org/badges/version/ontoFAST)](https://CRAN.R-project.org/package=ontoFAST))
+[![CRAN status](https://www.r-pkg.org/badges/version/ontoFAST)](https://CRAN.R-project.org/package=ontoFAST)
 
 # ontoFAST
  <p align="left">
