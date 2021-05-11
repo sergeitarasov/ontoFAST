@@ -1,11 +1,12 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/ontoFAST)](https://CRAN.R-project.org/package=ontoFAST)
 
-# ontoFAST
+# ontoFAST: An R package for interactive and semi-automatic annotation of characters with biological ontologies
+        with biological ontologies
  <p align="left">
   <img src="https://github.com/sergeitarasov/ontoFAST/blob/master/test/Icon_ontofast_new.png" width="150" title="hover text">
 </p> 
 
-### This is the R package for interactive, semi-automatic annotation of character matrices (character statements) with biological ontologies. 
+### This is the R package for interactive
 
 [Installation and Manual](https://github.com/sergeitarasov/ontoFAST/wiki)
 
