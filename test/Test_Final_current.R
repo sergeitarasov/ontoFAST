@@ -23,7 +23,7 @@ Sharkey_characters<-read.csv(system.file("data_onto", "Sharkey_2011.csv", packag
 
 
 #---- Make object for annotation
-hao_obo<-onto_process(hao_obo, Sharkey_characters[,1], do.annot = T)
+hao_obo<-onto_process(hao_obo, Sharkey_characters[,1], do.annot = F)
 # new envr
 ontofast <- new.env(parent = emptyenv())
 ontofast$shiny_in <- make_shiny_in(hao_obo)
