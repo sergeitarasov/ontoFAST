@@ -5,13 +5,15 @@
   <img src="https://github.com/sergeitarasov/ontoFAST/blob/master/test/Icon_ontofast_new.png" width="150" title="hover text">
 </p> 
 
+#### Quick start
+
 ```{r}
 # Install necessary packages
 install.packages("ontoFAST")
 install.packages("igraph")
 library("ontoFAST")
 
-# Read in data
+# Read in ontology and character matrix
 hao_obo<-get_OBO(system.file("data_onto", "HAO.obo", package = "ontoFAST"),
 extract_tags="everything", propagate_relationships = c("BFO:0000050", "is_a"))
 data(Sharkey_2011)
@@ -28,7 +30,7 @@ write.csv(out, "annotations.csv")
 
 ```
 
-
+#### Manual
 [Installation and Manual](https://github.com/sergeitarasov/ontoFAST/wiki)
 
 The package provides convenient and efficient tools that allow linking character statements used in phylogenetics with anatomy and phenotype ontologies. It also provides functions to query linked characters using ontological relationships. The prime aim of this package is to enhance integration of comparative phylogenetic methods with ontological approaches.
