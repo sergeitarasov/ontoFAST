@@ -5,7 +5,7 @@
   <img src="https://github.com/sergeitarasov/ontoFAST/blob/master/test/Icon_ontofast_new.png" width="150" title="hover text">
 </p> 
 
-#### Quick start
+### Quick start
 
 ```{r}
 # Install necessary packages
