@@ -9,6 +9,7 @@
 
 
 ## Quick start guide
+[Click here for the detail Tutorial](https://github.com/sergeitarasov/ontoFAST/wiki)
 
 ### Install the necessary packages
 ```{r}
