@@ -11,7 +11,7 @@
 ## Quick start guide
 [Click here for the detail Tutorial](https://github.com/sergeitarasov/ontoFAST/wiki)
 
-[PREPRINT](https://www.biorxiv.org/content/10.1101/2021.05.11.443562v1)
+[Preprint](https://www.biorxiv.org/content/10.1101/2021.05.11.443562v1)
 
 ### Install the necessary packages
 ```{r}
