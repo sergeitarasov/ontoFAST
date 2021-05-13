@@ -11,6 +11,8 @@
 ## Quick start guide
 [Click here for the detail Tutorial](https://github.com/sergeitarasov/ontoFAST/wiki)
 
+[PREPRINT](https://www.biorxiv.org/content/10.1101/2021.05.11.443562v1)
+
 ### Install the necessary packages
 ```{r}
 install.packages("ontoFAST")
@@ -41,7 +43,7 @@ write.csv(out, "annotations.csv")
 ## Description
 
 [Click here for the detail Tutorial](https://github.com/sergeitarasov/ontoFAST/wiki)
-[PREPRINT](https://www.biorxiv.org/content/10.1101/2021.05.11.443562v1)
+
 
 The R package ontoFAST aids annotating characters and character matrices with biological ontologies. Its interactive interface allows quick and convenient tagging of character statements with necessary ontology terms. The produced annotaions can be exported in csv format for downstream analysis. Additinally, OntoFAST provides: (i) functions for constructing simple queries of characters against ontologies, and (ii) helper function for exporting and visualising complex ontological hierarchies and their relationships.
 
